@@ -28,6 +28,15 @@ const AdminProfileSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
+  notifications: [{
+    notification: {
+      type: String
+    },
+    notificationtype: {
+      type: String
+    },
+    
+  }],
 
   
 });

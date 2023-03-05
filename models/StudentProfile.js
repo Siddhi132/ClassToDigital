@@ -75,7 +75,16 @@ const studentProfileSchema = new mongoose.Schema({
 
   resume: {
     type: String
-  }
+  },
+  notifications: [{
+    notification: {
+      type: String
+    },
+    notificationtype: {
+      type: String
+    },
+    
+  }],
 
   
 });
