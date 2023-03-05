@@ -1,7 +1,7 @@
 const StudentProfile = require('../../models/StudentProfile');
 const MentorProfile = require('../../models/MentorProfile');
 const AdminProfile = require('../../models/AdminProfile');
-
+const CompanyProfile = require('../../models/CompanyProfile');
 const addNotification = async (req, res) => {
     console.log('req.bodynotification', req.body);
     let userId = req.body.userId;
@@ -51,6 +51,19 @@ const addNotification = async (req, res) => {
         }
         )
     }
+    else if (userRole == 'company') {
+        CompanyProfile.findOneAndUpdate({ _id: userId }, { $push: { notifications: notificationData } }, (err, existingUser) => {
+            if (!err) {
+                res.status(200).send({ "status": true, "statusCode": 200, "message": "notification added successfully" });
+
+            }
+            else {
+                res.status(400).send({ "status": false, "statusCode": 500, "message": "notification not added!" });
+
+            }
+        }
+        )
+    }
 
 
 
@@ -70,6 +83,9 @@ const getNotification = async (req, res) => {
     }
     else if (userRole == 'admin') {
         var userDetails = await AdminProfile.findById(userId)
+    }
+    else if (userRole == 'company') {
+        var userDetails = await CompanyProfile.findById(userId)
     }
 
 
@@ -98,6 +114,10 @@ const deleteNotification = async (req, res) => {
     else if (userRole == 'admin') {
         var userDetails = await AdminProfile.findById(userId)
     }
+    else if (userRole == 'company') {
+        var userDetails = await CompanyProfile.findById(userId)
+    }
+
 
 
     if (!userDetails) {
@@ -138,6 +158,17 @@ const deleteNotification = async (req, res) => {
     }
     else if (userRole == 'admin') {
         AdminProfile.findOneAndUpdate({ _id: userId }, { $set: { notifications: newNotifications } }, (err, existingUser) => {
+            if (!err) {
+                res.status(200).send({ "status": true, "statusCode": 200, "message": "notification deleted successfully" });
+            }
+            else {
+                res.status(400).send({ "status": false, "statusCode": 400, "message": "notification not deleted!" });
+            }
+        }
+        )
+    }
+    else if (userRole == 'company') {
+        CompanyProfile.findOneAndUpdate({ _id: userId }, { $set: { notifications: newNotifications } }, (err, existingUser) => {
             if (!err) {
                 res.status(200).send({ "status": true, "statusCode": 200, "message": "notification deleted successfully" });
             }

@@ -48,7 +48,16 @@ const companyProfileSchema = new mongoose.Schema({
     },
     description: {
         type: String
-    }
+    },
+    notifications: [{
+        notification: {
+          type: String
+        },
+        notificationtype: {
+          type: String
+        },
+        
+      }],
 
 
 
