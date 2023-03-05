@@ -86,6 +86,15 @@ const mentorSchema = new mongoose.Schema({
     projectRepository: [{
         type: Array,
     }],
+    notifications: [{
+        notification: {
+          type: String
+        },
+        notificationtype: {
+          type: String
+        },
+        
+      }],
 
 
 
