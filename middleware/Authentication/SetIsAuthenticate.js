@@ -21,4 +21,5 @@ const isLoginRequired = (req, res, next) => {
 };
 
 
+
 module.exports = {isAuth, isLoginRequired};

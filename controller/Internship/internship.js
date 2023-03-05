@@ -65,7 +65,7 @@ const getAllInternship = async (req, res) => {
   }
   catch (err) {
     console.log('err', err);
-    res.send({ status: false, statusCode: 400, 'allinternship': "Internship not found" });
+    res.send({ status: false, statusCode: 400, 'message': "Internship not found" });
   }
 }
 

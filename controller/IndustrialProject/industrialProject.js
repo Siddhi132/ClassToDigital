@@ -62,7 +62,7 @@ const getAllIndustrialProjects = async (req, res) => {
     }
     catch (err) {
       console.log('err', err);
-      res.send({ status: false, statusCode: 400, 'allIndustrialProject': "Industrial Projects not found" });
+      res.send({ status: false, statusCode: 400, 'message': "Industrial Projects not found" });
     }
   }
 

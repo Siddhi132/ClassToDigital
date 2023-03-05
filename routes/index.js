@@ -159,7 +159,7 @@ router.post('/uploadInternship', isLoginRequired, (req, res) => {
       res.render('Internship/UploadInternship', { "message": response.data });
     })
     .catch((error) => {
-      res.render('Internship/UploadInternship', {"message": error});
+      res.render('Internship/UploadInternship', { "message": error });
       console.log(error);
     });
 });
@@ -170,7 +170,7 @@ router.get("/internships", (req, res) => {
       res.redirect('/login');
     }
     console.log("req.query", req.query);
-    axios.get(process.env.BASE_URL + '/api/allInternship', { params :{"request":req.query,"id":req.session.userId,"role":req.session.userRole} })
+    axios.get(process.env.BASE_URL + '/api/allInternship', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
       .then((response) => {
         console.log("response here", response.data);
         res.render('Internship/InternshipDetails', { "internship": response.data });
@@ -206,15 +206,15 @@ router.get('/uploadIndustrialProject', (req, res) => {
   }
 });
 
-router.post('/uploadIndustrialProject',isLoginRequired, (req, res) => {
+router.post('/uploadIndustrialProject', isLoginRequired, (req, res) => {
   // Code to fetch data from the API goes here
   req.body.companyId = req.session.userId;
-  axios.post(process.env.BASE_URL +'/api/uploadIndustrialProject',req.body)
+  axios.post(process.env.BASE_URL + '/api/uploadIndustrialProject', req.body)
     .then((response) => {
-      res.render('IndustrialProject/UploadIndustrialProject', {"message": response.data});
+      res.render('IndustrialProject/UploadIndustrialProject', { "message": response.data });
     })
     .catch((error) => {
-      res.render('IndustrialProject/UploadIndustrialProject', {"message": error});
+      res.render('IndustrialProject/UploadIndustrialProject', { "message": error });
       console.log(error);
     });
 });
@@ -225,7 +225,7 @@ router.get("/industrialProjects", (req, res) => {
       res.redirect('/login');
     }
     console.log("req.query", req.query);
-    axios.get(process.env.BASE_URL + '/api/allIndustrialProjects', { params :{"request":req.query,"id":req.session.userId,"role":req.session.userRole} })
+    axios.get(process.env.BASE_URL + '/api/allIndustrialProjects', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
       .then((response) => {
         console.log("response here", response.data);
         res.render('IndustrialProject/IndustrialProjectDetails', { "industrialProject": response.data });
@@ -248,6 +248,184 @@ router.get("/industrialProjects", (req, res) => {
       });
   }
 });
+
+
+// Research Paper
+router.get('/uploadResearchPaper', isLoginRequired, (req, res) => {
+  if (req.session.userRole == "mentor" || req.session.userRole == "student") {
+    res.render('ResearchPaper/UploadResearchPaper');
+  }
+  else {
+    res.redirect('/');
+  }
+});
+
+router.post('/uploadResearchPaper', isLoginRequired, (req, res) => {
+  req.body.userId = req.session.userId;
+  req.body.userRole = req.session.userRole;
+  console.log("req.body", req.body);
+  axios.post(process.env.BASE_URL + '/api/uploadResearchPaper', req.body)
+    .then((response) => {
+      console.log("response", response.data);
+      res.render('ResearchPaper/UploadResearchPaper', { "message": response.data });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.render('ResearchPaper/UploadResearchPaper', { "message": error });
+    });
+});
+
+
+router.get('/researchPapers', (req, res) => {
+  if (req.query._id) {
+    if (!req.session.userId) {
+      res.redirect('/login');
+    }
+    console.log("req.query", req.query);
+    axios.get(process.env.BASE_URL + '/api/allResearchPapers', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
+      .then((response) => {
+        console.log("response here", response.data);
+        res.render('ResearchPaper/ResearchPaperDetails', { "researchPaper": response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
+      });
+  }
+  else {
+    axios.get(process.env.BASE_URL + '/api/allResearchPapers', { params: req.query })
+      .then((response) => {
+        console.log("response here", response.data);
+        res.render('ResearchPaper/ResearchPapers', { "researchPapers": response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
+
+      });
+  }
+});
+
+// Product section 
+router.get("/uploadProduct",isLoginRequired, (req, res) => {
+  if (req.session.userRole == "mentor" || req.session.userRole == "student") {
+    res.render('SellProduct/UploadProduct');
+  }
+  else {
+    res.redirect('/');
+  }
+});
+
+router.post("/uploadProduct",isLoginRequired,(req,res)=>{
+  console.log("here..",req.body)
+  console.log("here..",req.session.userId)
+  req.body.userId = req.session.userId;
+  var role=req.session.userRole;
+
+  axios.post(process.env.BASE_URL+'/api/uploadProduct',{"data":req.body,"role":role})
+  .then((response) => {
+    res.render('SellProduct/UploadProduct', {"message": response.data});
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+});
+
+router.get("/products", (req, res) => {
+  
+    axios.get(process.env.BASE_URL + '/api/getProducts', { params: req.query })
+      .then((response) => {
+        console.log("response here", response.data);
+        res.render('SellProduct/GetProducts', { "products": response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
+
+      });
+  
+});
+
+
+//  project repository
+router.get('/uploadProjectRepository', isLoginRequired, (req, res) => {
+  res.render('ProjectRepository/uploadProjectRepository');
+});
+
+
+router.post('/uploadProjectRepository', isLoginRequired, (req, res) => {
+  // Code to fetch data from the API goes here
+  var userId = req.session.userId;
+  axios.post(process.env.BASE_URL + '/api/uploadProjectRepository', req.body, { params: { "userId": userId } })
+
+    .then((response) => {
+      res.render('ProjectRepository/uploadProjectRepository', { "message": response.data });
+    })
+    .catch((error) => {
+      res.render('ProjectRepository/uploadProjectRepository', { "message": error });
+
+    });
+});
+
+
+router.get("/ProjectRepository", (req, res) => {
+  if (req.query._id) {
+    if (!req.session.userId) {
+      res.redirect('/login');
+    }
+    console.log("req.query", req.query);
+    axios.get(process.env.BASE_URL + '/api/getProjectRepository', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
+      .then((response) => {
+        console.log("response here", response.data);
+        res.render('ProjectRepository/projectRepositoryDetails', { "projectRepository": response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
+      });
+  }
+  else {
+    axios.get(process.env.BASE_URL + '/api/getProjectRepository', { params: req.query })
+      .then((response) => {
+        console.log('response here', response.data);
+
+        res.render('ProjectRepository/projectRepositories', { "projectRepositories": response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
+
+      });
+  }
+});
+
+// Notification
+router.get("/notification", isLoginRequired, (req, res) => {
+  axios.get(process.env.BASE_URL + '/api/getNotification', { params: { "userId": req.session.userId, "userRole": req.session.userRole } })
+    .then((response) => {
+      console.log("response here", response.data);
+      res.send(response.data.data.notifications);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+);
+
+router.get("/deleteNotification", isLoginRequired, (req, res) => {
+  axios.get(process.env.BASE_URL + '/api/deleteNotification', { params: { "userId": req.session.userId, "userRole": req.session.userRole, "notificationId": req.query.notificationId } })
+    .then((response) => {
+      res.redirect('/');
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+);
+
+
+
+
 
 
 
