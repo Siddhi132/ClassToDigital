@@ -1,40 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-  <link rel="stylesheet" href="/styles/login-signup.css">
-  <title>Signup</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
+  <!-- jquery cdn  -->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+  <style>
+    .divider:after,
+    .divider:before {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #eee;
+    }
+
+    .h-custom {
+      height: calc(100% - 73px);
+    }
+
+    @media (max-width: 450px) {
+      .h-custom {
+        height: 100%;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
-  <div class="login-container">
-    <div class="image-section">
-      <img src="/images/vincent-lin-rLIkE9ZW0y4-unsplash.jpg" alt="login image">
+  <section class="vh-100">
+    <div class="container h-custom">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-9 col-lg-6 col-xl-5">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" class="img-fluid"
+            alt="Sample image">
+        </div>
+
+
+        <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+          <form method="post" action="/signup">
+            <h2 class="mb-5 text-center text-primary">ClassToDigital</h2>
+            <div class="form-outline mb-4">
+              <input type="name" id="name" name="name" class="form-control form-control-lg"
+                placeholder="Enter a valid Names" required/>
+              <label class="form-label" for="name">Name</label>
+            </div>
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <input type="email" id="email" name="email" class="form-control form-control-lg"
+                placeholder="Enter a valid email address" required />
+              <label class="form-label" for="email">Email address</label>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+              <input type="password" id="password" name="password" class="form-control form-control-lg"
+                placeholder="Enter password" required />
+              <label class="form-label" for="password">Password</label>
+            </div>
+
+
+            <select name="role" id="role" class="form-select form-select-lg" aria-label="Default select example" required>
+              <option value="student">Student</option>
+              <option value="admin">Admin</option>
+              <option value="mentor">Mentor</option>
+              <option value="company">Company</option>
+            </select>
+
+
+            <div class="text-center text-lg-start mt-4">
+              <input type="Submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                value="Sign up">
+              <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/login"
+                  class="link-danger">Login</a></p>
+            </div>
+
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="form-parent-section">
-      <h2>Welcome to C2D</h2>
-      <p class="paracolor">India's Biggest Education Platform which provide Courses, Internship and much more
-        opportunities.</p>
-      <form class="form-section" method="post" action="signup">
-        <input type="text" id="name" name="name" placeholder="Enter your name">
-        <br>
-        <input type="email" id="email" name="email" placeholder="Enter your email">
-        <br>
-        <input type="password" id="password" name="password" placeholder="Password">
-        <br>
-        <label for="role">Select Role:</label>
-        <select id="role" name="role">
-          <option value="admin">Admin</option>
-          <option value="student">Student</option>
-          <option value="mentor">Mentor</option>
-          <option value="faculty">Faculty</option>
-          <option value="company">Company/Industry</option>
-          <option value="content_creator">Content Creator</option>
-        </select>
-        <input type="submit" value="Submit">
-      </form>
-    </div>
-  </div>
+
+  </section>
 </body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
 
 </html>
