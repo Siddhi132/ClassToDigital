@@ -7,6 +7,35 @@ const User = require('../models/Users');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const { isAuth, isLoginRequired } = require('../middleware/Authentication/SetIsAuthenticate');
+const multer = require('multer');
+
+const reportStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      if (file.fieldname === 'projectImage') {
+        cb(null, 'public/projectImages');
+      } else if (file.fieldname === 'projectReport')  {
+        cb(null, 'public/projectReports');
+      }else {
+        cb(new Error('Invalid fieldname'));
+      }
+        
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+}
+);
+
+
+const ReporsitoryUpload = multer({
+    storage: reportStorage,
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype !== 'application/pdf' && file.mimetype !== 'image/png' && file.mimetype !== 'image/jpeg') {
+            return cb(new Error('Only PDF, PNG and JPEG files are allowed'))
+        }
+        cb(null, true);
+    }
+});
 
 
 
@@ -353,8 +382,17 @@ router.get('/uploadProjectRepository', isLoginRequired, (req, res) => {
 });
 
 
-router.post('/uploadProjectRepository', isLoginRequired, (req, res) => {
+router.post('/uploadProjectRepository', isLoginRequired,  ReporsitoryUpload.fields(
+  [
+    { name: 'projectImage', maxCount: 1 },
+    { name: 'projectReport', maxCount: 1 }
+  ]
+), (req, res) => {
   // Code to fetch data from the API goes here
+  console.log("req.only", req);
+  console.log("req.file befor ajax", req.file);
+  console.log("req.files befor ajax", req.files);
+  req.body.uploadFileData = req.files;
   var userId = req.session.userId;
   axios.post(process.env.BASE_URL + '/api/uploadProjectRepository', req.body, { params: { "userId": userId } })
 
@@ -377,7 +415,9 @@ router.get("/ProjectRepository", (req, res) => {
     axios.get(process.env.BASE_URL + '/api/getProjectRepository', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
       .then((response) => {
         console.log("response here", response.data);
-        res.render('ProjectRepository/projectRepositoryDetails', { "projectRepository": response.data });
+        login = 1;
+        var role = req.session.userRole;
+        res.render('ProjectRepository/projectRepositoryDetails', { "projectRepository": response.data.data.ProjectRepository, login , role});
       })
       .catch((error) => {
         console.log(error);
@@ -403,7 +443,7 @@ router.get("/ProjectRepository", (req, res) => {
 router.get("/notification", isLoginRequired, (req, res) => {
   axios.get(process.env.BASE_URL + '/api/getNotification', { params: { "userId": req.session.userId, "userRole": req.session.userRole } })
     .then((response) => {
-      console.log("response here", response.data);
+      console.log("response here",  response.data);
       res.send(response.data.data.notifications);
     })
     .catch((error) => {

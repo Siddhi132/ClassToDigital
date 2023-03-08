@@ -7,7 +7,162 @@
     <title>projectRepository details</title>
 </head>
 <body>
-    Project Repository : <%= projectRepository  %>
+
+ <% if(login){ %>
+        <% if(typeof role!="undefined" && role){ %>
+            <% if(role=="student"){ %>
+                <%- include('../Navbar/StudentNavbar.ejs') %>
+            <% }else if(role=="mentor"){ %>
+                <%- include('../Navbar/MentorNavbar.ejs') %>
+            <% }else if(role=="admin"){ %>
+                <%- include('../Navbar/AdminNavbar.ejs') %>
+            <% }else if(role=="company"){ %>
+                <%- include('../Navbar/CompanyNavbar.ejs') %>
+            <% } %>
+        <% } %>
+        
+        <% }else { %>
+            <%- include('../Navbar/InitNavbar.ejs') %>
+        <% } %>
+
+
+
+
+
+
+
+
+
+
+    <% projectRepository.forEach(function(repository){ %>
+         <!--Main layout-->
+    <main class="mt-5 pt-4">
+        <div class="container mt-5 card" style="padding: 1em;">
+            <!--Grid row-->
+            <div class="row">
+                <!--Grid column-->
+                <div class="col-md-4 mb-4">
+                    <img src="<%= repository.projectImage.path %>"
+                        class="img-fluid" alt="" />
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                <div class="col-md-8 mb-4">
+                    <!--Content-->
+
+
+                    <div class="p-4">
+                        <strong>
+                            <h1 class="mb-3"><%= repository.projectName  %></h1>
+                        </strong>
+
+                        <div class="mb-3">
+                           <div style="display: flex; gap:2em">
+                            <a href="">
+                                <span class="badge bg-success me-1 p-md-2">Guide</span>
+                                <p class="text-black mt-3"><strong><%= repository.guideName %></strong></p>
+                            </a>
+                            <a href="">
+                                <span class="badge bg-info me-1 p-md-2">College , University</span>
+                                <p class="text-black mt-3"><strong><%= repository.collegeName %> , <%= repository.universityName %> </strong></p>
+                            </a>
+                           </div>
+                            <a href="">
+                                <span class="badge bg-dark me-1 p-md-2 f">Team Members </span>
+                                <div class="mt-3 text-black" style="display: flex; gap: 0.5em; flex-wrap: wrap; ">
+                          
+                                    <% var members = repository.teamMembers.split(','); %>
+                                    <% members.forEach(function(member){ %>
+                                        <div>
+                                            <p><strong> <%= member %> | </strong></p>
+                                            
+                                        </div>
+                                        <% }) %>
+
+                                    
+                                   
+
+                                </div>
+                            </a>
+                  
+                        </div>
+
+                        <strong>
+                            <p style="font-size: 20px;">Project Objective</p>
+                        </strong>
+
+                        <p><%= repository.objective %></p>
+
+                        <button class="btn btn-primary ms-1" type="submit">
+                            <a class="text-white" href="<%= repository.projectReport.path%>" target="_blank">Project Report</a>
+                            <i class="fas fa-download ms-1 "></i>
+                        </button>
+                        <button class="btn btn-primary ms-1">
+                            <a class="text-white" href="<%= repository.projectSourceCode %>" target="_blank">Project Source Code</a>
+                            <i class="fas fa-link ms-1 "></i>
+                        </button>
+                    </div>
+                    <!--Content-->
+                </div>
+                <!--Grid column-->
+            </div>
+            <!--Grid row-->
+
+            <hr />
+
+            <!--Grid row-->
+            <div class="row d-flex justify-content-center">
+                <!--Grid column-->
+                <div class="col-md-9 ">
+                    <h4 class="my-4 h4">Project Description</h4>
+
+                    <p><%= repository.projectDescription %></p>
+                    <h4 class="my-4 h5">Contact Details</h4>
+                    <p><%= repository.email %></p>
+                   <div class="row">
+                    <div class="col-md-6 ">
+                        <p class="my-4 h5">Technology Used In project</p>
+                        <a href="" class="mt-0">
+                            <div>
+                                <% var technologies = repository.technologiesUsed.split(','); %>
+                                        <% technologies.forEach(function(tech){ %>
+                                            
+                                                <span class="badge badge-light me-1 p-md-2"><%= tech %></span>
+                                                <% }) %>
+                                            </div>
+                            
+                        </a>
+                    </div>
+                    <div class="col-md-6 ">
+                        <p class="my-4 h5">Skills To be Learned</p>
+                        <a href="" class="mt-0">
+                            <div>
+                                <% var skills = repository.skillsToBeLearned.split(','); %>
+                                        <% skills.forEach(function(skill){ %>
+                                            
+                                                <span class="badge badge-light me-1 p-md-2"><%= skill %></span>
+                                                <% }) %>
+                                            </div>
+                        </a>
+                    </div>
+                   </div>
+                </div>
+                <!--Grid column-->
+            </div>
+            <!--Grid row-->
+
+        </div>
+    </main>
+    <!--Main layout-->
+       
+    <% }) %>
+
+    
+
+        
+        <!-- Fotter -->
+        <%- include('../Footer/Footer.ejs') %>
 
 
 </body>
