@@ -8,7 +8,7 @@ const projectRepositorySchema = new mongoose.Schema({
         required: true
     },
     teamMembers: {
-        type: [String],
+        type: String,
         required: true
     },
     guideName: {
@@ -40,13 +40,29 @@ const projectRepositorySchema = new mongoose.Schema({
         required: true
     },
     projectReport: {
-        type: String,
-        required: true
+        name: {
+            type: String,
+            required: true,
+        },
+        path: {
+            type: String,
+            required: true,
+        },
+    },
+    projectImage: {
+        name: {
+            type: String,
+            required: true,
+        },
+        path: {
+            type: String,
+            required: true,
+        },
     },
     videoDemo: {
         type: String
     },
-    status:{
+    status: {
         type: Boolean,
         default: false
     },
@@ -62,7 +78,7 @@ const projectRepositorySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    
+
 
 
 });

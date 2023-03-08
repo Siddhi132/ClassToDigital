@@ -1,26 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClassToDigital</title>
 </head>
-<body>
-    <% if(login){
-        %>
-        <h1>Logged in</h1>
-        <%
-    }else{
-        %>
-        <h1>Not logged in</h1>
-        <%
-    } %>
 
-    <% if(typeof role!="undefined" && role){
-        %>
-        <h1>Role: <%= role %> </h1>
-        <%
-    } %>
+<body>
+
+    <!-- Navbar  -->
+    <% if(login){ %>
+        <% if(typeof role!="undefined" && role){ %>
+            <% if(role=="student"){ %>
+                <%- include('../Navbar/StudentNavbar.ejs') %>
+            <% }else if(role=="mentor"){ %>
+                <%- include('../Navbar/MentorNavbar.ejs') %>
+            <% }else if(role=="admin"){ %>
+                <%- include('../Navbar/AdminNavbar.ejs') %>
+            <% }else if(role=="company"){ %>
+                <%- include('../Navbar/CompanyNavbar.ejs') %>
+            <% } %>
+        <% } %>
+        
+        <% }else { %>
+            <%- include('../Navbar/InitNavbar.ejs') %>
+        <% } %>
+
+
+
+
+
+
+
+
+
+
+        
+        <!-- Fotter -->
+        <%- include('../Footer/Footer.ejs') %>
+
+
+
+
 </body>
+
 </html>

@@ -29,6 +29,9 @@ app.use('/', require('./routes/index'));
 app.use('/api', require('./routes/api'));
 
 
+// make pubblic folder static
+app.use(express.static('public'));
+
 const start = async () => {
   try {
     await connectDB();
