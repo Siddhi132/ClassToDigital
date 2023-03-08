@@ -1,0 +1,137 @@
+
+/* Just on it, color is apply on notification */
+/* :root {
+    --success: #3fbd63c4;
+    --success-md: #3fbd637c;
+    --success-l: #3fbd632d;
+    --info: #0069dec4;
+    --info-md: #0069de7c;
+    --info-l: #0069de2d;
+
+    --warning: #ef9400c4;
+    --warning-md: #ef94007c;
+    --warning-l: #ef94002d;
+
+    --danger: #ea4e2cc4;
+    --danger-md: #ea4e2c7c;
+    --danger-l: #ea4e2c2d;
+} */
+
+.dropdown-menu li {
+    position: relative;
+}
+
+.dropdown-menu .dropdown-submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 10px;
+}
+
+
+.dropdown-menu>li:hover>.dropdown-submenu {
+    display: block;
+}
+
+.navbar-coin {
+    cursor: pointer;
+}
+
+#notification-ul-container{
+    width: 20em;
+    padding: 0.3em;
+}
+#notification-ul-container li{
+    display: flex;
+}
+
+#notification-ul-container li a{
+    width: 90%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+    display: inline-block;
+    white-space: normal;
+}
+.deleteNotificationIcon{
+    width: 10%;
+    text-align: center;
+    cursor: pointer;
+    margin: auto;
+}
+
+
+#notification-ul-container li .success {
+    border: 1px solid var(--success-md);
+    background-color: var(--success-l);
+}
+
+/* .notification.success i {
+    background-color: var(--success);
+} */
+
+.notification.success {
+    border: 1px solid var(--success-md);
+    background-color: var(--success-l);
+}
+
+/* .notification.success i {
+    background-color: var(--success);
+} */
+
+
+/*******/
+.notification.info {
+    border: 1px solid var(--info-md);
+    background-color: var(--info-l);
+}
+
+/* .notification.info i {
+    background-color: var(--info);
+} */
+
+/*******/
+.notification.warning {
+    border: 1px solid var(--warning-md);
+    background-color: var(--warning-l);
+}
+
+/* .notification.warning i {
+    background-color: var(--warning);
+} */
+
+.notification.warning .icon {
+    background-color: var(--warning);
+}
+
+/********/
+.notification.danger {
+    border: 1px solid var(--danger-md);
+    background-color: var(--danger-l);
+}
+
+.notification.danger i {
+    background-color: var(--danger);
+}
+
+
+
+
+
+/* media query for multi level drop down when click happen then it should be open */
+
+@media (max-width: 767px) {
+
+    .dropdown-menu .dropdown-submenu {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .dropdown-menu>li:hover>.dropdown-submenu {
+        display: block;
+    }
+    
+
+}
