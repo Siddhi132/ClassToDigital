@@ -74,7 +74,14 @@ const studentProfileSchema = new mongoose.Schema({
   }],
 
   resume: {
-    type: String
+    name: {
+      type: String,
+      required: true,
+  },
+  path: {
+      type: String,
+      required: true,
+  },
   },
   notifications: [{
     notification: {
@@ -113,3 +120,5 @@ studentProfileSchema.methods.isValidPassword = async function (password) {
 const studentProfile = mongoose.model('studentProfile', studentProfileSchema);
 
 module.exports = studentProfile;
+
+
