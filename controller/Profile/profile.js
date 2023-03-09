@@ -133,7 +133,7 @@ const updateProfile = async (req, res) => {
                 branch: req.body.data.branch,
                 stream: req.body.data.stream,
                 semester: req.body.data.semester,
-                location: req.body.data.location,
+                state: req.body.data.state,
                 resume: req.body.data.resume
             }
             // console.log('updateFields', updateFields);

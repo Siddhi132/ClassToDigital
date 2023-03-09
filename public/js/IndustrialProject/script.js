@@ -2,6 +2,13 @@ const $filterBtn = $('#filter-btn');
 const $hideFilter = $('#hide-filter-btn');
 const $sidebar = $('.sidebar');
 const $priceSlider = $('#price-slider');
+var userId = document.currentScript.getAttribute('userId');
+var userRole = document.currentScript.getAttribute('userRole');
+let data = {
+  "id": userId,
+  "role": userRole
+}
+var alreadyAppliedIndustrialProjects;
 // slider value change 
 $priceSlider.slider({
   range: true,
@@ -145,12 +152,29 @@ function filterIndustrialProject() {
        <hr>
        <div class="d-flex flex-row-reverse">
            <div class="ms-2 me-2">
-               <a href="IndustrialProjectDetail?id=" ><button class="btn btn-primary" id="detailbtn">View Details</button></a>
-           </div>
-           <div class="">
-               <button class="btn btn-secondary">Apply Now</button>
-           </div>
-       
+               <a href="/industrialProjects?_id=${ item._id }"><button class="btn btn-primary" id="detailbtn">View Details</button></a>
+           </div>`;
+           if (userId != "" && userRole == "student") {
+            card += `  <button class="btn btn-secondary applynow"  data-id="${item._id}">
+            Apply now
+
+          </button>`;
+          }
+          else if (userId != "" && userRole != "student") {
+            card += `<button class="btn btn-tertiary">
+            You can't apply
+
+          </button>`;
+          }
+          else {
+            card += `<a href="/login"><button class="btn btn-secondary" id="login">
+            Apply now
+          </button></a>`;
+          }
+
+
+
+         card+=` 
        </div>
        
        
@@ -166,6 +190,8 @@ function filterIndustrialProject() {
         <h5 class="card-title">${ data.message}</h5>
       </div>`;
       $('.listings').html(card);
+      $('#noOfIndustrialProjectFound').text("");
+
     }
     
   }
@@ -179,6 +205,7 @@ fetch('/api/Categories')
   .then(data => {
     console.log(data.data.categories[0].industrialProject);
     let industrialProjects=data.data.categories[0].industrialProject;
+    let studentProfile=data.data.categories[0].studentProfile;
     let categories=industrialProjects.category;
     let locations=industrialProjects.location;
     let modeOfIndustrialProjects=industrialProjects.modeOfIndustrialProject;
@@ -191,6 +218,41 @@ fetch('/api/Categories')
     );
     modeOfIndustrialProjects.forEach(modeOfIndustrialProject => {
       $('#modeOfIndustrialProject').append(`<option value="${modeOfIndustrialProject}">${modeOfIndustrialProject}</option>`);
+    }
+    );
+
+    
+    // for modal to submit apply form 
+    let education = studentProfile.education;
+    let stream = studentProfile.stream;
+    let college = studentProfile.college;
+    let university = studentProfile.university;
+    let branch = studentProfile.branch;
+    let semester = studentProfile.semester;
+    let state = studentProfile.state;
+
+    education.forEach(education => {
+      $('#education').append(`<option value="${education}">${education}</option>`);
+    });
+    stream.forEach(stream => {
+      $('#stream').append(`<option value="${stream}">${stream}</option>`);
+    }
+    );
+    college.forEach(college => {
+      $('#college').append(`<option value="${college}">${college}</option>`);
+    });
+    university.forEach(university => {
+      $('#university').append(`<option value="${university}">${university}</option>`);
+    });
+    branch.forEach(branch => {
+      $('#branch').append(`<option value="${branch}">${branch}</option>`);
+    });
+    semester.forEach(semester => {
+      $('#semester').append(`<option value="${semester}">${semester}</option>`);
+    }
+    );
+    state.forEach(state => {
+      $('#state').append(`<option value="${state}">${state}</option>`);
     }
     );
   }
@@ -221,6 +283,58 @@ $(this).val($(this).val().toLowerCase());
   });
 });
 
+
+
+// autofill value in modal 
+
+fetch('/api/profile?' + new URLSearchParams(data), {
+  method: 'GET',
+})
+  .then(res => res.json())
+  .then(data => {
+    console.log("i am ", data);
+    if (data.statusCode == 200) {
+      $('#name').val(data.data.user.name);
+      $('#email').val(data.data.user.email);
+      $('#phone').val(data.data.user.phone);
+      $('#branch').val(data.data.user.branch);
+      $('#college').val(data.data.user.college);
+      $('#education').val(data.data.user.education);
+      $('#state').val(data.data.user.state);
+      $('#stream').val(data.data.user.stream);
+      $('#university').val(data.data.user.university);
+      $('#semester').val(data.data.user.semester);
+    }
+    // submit modal and apply complete 
+    let arr = data.data.user.industrialProjects;
+    alreadyAppliedIndustrialProjects = arr;
+    console.log(arr);
+  });
+
+  
+// which idp apply btn click 
+$(document).on('click', '.applynow', function (e) {
+  let idpId = $(this).attr('data-id');
+  let loopend = 0;
+  for (let i = 0; i < alreadyAppliedIndustrialProjects.length && loopend != 1; i++) {
+    if (alreadyAppliedIndustrialProjects[i] == idpId) {
+      loopend = 1;
+      console.log("already applied");
+      $('#alreadyAppliedAlert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+      You have already applied for this industrial project
+      <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>`);
+      break;
+    }
+
+  }
+  if (loopend == 0) {
+    $('#submitIDPApp').attr('data-idpId', idpId);
+    $('#applyNowModal').modal('show');
+  }
+
+})
+
 // show filter sidebar
 $filterBtn.on('click', function() {
   $sidebar.css('transform', 'translateX(0)');
@@ -228,4 +342,103 @@ $filterBtn.on('click', function() {
 // hide filter sidebar
 $hideFilter.on('click', function() {
   $sidebar.css('transform','translateX(-100%)');
+});
+
+
+// submit idp application form 
+$(document).on('click', "#submitIDPApp", function (e) {
+  var idpId = $(this).attr('data-idpId');
+  var data = {
+    "userId": userId,
+    "industrialProjectId": idpId
+  }
+  var data2 = {}
+  var formData = $('#idpAppForm').serializeArray();
+  for (var i = 0; i < formData.length; i++) {
+    data2[formData[i].name] = formData[i].value;
+  }
+  var getCurrtime = new Date().getTime();
+  if($('#resume').prop('files')[0] == undefined){
+    $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Please upload your resume
+    <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+  </div>`);
+    return;
+  }
+  var resumeName = getCurrtime + $('#resume').prop('files')[0].name;
+  var resumePath = "/studentProfile/Resumes/" + resumeName;
+  var resumeData = {
+    "name": resumeName,
+    "path": resumePath
+  }
+  data2['resume'] = resumeData;
+  console.log("data2", data2);
+
+  for (var key in data2) {
+    if (data2[key] == "") {
+      // console.log("empty value");
+      $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+      Please fill all the fields
+      <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>`);
+      return;
+    }
+  }
+
+
+  console.log(idpId);
+
+  // save resume file in folder of that resumePath with resumeName in node js without api call
+  var resumeFileData = new FormData();
+  resumeFileData.append('resume', resumeName);
+  resumeFileData.append('path', resumePath);
+  console.log(resumeFileData);
+
+
+  fetch('/api/applyForIndustrialProject', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      if (data.statusCode == 200) {
+        fetch("/api/profile", {
+          method: "post",
+          body: JSON.stringify({ data: data2, "id": userId, "role": userRole }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+          .then(resp => resp.json())
+          .then(data123 => {
+            console.log("dummy...", data123);
+            $('#applyNowModal').modal('hide');
+            $('#successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+        ${data.message}
+        <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+      </div>`);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+
+      }
+      else {
+        $('#applyNowModal').modal('hide');
+        $('#errorAlert').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+        ${data.message}
+        <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+      </div>`);
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+
+
 });
