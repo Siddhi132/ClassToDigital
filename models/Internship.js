@@ -22,7 +22,7 @@ const internshipScheme=new mongoose.Schema({
     rolesAndResponsibilities:{type:String,required:true},
     perks:{type:String,required:true},
     whoCanApply:{type:String,required:true},
-    status:{type:Boolean,required:true,default:false},
+    status:{type:Boolean,required:true,default:true},
     totalNumberOfApplicants:{type:Number,required:true},
     criteriaForSelection:{type:String,required:true}
 

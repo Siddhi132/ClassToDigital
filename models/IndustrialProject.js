@@ -24,7 +24,8 @@ const industrialProjectSchema = new mongoose.Schema({
     perks:{type:String,required:true},
     whoCanApply:{type:String,required:true},
     totalNumberOfApplicants:{type:Number,required:true},
-    criteriaForSelection:{type:String,required:true}
+    criteriaForSelection:{type:String,required:true},
+    status:{type:Boolean,required:true,default:true},
 
 
 });
