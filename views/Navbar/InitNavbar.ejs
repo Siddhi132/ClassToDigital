@@ -6,15 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="styles/navbar.css">
+    <!-- Initial Link Loading -->
+    <%- include('../InitialLoading/InitUp.ejs') %>
 </head>
 
 <body>
@@ -47,16 +40,25 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li>
-                                <a class="dropdown-item" href="#">Internships</a>
+                                <a class="dropdown-item" href="/internships">Internships</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Repository</a>
+                                <a class="dropdown-item" href="/projectRepository">Repository</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Industrial Projects</a>
+                                <a class="dropdown-item" href="/industrialProjects">Industrial Projects</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Products</a>
+                                <a class="dropdown-item" href="/mentors">Mentors</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/products">Products</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/researchPapers">Research Papers</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Exam Papers</a>
                             </li>
                         </ul>
                     </li>
@@ -197,12 +199,13 @@
             <!-- Right elements -->
             <div class="d-flex align-items-center">
 
-                <button type="button" class="btn btn-link px-3 me-2">
-                    Login
+               
+                <button class="btn btn-link px-3 me-2">
+                    <a class="text-primary" href="/login">Login</a>
                 </button>
-                <button type="button" class="btn btn-primary me-3">
-                    Sign up for free
-                </button>
+                <button class="btn btn-primary me-3">
+                    <a class="text-white" href="/signup">SignUp</a>
+                </button>               
 
             </div>
             <!-- Right elements -->
@@ -212,7 +215,8 @@
     <!-- Navbar -->
 
 </body>
-<!-- MDB -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+<!-- Initial Script Loading -->
+<%- include('../InitialLoading/InitDown.ejs') %>
+    <script src="js/Notification/Notification.js"></script>
 
 </html>
