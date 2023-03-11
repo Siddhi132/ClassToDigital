@@ -1,12 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Get product</title>
+  <title>Document</title>
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
+  <style>
+    @media (max-width: 767.98px) {
+      .border-sm-start-none {
+        border-left: none !important;
+      }
+    }
+
+    .hideDetail:hover {
+      cursor: pointer;
+    }
+  </style>
+
 </head>
+
 <body>
-  Get product: <%= products %>
+
+  <section style="background-color: #eee;">
+    <div class="container py-5">
+      <div class="row justify-content-center mb-3">
+        <div class="col-md-8 col-xl-6 mb-2 mb-md-0 ">
+          <input type="search" class="form-control" id="searchProduct" placeholder="Search by product name"
+            aria-label="Search" />
+
+
+
+        </div>
+        <div class="col-md-2 col-xl-2 mb-2 mb-md-0 ">
+          <select name="category" id="category" class="form-select" aria-label="Default select example">
+            <option value="" selected>Choose category</option>
+
+          </select>
+        </div>
+        <div class="col-md-2 col-xl-2 mb-2 mb-md-0 ">
+          <select name="conditionRating" id="conditionRating" class="form-select" aria-label="Default select example">
+            <option value="" selected>Choose conditionRating</option>
+          </select>
+        </div>
+      </div>
+      <!-- 
+
+<%= JSON.stringify(products.statusCode) %>
+<%= JSON.stringify(products.message) %>
+<%= JSON.stringify(products.data.allProducts) %> -->
+
+      <div class="allProducts">
+
+        <!-- foreach loop for products.data.allProducts  -->
+
+        <% products.data.allProducts.forEach(function(product){ %>
+
+
+          <div class="row justify-content-center mb-3">
+            <div class="col-md-12 col-xl-10">
+              <div class="card shadow-3-strong border rounded-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                      <div id="carouselExampleControls" class="carousel slide" data-mdb-ride="carousel">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="/images/Internship/IBM_logo_in.jpg" class="d-block w-100"
+                              alt="Wild Landscape" />
+                          </div>
+                          <div class="carousel-item">
+                            <img src="/images/Internship/IBM_logo_in.jpg" class="d-block w-100"
+                              alt="Camera" />
+                          </div>
+                          <div class="carousel-item">
+                            <img src="/images/Internship/IBM_logo_in.jpg" class="d-block w-100"
+                              alt="Exotic Fruits" />
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleControls"
+                          data-mdb-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-mdb-target="#carouselExampleControls"
+                          data-mdb-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-6">
+                      <h5 id="productName">
+                        <%= product.productTitle %>
+                      </h5>
+                      <div class="d-flex flex-row">
+                        <div class="text-primary mb-1 me-2">
+                          <span id="conditionRatingVal" style="display:none;">
+                            <%= product.conditionRating %>
+                          </span>
+                          <% for(var i=1; i<=product.conditionRating; i++){ %>
+                            <i class="fa fa-star"></i>
+                            <% } %>
+                              <% for(var j=0;j<5-product.conditionRating;j++){ %>
+                                <i class="fa-regular fa-star"></i>
+                                <% } %>
+
+                        </div>
+                      </div>
+                      <div class="mt-1 mb-0  small">
+                        <span class="text-primary"> • </span>
+                        <span id="categoryName">
+                          <%= product.category %>
+                        </span>
+                        <span class="text-primary"> • </span>
+                        <span>
+                          <%= product.location %>
+                        </span>
+
+                      </div>
+                      <div class="mb-2 text-muted small">
+                        <span class="text-primary"> • </span>
+                        <span>Date Of Purchase : <%= product.dateOfPurchase.slice(0,10) %></span>
+
+                      </div>
+
+                    </div>
+                    <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start d-flex flex-column ">
+                      <!-- <div class="d-flex flex-row align-items-center mb-1"> -->
+                      <span class="text-primary text-end">Message <i class="fa fa-comment"></i></span>
+
+                      <h4 class="mb-1 me-1">
+                        <%= product.price %> Rs.
+                      </h4>
+                      <!-- chat icon  -->
+                      <!-- </div> -->
+                      <!-- <div class="d-flex flex-column mt-4"> -->
+                      <button class="btn btn-primary mt-auto showDetail" type="button">Details</button>
+
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer" style="display: none;">
+                  <h5 class="text-uppercase text-primary">Notes</h5>
+                  <p>
+                    <%= product.note %><span class="hideDetail"><i
+                          class=" text-primary fa-sharp fa-solid fa-arrow-up"></i></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <% }) %>
+      </div>
+
+
+    </div>
+  </section>
 </body>
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+<!-- jquery cdn  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+
+    // dropdown for category and condition rating 
+
+    fetch('/api/Categories')
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        let products = data.data.categories[0].product;
+
+        let categories = products.category;
+        let condition = products.condition;
+
+        categories.forEach(element => {
+          $("#category").append(`<option value="${element}">${element}</option>`);
+        });
+        condition.forEach(element => {
+          $("#conditionRating").append(`<option value="${element}">${element}</option>`);
+        });
+
+      })
+      .catch(err => console.log(err));
+
+
+    //working search bar 
+
+    $(document).on('keyup', "#searchProduct", function () {
+      var value = $(this).val();
+      // console.log(value);
+      var patt = new RegExp(value, "i");
+      // console.log(patt);
+      $(".allProducts .row").each(function () {
+        // console.log($(this).text());
+        if (!patt.test($(this).find('#productName').text())) {
+          $(this).hide();
+        } else {
+          $(this).show();
+        }
+      });
+    });
+
+
+    // two filters working 
+
+    function filterproduct() {
+      var category = $("#category").val();
+      var conditionRating = $("#conditionRating").val();
+     
+      if (category != "" && conditionRating != "") {
+        $(".allProducts .row").each(function () {
+          if ($(this).find('#categoryName').text().toLowerCase().indexOf(category.toLowerCase()) != -1 && $(this).find('#conditionRatingVal').text().toLowerCase().indexOf(conditionRating.toLowerCase()) != -1) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+
+      }
+      else if(category != "" && conditionRating == ""){
+        $(".allProducts .row").each(function () {
+          if ($(this).find('#categoryName').text().toLowerCase().indexOf(category.toLowerCase()) != -1) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      }
+      else if(category == "" && conditionRating != ""){
+        $(".allProducts .row").each(function () {
+          if ($(this).find('#conditionRatingVal').text().toLowerCase().indexOf(conditionRating.toLowerCase()) != -1) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      }
+      else{
+        $(".allProducts .row").each(function () {
+          $(this).show();
+        });
+      }
+    }
+
+
+    $(document).on('change', "#category", filterproduct);
+    $(document).on('change', "#conditionRating", filterproduct);
+
+
+
+
+
+
+
+
+    // show and hide details of product
+    $(".showDetail").click(function () {
+      $(this).parent().parent().parent().parent().find(".card-footer").slideDown();
+
+
+
+    });
+    $(".hideDetail").click(function () {
+      $(this).parent().parent().parent().parent().find(".card-footer").slideUp();
+    });
+  });
+</script>
+
 </html>

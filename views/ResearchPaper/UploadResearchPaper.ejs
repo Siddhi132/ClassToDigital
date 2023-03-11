@@ -6,78 +6,125 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
+    <style>
+        .card {
+            box-shadow: 0 0 15px -2px #444444;
+            ;
+
+        }
+
+        .main-heading {
+            color: #1c4980;
+        }
+    </style>
 </head>
 
-<body class="bg-light">
-    <!-- Responsive bootstrap form which has fileds for uploading research paper like Research paper title, description, team memebr, guide, skills required, notedetails, etc. -->
+<body>
+    <section class="h-100 bg-light">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card card-registration my-4">
+                        <div class="row g-0">
 
-    <!-- i fmessage is set then show alert otherwise not --> 
-    <% if(typeof message != "undefined" && message){ %>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <%= message.message %>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <% } %>
+                            <div class="col-xl-12">
+                                <% if(typeof message != "undefined" && message){ %>
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <%= message.message %>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                    <% } %>
+                                <div class="card-body p-md-5 text-black">
+                                    <h3 class="mb-5 text-uppercase main-heading">Upload Research paper Details</h3>
+
+                                    <form method="post" action="/uploadResearchPaper" id="addInternshipform">
+                                        <div class="form-outline mb-4">
+                                            <input type="text" id="title" name="title"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="title">title</label>
+                                        </div>
+
+                                        <div class="form-outline mb-4">
+                                            <textarea type="input" class="form-control  form-control-lg"
+                                                id="description" name="description" rows="3"
+                                                required></textarea>
+                                            <label class="form-label" for="description">Brief Description About
+                                                Research paper</label>
+                                        </div>
+
+                                        <div class=" mb-4">
+
+                                            <select class="form-select form-select-lg" id="category" name="category"
+                                                aria-label="Default select example" required>
+                                                <option value="" selected>Choose category</option>
+
+                                            </select>
+
+                                        </div>
 
 
-    <div class="container mt-3 ">
-        <div class="wholeform bg-white ps-3 pe-3 pb-3 border-dark shadow-lg bg-body rounded">
-        <h2 class="text-center mb-3 mt-3">Upload Research paper details</h2>
+                                        <div class="form-outline mb-4">
+                                            <input type="text" id="teamMembers" name="teamMembers"
+                                                class="form-control  form-control-lg" required />
+                                            <label class="form-label" for="teamMembers">teamMembers</label>
 
-    <form action="/uploadResearchPaper" method="post">
-        <div class="form-group mb-4">
-            <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" required>
-        </div>
-        <div class="form-group mb-4">
-            <label for="description">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-        </div>
-        <div class="form-group mb-4">
-            <label for="category">category</label>
-            <select name="category" id="category">
+                                        </div>
 
-            </select>
-        </div>
-        <div class="form-group mb-4">
-            <label for="teamMembers">Team Members</label>
-            <input type="text" class="form-control" id="teamMembers" name="teamMembers" required>
-        </div>
-        <div class="form-group mb-4">
-            <label for="guide">Guide</label>
-            <input type="text" class="form-control" id="guide" name="guide" required>
-        </div>
-        <div class="form-group mb-4">
-            <label for="skillsRequired">Skills Required</label>
-            <input type="text" class="form-control" id="skillsRequired" name="skillsRequired" required>
-        </div>
-        <div class="form-group mb-4">
-            <label for="noteDetails">Note Details</label>
-            <input type="text" class="form-control" id="noteDetails" name="noteDetails" required>
-        </div>
-        <!-- submit buuton  -->
-        <button type="submit" class="btn btn-primary">Submit</button>
 
-    </form>
-</div>
-</div>
+                                        <div class="form-outline mb-4">
+                                            <input type="text" id="guide" name="guide"
+                                                class="form-control  form-control-lg" required />
+                                            <label class="form-label" for="guide">guide</label>
+
+                                        </div>
+
+
+                                 
+
+                                        
+
+                                        <div class="form-outline mb-4">
+                                            <input type="text" id="skillsRequired" name="skillsRequired"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="skillsRequired">Skills Required(Seperate By
+                                                Comma(,) )</label>
+                                        </div>
+
+
+                                        <div class="form-outline mb-4">
+                                            <textarea type="input" class="form-control  form-control-lg"
+                                                id="noteDetails" name="noteDetails" rows="3"
+                                                required></textarea>
+                                            <label class="form-label" for="noteDetails">noteDetails
+                                                </label>
+                                        </div>
+
+                                       
+
+                                        <div class="d-flex justify-content-center pt-3">
+                                            <input id="submitInternshipForm" type="submit"
+                                                class="btn btn-primary ms-2 btn-lg" value="Submit">
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function() {
-        fetch('/api/Categories')
-            .then(response => response.json())
-            .then(data => {
-                let categories=data.data.categories[0].researchPaper.category;
-                console.log(categories);
-                categories.forEach(category => {
-                    $('#category').append(`<option value="${category}">${category}</option>`)
-                });
-            })
-    })
-</script>
+<!-- MDB -->
+<!-- jquery cdnjs -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+<script type="text/javascript" src="/js/ResearchPaper/uploadResearchPaper.js"></script>
 </html>
