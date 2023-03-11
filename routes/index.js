@@ -10,38 +10,45 @@ const { isAuth, isLoginRequired } = require('../middleware/Authentication/SetIsA
 const multer = require('multer');
 const fs = require('fs');
 
-const reportStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      if (file.fieldname === 'projectImage') {
-        if(!fs.existsSync('public/projectImages')){
-          fs.mkdirSync('public/projectImages');
-        }
-        cb(null, 'public/projectImages');
-      } else if (file.fieldname === 'projectReport')  {
-        if(!fs.existsSync('public/projectReports')){
-          fs.mkdirSync('public/projectReports');
-        }
-        cb(null, 'public/projectReports');
-      }else {
-        cb(new Error('Invalid fieldname'));
+const uploadStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    if (file.fieldname === 'projectImage') {
+      if (!fs.existsSync('public/uploadedData/projectRepository/projectImages')) {
+        fs.mkdirSync('public/uploadedData/projectRepository/projectImages');
       }
-        
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
+      cb(null, 'public/uploadedData/projectRepository/projectImages');
+    } else if (file.fieldname === 'projectReport') {
+      if (!fs.existsSync('public/uploadedData/projectRepository/projectReports')) {
+        fs.mkdirSync('public/uploadedData/projectRepository//projectReports');
+      }
+      cb(null, 'public/uploadedData/projectRepository/projectReports');
     }
+    else if (file.fieldname === 'resumeFile') {
+      if (!fs.existsSync('public/uploadedData/internship/resumeFiles')) {
+        fs.mkdirSync('public/uploadedData/internship/resumeFiles');
+      }
+      cb(null, 'public/uploadedData/internship/resumeFiles');
+    }  
+    else {
+      cb(new Error('Invalid fieldname'));
+    }
+
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
 }
 );
 
 
-const ReporsitoryUpload = multer({
-    storage: reportStorage,
-    fileFilter: function (req, file, cb) {
-        if (file.mimetype !== 'application/pdf' && file.mimetype !== 'image/png' && file.mimetype !== 'image/jpeg') {
-            return cb(new Error('Only PDF, PNG and JPEG files are allowed'))
-        }
-        cb(null, true);
+const uploadFile = multer({
+  storage: uploadStorage,
+  fileFilter: function (req, file, cb) {
+    if (file.mimetype !== 'application/pdf' && file.mimetype !== 'image/png' && file.mimetype !== 'image/jpeg') {
+      return cb(new Error('Only PDF, PNG and JPEG files are allowed'))
     }
+    cb(null, true);
+  }
 });
 
 
@@ -123,11 +130,17 @@ router.get('/profile', isLoginRequired, async (req, res) => {
   console.log("in profile", req.session);
   axios.get(process.env.BASE_URL + '/api/profile', { params: { "id": req.session.userId, "role": req.session.userRole } })
     .then((response) => {
+      if (!req.session.userId) {
+        login = 0;
+      }
+      else {
+        login = 1;
+      }
       console.log('response.data.profile', response);
       var role = response.data.data.user.role;
       console.log("role here", role);
       // flag = 1;
-      res.render('Profile/Profile', { "user": response.data, role });
+      res.render('Profile/Profile', { "user": response.data.data.user, role, login });
     })
     .catch((error) => {
       console.log(error);
@@ -160,15 +173,24 @@ router.get('/mentors', (req, res) => {
     }
     axios.get(process.env.BASE_URL + '/api/getMentors', { params: req.query })
       .then((response) => {
-        res.render('Mentor/Mentor', { "mentor": response.data.data.mentors });
+        login = 1;
+        var role = req.session.userRole;
+        res.render('Mentor/Mentor', { "mentor": response.data.data.mentors , login, role});
       })
       .catch((error) => {
         res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
       });
   } else {
+    if (!req.session.userId) {
+      login = 0;
+    }
+    else {
+      login = 1;
+      var role = req.session.userRole;
+    }
     axios.get(process.env.BASE_URL + '/api/getMentors', { params: req.query })
       .then((response) => {
-        res.render('Mentor/AllMentors', { "mentors": response.data.data.mentors });
+        res.render('Mentor/AllMentors', { "mentors": response.data.data.mentors, login, role });
       })
       .catch((error) => {
         console.log(error);
@@ -211,17 +233,24 @@ router.get("/internships", (req, res) => {
         login = 1;
         var role = req.session.userRole;
         console.log("response here", response.data);
-        res.render('Internship/InternshipDetails', { "internship": response.data.data.allinternship, login, role });
+        res.render('Internship/InternshipDetails', { "internship": response.data.data.allinternship,"userId": req.session.userId, login, role });
       })
-      .catch((error) => { 
+      .catch((error) => {
         console.log(error);
         res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
       });
   }
   else {
+    if (!req.session.userId) {
+      login = 0;
+    }
+    else {
+      login = 1;
+      var role = req.session.userRole;
+    }
     axios.get(process.env.BASE_URL + '/api/allInternship', { params: req.query })
       .then((response) => {
-        res.render('Internship/Internships', { "internships": response.data,"userId":req.session.userId,"userRole":req.session.userRole });
+        res.render('Internship/Internships', { "internships": response.data, "userId": req.session.userId, "userRole": req.session.userRole , login, role});
       })
       .catch((error) => {
         console.log(error);
@@ -265,9 +294,10 @@ router.get("/industrialProjects", (req, res) => {
     console.log("req.query", req.query);
     axios.get(process.env.BASE_URL + '/api/allIndustrialProjects', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
       .then((response) => {
-
+        login = 1;
+        var role = req.session.userRole;
         console.log("response here", response.data);
-        res.render('IndustrialProject/IndustrialProjectDetails', { "industrialProject": response.data,"userId":req.session.userId,"userRole":req.session.userRole });
+        res.render('IndustrialProject/IndustrialProjectDetails', { "industrialProject": response.data.data.allIndustrialProject,"userId": req.session.userId, login, role });
       })
       .catch((error) => {
         console.log(error);
@@ -275,10 +305,17 @@ router.get("/industrialProjects", (req, res) => {
       });
   }
   else {
+    if (!req.session.userId) {
+      login = 0;
+    }
+    else {
+      login = 1;
+      var role = req.session.userRole;
+    }
     axios.get(process.env.BASE_URL + '/api/allIndustrialProjects', { params: req.query })
       .then((response) => {
         console.log("response here", response.data);
-        res.render('IndustrialProject/IndustrialProjects', { "industrialProject": response.data,"userId":req.session.userId,"userRole":req.session.userRole });
+        res.render('IndustrialProject/IndustrialProjects', { "industrialProject": response.data, "userId": req.session.userId, "userRole": req.session.userRole , login, role});
       })
       .catch((error) => {
         console.log(error);
@@ -324,7 +361,7 @@ router.get('/researchPapers', (req, res) => {
     axios.get(process.env.BASE_URL + '/api/allResearchPapers', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
       .then((response) => {
         console.log("response here", response.data);
-        res.render('ResearchPaper/ResearchPaperDetails', { "researchPaper": response.data });
+        res.render('ResearchPaper/ResearchPaperDetails', { "researchPaper": response.data ,"userId": req.session.userId});
       })
       .catch((error) => {
         console.log(error);
@@ -346,7 +383,7 @@ router.get('/researchPapers', (req, res) => {
 });
 
 // Product section 
-router.get("/uploadProduct",isLoginRequired, (req, res) => {
+router.get("/uploadProduct", isLoginRequired, (req, res) => {
   if (req.session.userRole == "mentor" || req.session.userRole == "student") {
     res.render('SellProduct/UploadProduct');
   }
@@ -355,34 +392,34 @@ router.get("/uploadProduct",isLoginRequired, (req, res) => {
   }
 });
 
-router.post("/uploadProduct",isLoginRequired,(req,res)=>{
-  console.log("here..",req.body)
-  console.log("here..",req.session.userId)
+router.post("/uploadProduct", isLoginRequired, (req, res) => {
+  console.log("here..", req.body)
+  console.log("here..", req.session.userId)
   req.body.userId = req.session.userId;
-  var role=req.session.userRole;
+  var role = req.session.userRole;
 
-  axios.post(process.env.BASE_URL+'/api/uploadProduct',{"data":req.body,"role":role})
-  .then((response) => {
-    res.render('SellProduct/UploadProduct', {"message": response.data});
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+  axios.post(process.env.BASE_URL + '/api/uploadProduct', { "data": req.body, "role": role })
+    .then((response) => {
+      res.render('SellProduct/UploadProduct', { "message": response.data });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 router.get("/products", (req, res) => {
-  
-    axios.get(process.env.BASE_URL + '/api/getProducts', { params: req.query })
-      .then((response) => {
-        console.log("response here", response.data);
-        res.render('SellProduct/GetProducts', { "products": response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-        res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
 
-      });
-  
+  axios.get(process.env.BASE_URL + '/api/getProducts', { params: req.query })
+    .then((response) => {
+      console.log("response here", response.data);
+      res.render('SellProduct/GetProducts', { "products": response.data });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
+
+    });
+
 });
 
 
@@ -392,7 +429,7 @@ router.get('/uploadProjectRepository', isLoginRequired, (req, res) => {
 });
 
 
-router.post('/uploadProjectRepository', isLoginRequired,  ReporsitoryUpload.fields(
+router.post('/uploadProjectRepository', isLoginRequired, uploadFile.fields(
   [
     { name: 'projectImage', maxCount: 1 },
     { name: 'projectReport', maxCount: 1 }
@@ -427,7 +464,7 @@ router.get("/ProjectRepository", (req, res) => {
         console.log("response here", response.data);
         login = 1;
         var role = req.session.userRole;
-        res.render('ProjectRepository/projectRepositoryDetails', { "projectRepository": response.data.data.ProjectRepository, login , role});
+        res.render('ProjectRepository/projectRepositoryDetails', { "projectRepository": response.data.data.ProjectRepository, login, role });
       })
       .catch((error) => {
         console.log(error);
@@ -444,8 +481,8 @@ router.get("/ProjectRepository", (req, res) => {
     }
     axios.get(process.env.BASE_URL + '/api/getProjectRepository', { params: req.query })
       .then((response) => {
-        console.log('response here', response.data);        
-        res.render('ProjectRepository/projectRepositories', { "projectRepositories": response.data.data.ProjectRepository, login , role });
+        console.log('response here', response.data);
+        res.render('ProjectRepository/projectRepositories', { "projectRepositories": response.data.data.ProjectRepository, login, role });
       })
       .catch((error) => {
         console.log(error);
@@ -459,7 +496,7 @@ router.get("/ProjectRepository", (req, res) => {
 router.get("/notification", isLoginRequired, (req, res) => {
   axios.get(process.env.BASE_URL + '/api/getNotification', { params: { "userId": req.session.userId, "userRole": req.session.userRole } })
     .then((response) => {
-      console.log("response here",  response.data);
+      console.log("response here", response.data);
       res.send(response.data.data.notifications);
     })
     .catch((error) => {
@@ -485,14 +522,20 @@ router.get('/logout', (req, res) => {
   res.clearCookie('token');
   req.session.destroy(err => {
     if (err) {
-        console.log(err);
+      console.log(err);
     } else {
-        res.redirect('/');
-    }});
-  
+      res.redirect('/');
+    }
+  });
+
 });
 
-
+router.post('/resumeUpload', uploadFile.single('resumeFile'), (req, res) => {
+  console.log("req.only", req);
+  console.log("req.file befor ajax", req.file);
+  console.log("req.files befor ajax", req.files);
+  res.send({ "message": "File uploaded successfully" , "file": req.file});
+});
 
 
 

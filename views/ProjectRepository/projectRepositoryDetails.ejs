@@ -30,7 +30,7 @@
     <% projectRepository.forEach(function(repository){ %>
          <!--Main layout-->
     <main class="mt-5 pt-4">
-        <div class="container mt-5 card" style="padding: 1em;">
+        <div class="container mt-5 border border-1 shadow-3" style="padding: 1em; border-radius: 5px;">
             <!--Grid row-->
             <div class="row">
                 <!--Grid column-->
@@ -140,11 +140,20 @@
                         </a>
                     </div>
                    </div>
+                   <div class="videoDemo">
+                    <h4 class="my-4 h4">Video Demo</h4>
+                    <a href="<%= repository.videoDemo %>" target="_blank">Video demo <i class="fas fa-link ms-1 "></i></a>
+                    
+                   
+                    <!-- <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="560" height="315" src="<%= repository.videoDemo %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </div> -->
                 </div>
                 <!--Grid column-->
             </div>
             <!--Grid row-->
 
+          
         </div>
     </main>
     <!--Main layout-->

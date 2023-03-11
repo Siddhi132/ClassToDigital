@@ -1,13 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>ClassToDigital Profile</title>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css'>
+    <link rel='stylesheet' href='https://unpkg.com/css-pro-layout@1.1.0/dist/css/css-pro-layout.css'>
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap'>
+    <link rel="stylesheet" href="styles/Profile/style.css">
+
 </head>
+
 <body>
-    <%= user %>
-    <%= role %>
-</body>
+
+        <!-- Navbar  -->
+        <% if(login){ %>
+            <% if(typeof role!="undefined" && role){ %>
+                <% if(role=="student"){ %>
+                    <%- include('../Navbar/StudentNavbar.ejs') %>
+                <% }else if(role=="mentor"){ %>
+                    <%- include('../Navbar/MentorNavbar.ejs') %>
+                <% }else if(role=="admin"){ %>
+                    <%- include('../Navbar/AdminNavbar.ejs') %>
+                <% }else if(role=="company"){ %>
+                    <%- include('../Navbar/CompanyNavbar.ejs') %>
+                <% } %>
+            <% } %>
+            
+            <% }else { %>
+                <%- include('../Navbar/InitNavbar.ejs') %>
+            <% } %>
+    
+
+            
+                <div class="profile-container ">
+                    <!-- partial:index.partial.html -->
+            <div class="layout has-sidebar fixed-sidebar fixed-header">
+                <aside id="sidebar" class="sidebar break-point-sm has-bg-image">
+                    <a id="btn-collapse" class="sidebar-collapser"><i class="ri-arrow-left-s-line"></i></a>
+
+                    <div class="sidebar-layout">
+                        <div class="sidebar-header">
+                            <div class="pro-sidebar-logo">
+                                <div><%- user.name[0] %></div>
+                                <h5> Hi! <%- user.name.charAt(0).toUpperCase() + user.name.slice(1).toLowerCase() %> </h5>
+                            </div>
+                        </div>
+                        <div class="sidebar-content">
+                            <nav class="menu open-current-submenu">
+                                <ul>
+                                    <li class="menu-header"><span> GENERAL </span></li>
+                                    <li class="menu-item sub-menu">
+                                        <a href="#">
+                                            <span class="menu-icon">
+                                                <i class="ri-vip-diamond-fill"></i>
+                                            </span>
+                                            <span class="menu-title">Details</span>
+                                            <span class="menu-suffix">
+                                                <span class="badge primary">collect coin</span>
+                                            </span>
+                                        </a>
+                                        <div class="sub-menu-list">
+                                            <ul>
+                                                <li class="menu-item">
+                                                    <a href="#">
+                                                        <span class="menu-title">Internships</span>
+                                                    </a>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <a href="#">
+                                                        <span class="menu-title">Indusctrial Projects</span>
+                                                    </a>
+                                                </li>
+                                                <li class="menu-item sub-menu">
+                                                    <a href="#">
+                                                        <span class="menu-title">Forms</span>
+                                                    </a>
+                                                    <div class="sub-menu-list">
+                                                        <ul>
+                                                            <li class="menu-item">
+                                                                <a href="#">
+                                                                    <span class="menu-title">Input</span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="menu-item">
+                                                                <a href="#">
+                                                                    <span class="menu-title">Select</span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="menu-item sub-menu">
+                                                                <a href="#">
+                                                                    <span class="menu-title">More</span>
+                                                                </a>
+                                                                <div class="sub-menu-list">
+                                                                    <ul>
+                                                                        <li class="menu-item">
+                                                                            <a href="#">
+                                                                                <span class="menu-title">CheckBox</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="menu-item">
+                                                                            <a href="#">
+                                                                                <span class="menu-title">Radio</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="menu-item sub-menu">
+                                                                            <a href="#">
+                                                                                <span class="menu-title">Want more
+                                                                                    ?</span>
+                                                                                <span
+                                                                                    class="menu-suffix">&#x1F914;</span>
+                                                                            </a>
+                                                                            <div class="sub-menu-list">
+                                                                                <ul>
+                                                                                    <li class="menu-item">
+                                                                                        <a href="#">
+                                                                                            <span
+                                                                                                class="menu-prefix">&#127881;</span>
+                                                                                            <span class="menu-title">You
+                                                                                                made it </span>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="menu-item ">
+                                        <a href="#" id="profile-internship-btn">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                            </span>
+                                            <span class="menu-title">Internships</span>
+                                        </a>
+                                     
+                                    </li>
+                                    <li class="menu-item ">
+                                        <a href="#" id="profile-product-btn">
+                                            <span class="menu-icon">
+                                                <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+                                            </span>
+                                            <span class="menu-title">Products</span>
+                                        </a>
+                             
+                                    </li>
+                                    <li class="menu-item ">
+                                        <a href="#" id="profile-idp-btn">
+                                            <span class="menu-icon">
+                                                <i class="fa-sharp fa-solid fa-diagram-project"></i>
+                                            </span>
+                                            <span class="menu-title">Indusctrial Projects</span>
+                                        </a>
+                                 
+                                    </li>
+                                    <li class="menu-item ">
+                                        <a href="#" id="profile-mentors-btn">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-chalkboard-user"></i>
+                                            </span>
+                                            <span class="menu-title">Mentors</span>
+                                        </a>
+                                   
+                                    </li>
+                                    <li class="menu-item ">
+                                        <a href="#"  id="profile-research-btn">
+                                            <span class="menu-icon">
+                                                <i class="fa-sharp fa-solid fa-book"></i>
+                                            </span>
+                                            <span class="menu-title">Research Papers</span>
+                                        </a>
+                               
+                                    </li>
+                                    <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li>
+                                    <li class="menu-item">
+                                        <a href="#">
+                                            <span class="menu-icon">
+                                                <i class="ri-book-2-fill"></i>
+                                            </span>
+                                            <span class="menu-title">Documentation</span>
+                                            <span class="menu-suffix">
+                                                <span class="badge secondary">Beta</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="#">
+                                            <span class="menu-icon">
+                                                <i class="ri-calendar-fill"></i>
+                                            </span>
+                                            <span class="menu-title">Calendar</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="#">
+                                            <span class="menu-icon">
+                                                <i class="ri-service-fill"></i>
+                                            </span>
+                                            <span class="menu-title">Examples</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="sidebar-footer">
+                            <div class="footer-box">
+                                <div>
+                                    <img class="react-logo"
+                                        src="https://user-images.githubusercontent.com/25878302/213938106-ca8f0485-3f30-4861-9188-2920ed7ab284.png"
+                                        alt="react" />
+                                </div>
+                                <div style="padding: 0 10px">
+                                    <span style="display: block; margin-bottom: 10px">Pro sidebar is also available as a
+                                        react package
+                                    </span>
+                                    <div style="margin-bottom: 15px">
+                                        <img alt="preview badge"
+                                            src="https://img.shields.io/github/stars/azouaoui-med/react-pro-sidebar?style=social" />
+                                    </div>
+                                    <div>
+                                        <a href="https://github.com/azouaoui-med/react-pro-sidebar"
+                                            target="_blank">Check it out!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+                <div id="overlay" class="overlay"></div>
+                <div class="layout">
+                    <main class="content">
+                       
+                        <div>
+                            <a id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
+                              <i class="ri-menu-line ri-xl"></i>
+                            </a>
+                        </div>
+                        <div id="internship-content">
+                            internship
+                        </div>
+                        <div id="default-content">
+                            default-content
+                        </div>
+                        <div id="product-content">
+                            Products 
+                        </div>
+                        <div id="idp-content">
+                            Indusctrial Projects
+                        </div>
+                        <div id="research-content">
+                            Research
+                        </div>
+                        <div id="mentor-content">
+                            Mentor
+                        </div>
+                    </main>
+                     
+                        
+
+                    <div class="overlay"></div>
+                </div>
+            </div>
+                </div>
+
+        
+        <!-- Fotter -->
+        <%- include('../Footer/Footer.ejs') %>
+</body>   
+ <!-- partial -->
+            <script src='https://unpkg.com/@popperjs/core@2'></script>
+            <script src="js/Profile/script.js"></script>
+            <script src="js/Profile/manageProf.js"></script>
+
 </html>
