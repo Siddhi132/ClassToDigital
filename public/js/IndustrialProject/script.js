@@ -3,6 +3,7 @@ const $hideFilter = $('#hide-filter-btn');
 const $sidebar = $('.sidebar');
 const $priceSlider = $('#price-slider');
 var userId = document.currentScript.getAttribute('userId');
+console.log(document.currentScript)
 var userRole = document.currentScript.getAttribute('userRole');
 let data = {
   "id": userId,
@@ -10,6 +11,7 @@ let data = {
 }
 var alreadyAppliedIndustrialProjects;
 // slider value change 
+if($priceSlider.slider){
 $priceSlider.slider({
   range: true,
   min: 0,
@@ -23,6 +25,7 @@ $priceSlider.slider({
     console.log(startValue, stipend);
   }
 });
+}
 
 // filter IndustrialProject 
 function filterIndustrialProject() {
@@ -161,10 +164,7 @@ function filterIndustrialProject() {
           </button>`;
           }
           else if (userId != "" && userRole != "student") {
-            card += `<button class="btn btn-tertiary">
-            You can't apply
-
-          </button>`;
+            
           }
           else {
             card += `<a href="/login"><button class="btn btn-secondary" id="login">
@@ -324,6 +324,8 @@ $(document).on('click', '.applynow', function (e) {
       You have already applied for this industrial project
       <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
     </div>`);
+    window.scrollTo(0, 0)
+
       break;
     }
 
@@ -421,6 +423,8 @@ $(document).on('click', "#submitIDPApp", function (e) {
         ${data.message}
         <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
       </div>`);
+      window.scrollTo(0, 0)
+
           })
           .catch(err => {
             console.log(err);
@@ -433,6 +437,8 @@ $(document).on('click', "#submitIDPApp", function (e) {
         ${data.message}
         <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
       </div>`);
+      window.scrollTo(0, 0)
+
       }
     })
     .catch(err => {

@@ -1,12 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Research papers</title>
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
+<style>
+  .researchPaperDetails span{
+    background-color: #e5e5e5;
+    padding: 5px 8px ;
+    border-radius: 5px;
+    color: #4f4f4f;
+  }
+
+.skillsBadgeText{
+    color: #4f4f4f !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    margin-left: 5px !important;
+  }
+
+</style>
 </head>
+
 <body>
-  Research papers:  <%= researchPapers %>
+
+
+  <!-- beautifull heading  -->
+  <!-- <%= JSON.stringify(researchPapers.data.allResearchPaper) %> -->
+
+  <div class="container mt-4 mb-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="mb-2 text-center text-primary text-uppercase">Research paper</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-4 mb-5">
+
+    <div class="input-group mt-3 mb-3">
+      <div class="form-outline">
+        <input type="search" id="search-input" class="form-control" />
+        <label class="form-label" for="form1">Search By Project Name, Guide Name, Team Members, skills</label>
+      </div>
+      <button type="button" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+    <div id="search-content">
+      <% researchPapers.data.allResearchPaper.forEach(function(item){ %>
+        <div class="card bg-light mb-3 repo-card">
+          <div class="card-body">
+            <h3 class="card-title"><%- item.title -%></h5>
+                <p class="card-text"><%- item.description -%></p>
+                <div class="mb-3">
+                  <div style="display: flex; gap:2em">
+                    <a href="" class="researchPaperDetails">
+                      <span class="badge badge-primary me-1 p-md-2">Guide</span>
+                      <p class="text-black mt-3"><strong>
+                          <%= item.guide %>
+                        </strong></p>
+                    </a>
+                    <a href="" class="researchPaperDetails">
+                      <span class="badge badge-primary me-1 p-md-2 f">Team Members </span>
+                      <div class="mt-3 text-black" style="display: flex; gap: 0.5em; flex-wrap: wrap; ">
+
+                        <% var members=item.teamMembers.split(','); %>
+                          <% members.forEach(function(member){ %>
+                            <div>
+                              <p><strong>
+                                  <%= member %> |
+                                </strong></p>
+
+                            </div>
+                            <% }) %>
+
+                      </div>
+                    </a>
+                  </div>
+
+                  <div class="col-md-6 ">
+                    <h5 class="my-4">Skills you will get</h5>
+                    <a href="" class="mt-0">
+                      <div class="">
+                        <% var skills=item.skillsRequired.split(','); %>
+                          <% skills.forEach(function(skill){ %>
+
+                            <span class="badge badge-primary me-1 p-md-2 skillsBadgeText">
+                              <%= skill %>
+                            </span>
+                            <% }) %>
+                      </div>
+                    </a>
+                  </div>
+                  <hr>
+                  <div class="d-flex flex-row-reverse">
+                    <div class="ms-2 me-2">
+                      <a href="<%- '/researchPapers?_id=' + item._id -%>"><button class="btn btn-primary"
+                          id="detailbtn">View Details</button></a>
+                    </div>
+
+
+                  </div>
+                </div>
+          </div>
+        </div>
+
+
+
+        <% }) %>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <!-- Fotter -->
+  <%- include('../Footer/Footer.ejs') %>
+
+
 </body>
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+<script src="js/ResearchPaper/script.js"></script>
+
+
 </html>
