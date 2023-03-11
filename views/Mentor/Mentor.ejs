@@ -1,17 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mentor</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <style>
+        .mentor-section-header {
+            margin: auto;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .Mentors-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+
+        }
+
+        .mentor-card {
+            cursor: pointer;
+            padding: 1em;
+            width: 290px;
+            margin: 1em;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+
+
+        }
+
+        .mentor-card:hover {
+
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+            transform: scale(1.05);
+            transition: all 0.3s ease-in-out;
+
+        }
+
+
+        .mentor-details-section {
+            margin: auto;
+            margin-bottom: 0;
+            width: 80%;
+            margin: 1em;
+            padding: 1em;
+            border-radius: 5px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+
+
+        }
+
+        .upper-profile-section {
+            display: flex;
+
+        }
+
+        .details-left-section {
+            width: 50%;
+            margin: auto;
+            text-align: center;
+
+        }
+
+        .image-right-section {
+            width: 50%;
+            margin: auto;
+            text-align: left;
+            padding: 1em;
+            font-size: larger;
+
+        }
+
+        .batch-mentor {
+            background-color: #efefef;
+            width: fit-content;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+        }
+
+        .brief-details-mentor-section {
+            padding: 1em;
+        }
+
+        .mentor-image {
+            /* Image responsive */
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+            border-radius: 0.1px solid #000;
+
+        }
+
+        .detail-sec {
+            width: 10em
+        }
+
+        .mentor-detail-image{
+            margin: auto !important;
+            text-align: center !important;
+        }
+    </style>
 </head>
+
 <body>
-    
-    <% if(typeof mentor!="undefined" && mentor){
-        %>
-        <h1>mentor: <%= mentor %> </h1>
-        <%
-    } %>
+
+    <!-- Navbar -->
+
+    <% if(login){ %>
+        <% if(typeof role!="undefined" && role){ %>
+            <% if(role=="student"){ %>
+                <%- include('../Navbar/StudentNavbar.ejs') %>
+            <% }else if(role=="mentor"){ %>
+                <%- include('../Navbar/MentorNavbar.ejs') %>
+            <% }else if(role=="admin"){ %>
+                <%- include('../Navbar/AdminNavbar.ejs') %>
+            <% }else if(role=="company"){ %>
+                <%- include('../Navbar/CompanyNavbar.ejs') %>
+            <% } %>
+        <% } %>
+        
+        <% }else { %>
+            <%- include('../Navbar/InitNavbar.ejs') %>
+        <% } %>
+
+    <% if(typeof mentor!="undefined" && mentor){ %>
+        <% mentor.forEach(function(item){ %>
+            <div class="container mentor-details-section">
+                <div class="row upper-profile-section">
+
+                    <div class="details-left-section col-md-5 mentor-detail-image">
+                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+                            class="rounded-circle z-depth-2 mentor-image" alt="100x100">
+
+                    </div>
+
+                    <div class="image-right-section col-md-7">
+                        <h3><%- item.name -%></h3>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <p><%- item.AreaOfIntrest -%></p>
+
+
+                        <div class="d-flex ">
+                            <div class="me-4 detail-sec">
+                                <div class="batch-mentor">
+                                    <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;Location
+                                </div>
+                                <p>&nbsp;<%- item.location -%></p>
+                            </div>
+
+                            <div class="ms-4 detail-sec">
+                                <div class="batch-mentor">
+                                    <i class="fas fa-envelope"></i>&nbsp;&nbsp;Email
+                                    Id
+                                </div>
+                                <p>&nbsp;<%- item.email -%>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex me-4">
+                            <div class="me-4 detail-sec">
+                                <div class="batch-mentor">
+                                    <i class="fas fa-phone"></i>&nbsp;&nbsp;Phone
+                                    Number
+                                </div>
+                                <p>&nbsp;<%- item.phone -%>
+                                </p>
+                            </div>
+
+                            <div class="ms-4 detail-sec">
+                                <div class="batch-mentor">
+                                    <i class="fas fa-book"></i>&nbsp;&nbsp;Education
+                                </div>
+                                <p>&nbsp;<%- item.education -%></p>
+                            </div>
+                        </div>
+                        <div class="d-flex me-4">
+                            <div class="me-4 detail-sec">
+                                <div class="batch-mentor">
+                                    <i class="fas fa-briefcase"></i>&nbsp;&nbsp;Specialization
+        
+                                </div>
+                                <p>&nbsp;<%- item.Specialization -%>
+                                </p>
+                            </div>
+
+                            <div class="ms-4 detail-sec">
+                                <div class="batch-mentor">
+                                    <i class="fas fa-user"></i>&nbsp;&nbsp; Students
+                                </div>
+                                <p>&nbsp;<%- item.mentee -%></p>
+                            </div>
+                        </div>
+
+
+                        
+
+
+                    </div>
+
+
+
+
+                </div>
+
+                <hr>
+                <div class="brief-details-mentor-section">
+                    <h3 class="card-title">About Me</h3>
+                    <p><%- item.Description -%></p>
+
+
+                    <br>
+                    <div class="mb-4 pb-2">
+                        <button type="button" class="btn btn-outline-dark btn-floating">
+                            <i class="fab fa-facebook-f fa-lg"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark btn-floating">
+                            <i class="fab fa-twitter fa-lg"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-dark btn-floating">
+                            <i class="fab fa-skype fa-lg"></i>
+                        </button>
+                    </div>
+
+                    <button class="btn btn-dark">Message</button>
+                </div>
+            </div>
+
+
+            <% }) %>
+                <% } %>
+                    <!-- Fotter -->
+                    <%- include('../Footer/Footer.ejs') %>
+
 </body>
+
 </html>

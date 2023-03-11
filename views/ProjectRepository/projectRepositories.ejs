@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>projectRepository details</title>
     <link rel="stylesheet" href="styles/projectRepository/projectRepo.css">
 </head>
+
 <body>
     <% if(login){ %>
         <% if(typeof role!="undefined" && role){ %>
@@ -24,86 +26,106 @@
         <% }else { %>
             <%- include('../Navbar/InitNavbar.ejs') %>
         <% } %>
-        
-        <!-- beautifull heading  -->
 
-        <div class="container mt-4 mb-5">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="mb-2 text-center text-primary">Project Repository</h1>
-                </div>
+
+    <!-- beautifull heading  -->
+
+    <div class="container mt-4 mb-5">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="mb-2 text-center text-primary">
+                    Project Repository</h1>
             </div>
         </div>
+    </div>
 
-        <div class="container mt-4 mb-5">
-            
-            <div class="input-group mt-3 mb-3">
-                <div class="form-outline">
-                  <input type="search" id="search-input" class="form-control"/>
-                  <label class="form-label" for="form1">Search By Project Name, Guide Name, Team Members, skills</label>
-                </div>
-                <button type="button" class="btn btn-primary">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
-       <div id="search-content">
-        <% projectRepositories.forEach(function(repository){ %>
-            <div class="card bg-light mb-3 repo-card" >
-                <div class="card-body">
-                  <h3 class="card-title"><%- repository.projectName -%></h5>
-                  <p class="card-text"><%- repository.objective -%></p>
-                  <div class="mb-3">
-                    <div style="display: flex; gap:2em">
-                     <a href="" class="repositoryDetails">
-                         <span class="badge badge-primary me-1 p-md-2">Guide</span>
-                         <p class="text-black mt-3"><strong><%= repository.guideName %></strong></p>
-                     </a>
-                     <a href="" class="repositoryDetails" >
-                        <span class="badge badge-primary me-1 p-md-2 f">Team Members </span>
-                        <div class="mt-3 text-black" style="display: flex; gap: 0.5em; flex-wrap: wrap; ">
-                  
-                            <% var members = repository.teamMembers.split(','); %>
-                            <% members.forEach(function(member){ %>
-                                <div>
-                                    <p><strong> <%= member %> | </strong></p>
-                                    
-                                </div>
-                                <% }) %>
-           
-                        </div>
-                    </a>
-                    </div>
-                   
-                    <div class="col-md-6 ">
-                        <h5 class="my-4">Skills you will get</h5>
-                        <a href="" class="mt-0">
-                            <div class="">
-                                <% var skills = repository.skillsToBeLearned.split(','); %>
-                                        <% skills.forEach(function(skill){ %>
-                                            
-                                                <span class="badge badge-primary me-1 p-md-2 skillsBadgeText"><%= skill %></span>
-                                                <% }) %>
+    <div class="container mt-4 mb-5">
+
+        <div class="input-group mt-3 mb-3">
+            <div class="form-outline">
+                <input type="search" id="search-input" class="form-control" />
+                <label class="form-label" for="form1">Search
+                    By Project Name, Guide Name, Team
+                    Members, skills</label>
+            </div>
+            <button type="button" class="btn btn-primary">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <div id="search-content">
+            <% projectRepositories.forEach(function(repository){ %>
+                <div class="card bg-light mb-3 repo-card">
+                    <div class="card-body">
+                        <h3 class="card-title"><%- repository.projectName -%>
+                                </h5>
+                                <p class="card-text"><%- repository.objective -%></p>
+                                <div class="mb-3">
+                                    <div style="display: flex; gap:2em">
+                                        <a href="" class="repositoryDetails">
+                                            <span class="badge badge-primary me-1 p-md-2">Guide</span>
+                                            <p class="text-black mt-3">
+                                                <strong>
+                                                    <%= repository.guideName %>
+                                                </strong>
+                                            </p>
+                                        </a>
+                                        <a href="" class="repositoryDetails">
+                                            <span class="badge badge-primary me-1 p-md-2 f">Team
+                                                Members
+                                            </span>
+                                            <div class="mt-3 text-black"
+                                                style="display: flex; gap: 0.5em; flex-wrap: wrap; ">
+
+                                                <% var members=repository.teamMembers.split(','); %>
+                                                    <% members.forEach(function(member){ %>
+                                                        <div>
+                                                            <p><strong>
+                                                                    <%= member %>
+                                                                        |
+                                                                </strong>
+                                                            </p>
+
+                                                        </div>
+                                                        <% }) %>
+
                                             </div>
-                        </a>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-6 ">
+                                        <h5 class="my-4">
+                                            Skills you will
+                                            get</h5>
+                                        <a href="" class="mt-0">
+                                            <div class="">
+                                                <% var skills=repository.skillsToBeLearned.split(','); %>
+                                                    <% skills.forEach(function(skill){ %>
+
+                                                        <span class="badge badge-primary me-1 p-md-2 skillsBadgeText">
+                                                            <%= skill %>
+                                                        </span>
+                                                        <% }) %>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex flex-row-reverse">
+                                        <div class="ms-2 me-2">
+                                            <a href="<%- '/projectRepository?_id=' + repository._id -%>"><button
+                                                    class="btn btn-primary" id="detailbtn">View
+                                                    Details</button></a>
+                                        </div>
+                                 
+
+                                    </div>
+                                </div>
                     </div>
-                    <hr>
-                    <div class="d-flex flex-row-reverse">
-                        <div class="ms-2 me-2">
-                            <a href="<%- '/projectRepository?_id=' + repository._id -%>"><button class="btn btn-primary" id="detailbtn">View Details</button></a>
-                        </div>
-                        <div class="">
-                            <button class="btn btn-secondary">Apply Now</button>
-                        </div>
-                    
-                    </div>
-                 </div>
                 </div>
-              </div>
-             
-        
-              
-              <% }) %>
-       </div>
+
+
+
+                <% }) %>
+        </div>
     </div>
 
 
@@ -111,16 +133,15 @@
 
 
 
-    
 
-        
-        <!-- Fotter -->
-        <%- include('../Footer/Footer.ejs') %>
+
+
+    <!-- Footer -->
+    <%- include('../Footer/Footer.ejs') %>
 
 
 </body>
 <script src="js/ProjectRepository/script.js"></script>
-<!-- Initial Script Loading -->
-<%- include('../InitialLoading/InitDown.ejs') %>
+
 
 </html>
