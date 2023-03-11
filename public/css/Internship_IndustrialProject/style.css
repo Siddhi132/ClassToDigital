@@ -21,7 +21,7 @@ a {
   background-color: #1c4980;
   color: white;
 }
-.container {
+.container.internship-container{
   position: relative;
   height: 100vh;
 }
@@ -240,7 +240,7 @@ main .listings {
   content: "";
   color: gray;
 }
-.container{
+.container.internship-container{
   padding: 0 !important;
   max-width: 100% !important;
 }
@@ -370,7 +370,7 @@ div#radius-slider.slider {
     margin: 0;
   }
 
-  .container {
+  .container.internship-container {
     padding: 0 !important;
     max-width: 100% !important;
     display: flex;

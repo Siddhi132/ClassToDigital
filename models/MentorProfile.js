@@ -58,6 +58,10 @@ const mentorSchema = new mongoose.Schema({
         type: String,
         default: 0
     },
+    Description: {
+        type: String,
+        default: "NA"
+    },
     InstagramLink: {
         type: String
     },

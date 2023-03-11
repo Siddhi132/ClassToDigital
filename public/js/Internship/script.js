@@ -11,19 +11,22 @@ let data = {
 var alreadyAppliedInternships;
 
 // slider value change 
-$priceSlider.slider({
-  range: true,
-  min: 0,
-  max: 50000,
-  step: 1000,
-  slide: function (event, ui) {
-    let startValue = ui.values[0];
-    let stipend = ui.values[1];
-    $('.start').html(startValue);
-    $('.end').html(stipend);
-    console.log(startValue, stipend);
-  }
-});
+if ($priceSlider.slider) {
+  $priceSlider.slider({
+    range: true,
+    min: 0,
+    max: 50000,
+    step: 1000,
+    slide: function (event, ui) {
+      let startValue = ui.values[0];
+      let stipend = ui.values[1];
+      $('.start').html(startValue);
+      $('.end').html(stipend);
+      console.log(startValue, stipend);
+    }
+  });
+}
+
 
 // filter internship 
 function filterinternships() {
@@ -148,7 +151,7 @@ function filterinternships() {
        <hr>
        <div class="d-flex flex-row-reverse">
            <div class="ms-2 me-2">
-               <a href="internshipDetail?_id=${ item._id }" ><button class="btn btn-primary" id="detailbtn">View Details</button></a>
+               <a href="internships?_id=${item._id}" ><button class="btn btn-primary" id="detailbtn">View Details</button></a>
            </div>`;
           if (userId != "" && userRole == "student") {
             card += `  <button class="btn btn-secondary applynow"  data-id="${item._id}">
@@ -157,10 +160,7 @@ function filterinternships() {
           </button>`;
           }
           else if (userId != "" && userRole != "student") {
-            card += `<button class="btn btn-tertiary">
-            You can't apply
-
-          </button>`;
+           
           }
           else {
             card += `<a href="/login"><button class="btn btn-secondary" id="login">
@@ -319,6 +319,8 @@ $(document).on('click', '.applynow', function (e) {
       You have already applied for this internship
       <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
     </div>`);
+    window.scrollTo(0, 0)
+
       break;
     }
 
@@ -345,7 +347,8 @@ $hideFilter.on('click', function () {
 // submit internship application form 
 $(document).on('click', "#submitInternshipApp", function (e) {
   var internshipId = $(this).attr('data-internshipId');
-  var data = {
+  var resumeData = $('#resumeFile').prop('files')[0];
+  var dataValidation = {
     "userId": userId,
     "internshipId": internshipId
   }
@@ -354,86 +357,179 @@ $(document).on('click', "#submitInternshipApp", function (e) {
   for (var i = 0; i < formData.length; i++) {
     data2[formData[i].name] = formData[i].value;
   }
-  var getCurrtime = new Date().getTime();
- if($('#resume').prop('files')[0] == undefined){
-    $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    Please upload your resume
-    <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
-  </div>`);
-    return;
-  }
 
-  var resumeName = getCurrtime + $('#resume').prop('files')[0].name;
-  var resumePath = "/studentProfile/Resumes/" + resumeName;
-  var resumeData = {
-    "name": resumeName,
-    "path": resumePath
-  }
-  data2['resume'] = resumeData;
-  console.log("data2", data2);
-  console.log(internshipId);
+  console.log('resume data', resumeData);
 
-  for (var key in data2) {
-    if (data2[key] == "") {
-      // console.log("empty value");
-      $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
-      Please fill all the fields
-      <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
-    </div>`);
-      return;
-    }
-  }
+  console.log('form old data 2', data2);
+  data2["resumeFile"] = resumeData;
+  console.log('form new data2', data2);
 
-  // save resume file in folder of that resumePath with resumeName in node js without api call
-  var resumeFileData = new FormData();
-  resumeFileData.append('resume', resumeName);
-  resumeFileData.append('path', resumePath);
-  console.log(resumeFileData);
+  var resumeformData = new FormData();
+  resumeformData.append('resumeFile', resumeData);
+  //  make a global variabl
 
 
-  fetch('/api/applyForInternship', {
+
+
+  fetch("/resumeUpload", {
     method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    body: resumeformData
   })
     .then(res => res.json())
     .then(data => {
-      console.log(data);
-      if (data.statusCode == 200) {
-        fetch("/api/profile", {
-          method: "post",
-          body: JSON.stringify({ data: data2, "id": userId, "role": userRole }),
-          headers: {
-            "Content-Type": "application/json"
+      console.log("fiel upload, data", data);
+      console.log("fiel upload, data", data.file);
+      var responseResumeDataFromAPI = data.file;
+      var resumeData = {
+        "name": responseResumeDataFromAPI.filename,
+        "path": responseResumeDataFromAPI.path
+      }
+      data2['resume'] = resumeData;
+      for (var key in data2) {
+        if (data2[key] == "") {
+          // console.log("empty value");
+          $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+          Please fill all the fields
+          <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+        </div>`);
+          return;
+        }
+      }
+
+      fetch('/api/applyForInternship', {
+        method: 'POST',
+        body: JSON.stringify(dataValidation),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          if (data.statusCode == 200) {
+            fetch("/api/profile", {
+              method: "post",
+              body: JSON.stringify({ data: data2, "id": userId, "role": userRole }),
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+              .then(resp => resp.json())
+              .then(data123 => {
+                console.log("dummy...", data123);
+                $('#applyNowModal').modal('hide');
+                $('#successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+            ${data.message}
+            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+          </div>`);
+                window.scrollTo(0, 0);
+              })
+              .catch(err => {
+                console.log(err);
+              })
+
+          }
+          else {
+            $('#applyNowModal').modal('hide');
+            $('#errorAlert').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            ${data.message}
+            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+          </div>`);
+            window.scrollTo(0, 0);
           }
         })
-          .then(resp => resp.json())
-          .then(data123 => {
-            console.log("dummy...", data123);
-            $('#applyNowModal').modal('hide');
-            $('#successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
-        ${data.message}
-        <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
-      </div>`);
-          })
-          .catch(err => {
-            console.log(err);
-          })
-
-      }
-      else {
-        $('#applyNowModal').modal('hide');
-        $('#errorAlert').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
-        ${data.message}
-        <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
-      </div>`);
-      }
+        .catch(err => {
+          console.log(err);
+        });
     })
     .catch(err => {
-      console.log(err);
-    });
+      console.log("fiel upload, err", err);
+    })
+
+
+
+  // var getCurrtime = new Date().getTime();
+  //  if($('#resume').prop('files')[0] == undefined){
+  //     $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  //     Please upload your resume
+  //     <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+  //   </div>`);
+  //     return;
+  //   }
+
+  //   var resumeName = getCurrtime + $('#resume').prop('files')[0].name;
+  //   var resumePath = "/studentProfile/Resumes/" + resumeName;
+  // console.log('responseResumeDataFromAPI', responseResumeDataFromAPI);
+
+  //   var resumeData = {
+  //     "name": responseResumeDataFromAPI.filename,
+  //     "path": responseResumeDataFromAPI.path
+  //   }
+  //   data2['resume'] = resumeData;
+  //   // console.log("data2", data2);
+  //   console.log(internshipId);
+
+  // for (var key in data2) {
+  //   if (data2[key] == "") {
+  //     // console.log("empty value");
+  //     $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  //     Please fill all the fields
+  //     <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+  //   </div>`);
+  //     return;
+  //   }
+  // }
+
+  // save resume file in folder of that resumePath with resumeName in node js without api call
+  // var resumeFileData = new FormData();
+  // resumeFileData.append('resume', resumeName);
+  // resumeFileData.append('path', resumePath);
+  // console.log(resumeFileData);
+
+  // 416-484 working
+  // fetch('/api/applyForInternship', {
+  //   method: 'POST',
+  //   body: JSON.stringify(data),
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // })
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     console.log(data);
+  //     if (data.statusCode == 200) {
+  //       fetch("/api/profile", {
+  //         method: "post",
+  //         body: JSON.stringify({ data: data2, "id": userId, "role": userRole }),
+  //         headers: {
+  //           "Content-Type": "application/json"
+  //         }
+  //       })
+  //         .then(resp => resp.json())
+  //         .then(data123 => {
+  //           console.log("dummy...", data123);
+  //           $('#applyNowModal').modal('hide');
+  //           $('#successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+  //       ${data.message}
+  //       <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+  //     </div>`);
+  //         })
+  //         .catch(err => {
+  //           console.log(err);
+  //         })
+
+  //     }
+  //     else {
+  //       $('#applyNowModal').modal('hide');
+  //       $('#errorAlert').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  //       ${data.message}
+  //       <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+  //     </div>`);
+  //     }
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
 
   // $('#internshipAppForm').submit();
 
