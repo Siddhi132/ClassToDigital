@@ -58,7 +58,7 @@ const getAllResearchPapers = async (req, res) => {
         val = await ResearchPaper.find(req.query.request);
       }
       else {
-        val = await ResearchPaper.find(req.query).where('stipend').gte(parseInt(req.query.stipend));
+        val = await ResearchPaper.find(req.query);
       }
       if (val.length == 0) {
         res.send({ status: false, statusCode: 404, 'message': "0 Research Paper found" });
@@ -83,6 +83,7 @@ const addCommentinResearchPaper = async (req, res) => {
   try {
     var researchPaperId = req.body.researchPaperId;
     var data = {
+      useremail:req.body.userEmail,
       userid: req.body.userId,
       comment: req.body.comment
     }

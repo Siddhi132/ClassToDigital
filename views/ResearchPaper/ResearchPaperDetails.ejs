@@ -1,12 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Paper Details</title>
+    <title>Research paper details</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
 </head>
+
 <body>
-    Research Paper : <%= researchPaper %>
+
+
+    <% researchPaper.data.allResearchPaper.forEach(function(item){ %>
+        <main class="mt-5 pt-4">
+            <div class="container mt-5 card" style="padding: 1em;">
+                <div class="row">
+                  
+                    <div class="col-md-12">
+                      
+                        <div class="">
+                            <div class="d-flex justify-content-between flex-wrap-reverse">
+                            <strong>
+                                <h2 class="mb-3">
+                                    <%= item.title %>
+                                </h2>
+                            </strong>
+                            <button class="btn btn-primary btn-sm mb-3 mb-sm-0">Chat for colloboartaion</button>
+                        </div>
+
+                            <div class="mb-3">
+                                <div style="display: flex; gap:2em">
+                                    <a href="">
+                                        <span class="badge bg-success me-1 p-md-2">Guide</span>
+                                        <p class="text-black mt-3"><strong>
+                                                <%= item.guide %>
+                                            </strong></p>
+                                    </a>
+
+                                </div>
+                                <a href="">
+                                    <span class="badge bg-dark me-1 p-md-2 f">Team Members </span>
+                                    <div class="mt-3 text-black" style="display: flex; gap: 0.5em; flex-wrap: wrap; ">
+
+                                        <% var members=item.teamMembers.split(','); %>
+                                            <% members.forEach(function(member){ %>
+                                                <div>
+                                                    <p><strong>
+                                                            <%= member %> |
+                                                        </strong></p>
+
+                                                </div>
+                                                <% }) %>
+
+
+
+
+                                    </div>
+                                </a>
+
+                            </div>
+
+                            <strong>
+                                <p style="font-size: 20px;">Research paper Description</p>
+                            </strong>
+
+                            <p>
+                                <%= item.description %>
+                            </p>
+
+
+                        </div>
+                        <!--Content-->
+                    </div>
+                    <!--Grid column-->
+                </div>
+              
+                <div class="row d-flex justify-content-center">
+                    <!--Grid column-->
+                    <div class="col-md-12 ">
+                        <h5 class="my-4">Note details</h5>
+
+                        <p>
+                            <%= item.noteDetails %>
+                        </p>
+
+                        <div class="row">
+
+                            <div class="col-md-12 ">
+                                <p class="my-4 h5">Skills To be Learned</p>
+                                <a href="" class="mt-0">
+                                    <div>
+                                        <% var skills=item.skillsRequired.split(','); %>
+                                            <% skills.forEach(function(skill){ %>
+
+                                                <span class="badge badge-light me-1 p-md-2">
+                                                    <%= skill %>
+                                                </span>
+                                                <% }) %>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Grid column-->
+                </div>
+
+                <!-- forum discussion  -->
+
+                <div class="ForumDiscussion mt-5">
+                    <div class="alerts"></div>
+                    <h5 class="text-primary text-uppercase"> let's start discussion</h5>
+                    <div id="commentAdd"></div>
+                    <form id="addComment">
+                        <div class="form-floating">
+                            <input type="hidden" id="researchPaperId" name="researchPaperId" value="<%= researchPaper.data.allResearchPaper[0]._id  %>">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="comment" name="comment"
+                                style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Comments</label>
+                        </div>
+                        <br>
+                        <button type="submit" id="AddComm"  class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+        
+                <div class="allDiscussion mt-5">
+        
+                </div>
+
+            </div>
+        </main>
+        <!--Main layout-->
+
+        <% }) %>
+
+
+
+
+            <!-- Fotter -->
+            <%- include('../Footer/Footer.ejs') %>
+
+
 </body>
+<!-- MDB -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+<script src="/js/ResearchPaper/researchPaperDetail.js" userid="<%= userId %>" researchpaperid="<%= researchPaper.data.allResearchPaper[0]._id %>"></script>
 </html>

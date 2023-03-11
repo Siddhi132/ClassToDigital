@@ -76,6 +76,24 @@ const getAllIndustrialProjects = async (req, res) => {
         const IndustrialProjectData = {
             industrialProjects: req.body.industrialProjectId,
         }
+
+
+        // increment one in total no of application in internship collection 
+
+    IndustrialProjects.findByIdAndUpdate(
+      req.body.industrialProjectId,
+      { $inc: { totalNumberOfApplicants: +1 } },
+      { new: true },
+      (err, result) => {
+        if (err) {
+          console.log("err", err);
+          res.send({ status: false, statusCode: 400, message: "Industrial Project not applied" });
+        }
+        else {
+          console.log("result", result);
+        }
+      }
+    );
       
           StudentProfile.findOneAndUpdate({ _id: id }, { $push: IndustrialProjectData }, (err, existingUser) => {
             if (!err) {
