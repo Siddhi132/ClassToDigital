@@ -17,6 +17,12 @@
     --danger-l: #ea4e2c2d;
 } */
 
+.navbar{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
 .dropdown-menu li {
     position: relative;
 }
