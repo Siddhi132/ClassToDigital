@@ -11,6 +11,9 @@ body{
   /*--------------------------------------------------------------
   # Hero Section
   --------------------------------------------------------------*/
+  .imgText{
+    font-size: 0.8rem;
+  }
   .hero {
     width: 100%;
     height: 100vh;
@@ -603,7 +606,7 @@ body{
   .internships .swiper-button-next-unique{
     background-image: url("/images/Dummy/reshot-icon-arrow-right-QC8ZV9TSGD.svg") !important;
     background-repeat: no-repeat;
-    right: -1%;
+    right: 0%;
     position: absolute;
     top: 63%;
     width: calc(var(--swiper-navigation-size)/ 44 * 27);
