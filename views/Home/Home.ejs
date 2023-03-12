@@ -1,49 +1,691 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClassToDigital</title>
-</head>
+    <title>Document</title>
+    <link href="/css/Home/aos.css" rel="stylesheet">
+    <link href="/css/Home/home.css" rel="stylesheet">
+    <link href="/css/Home/swiper-bundle.min.css" rel="stylesheet">
+    <!-- <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet"> -->
 
+
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" /> -->
+  <!-- Google Fonts -->
+  <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" /> -->
+  <!-- MDB -->
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" /> -->
+
+    <style>
+
+    </style>
+</head>
 <body>
 
-    <!-- Navbar  -->
-    <% if(login){ %>
-        <% if(typeof role!="undefined" && role){ %>
-            <% if(role=="student"){ %>
-                <%- include('../Navbar/StudentNavbar.ejs') %>
-            <% }else if(role=="mentor"){ %>
-                <%- include('../Navbar/MentorNavbar.ejs') %>
-            <% }else if(role=="admin"){ %>
-                <%- include('../Navbar/AdminNavbar.ejs') %>
-            <% }else if(role=="company"){ %>
-                <%- include('../Navbar/CompanyNavbar.ejs') %>
-            <% } %>
+<!-- Navbar  -->
+<% if(login){ %>
+    <% if(typeof role!="undefined" && role){ %>
+        <% if(role=="student"){ %>
+            <%- include('../Navbar/StudentNavbar.ejs') %>
+        <% }else if(role=="mentor"){ %>
+            <%- include('../Navbar/MentorNavbar.ejs') %>
+        <% }else if(role=="admin"){ %>
+            <%- include('../Navbar/AdminNavbar.ejs') %>
+        <% }else if(role=="company"){ %>
+            <%- include('../Navbar/CompanyNavbar.ejs') %>
         <% } %>
+    <% } %>
+    
+    <% }else { %>
+        <%- include('../Navbar/InitNavbar.ejs') %>
+    <% } %>
+
+    
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h1 data-aos="fade-up">Connecting<br>
+            Talent, Colleges, Recruiters</h1>
+          <h4 data-aos="fade-up" data-aos-delay="400" class="mt-3 h5 text-primary-own">We are team of talented designers making websites with Bootstrap</h4>
+          <div data-aos="fade-up" data-aos-delay="600">
+            <div class="text-center text-lg-start">
+              <a href="#about" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+                <span>Get Started</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 hero-img ms-3" data-aos="zoom-out" data-aos-delay="200">
+            <div class="d-flex">
+                <div class="m-2">
+                    <h6 class="position-absolute fw-bold text-primary-own mt-2 ms-2">Internship</h6>
+                    <img src="/images/Dummy/home-hero-learn.png" class="img-fluid" alt="">
+
+                </div>
+                <div class="m-2 text-start">
+                    <h6 class="position-absolute fw-bold mt-2 ms-2" style="color:#a988f4;">Project<br> Repository</h6>
+
+                    <img src="/images/Dummy/home-hero-practice.png" class="img-fluid" alt="">
+
+                </div>
+                <div class="m-2">
+                    <h6 class="position-absolute fw-bold text-primary-own mt-2 ms-2">IDP</h6>
+
+                    <img src="/images/Dummy/home-hero-mentorships.png" class="img-fluid" alt="">
+
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="m-2">
+                    <h6 class="position-absolute fw-bold text-primary-own mt-2 ms-2">Mentors</h6>
+
+                    <img src="/images/Dummy/home-hero-compete.png" class="img-fluid" alt="">
+
+                </div>
+                <div class="m-2">
+                    <h6 class="position-absolute fw-bold text-primary-own mt-2 ms-2">Sell Product</h6>
+
+                    <img src="/images/Dummy/home-hero-jobs.png" class="img-fluid" alt="">
+
+                </div>
+                <div class="m-2">
+                    <h6 class="position-absolute fw-bold text-primary-own mt-2 ms-2">Research paper</h6>
+
+                    <img src="/images/Dummy/home-hero-blogs.png" class="img-fluid" alt="">
+
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+
+    <!-- ======= Clients Section ======= -->
+    <section id="clients" class="clients mt-5 mb-9">
+
+        <div class="container" data-aos="fade-up">
+  
+    
+
+          <header class="section-header text-left mt-5 mb-5">
+            <h2 class="text-primary-own fw-bold">Our clients</h2>
+            <p class="text-primary-own">Participate, Showcase Skills & Gain CV Points through online & offline opportunities of your interest & make your mark!
+          </p>
+          </header>
+  
+          <div class="clients-slider swiper">
+            <div class="swiper-wrapper align-items-center">
+              <div class="swiper-slide"><img src="/images/Dummy/client-1.png" class="img-fluid" alt=""></div>
+              <div class="swiper-slide"><img src="/images/Dummy/client-2.png" class="img-fluid" alt=""></div>
+              <div class="swiper-slide"><img src="/images/Dummy/client-3.png" class="img-fluid" alt=""></div>
+              <div class="swiper-slide"><img src="/images/Dummy/client-4.png" class="img-fluid" alt=""></div>
+              <div class="swiper-slide"><img src="/images/Dummy/client-5.png" class="img-fluid" alt=""></div>
+              <div class="swiper-slide"><img src="/images/Dummy/client-6.png" class="img-fluid" alt=""></div>
+              <div class="swiper-slide"><img src="/images/Dummy/client-7.png" class="img-fluid" alt=""></div>
+              <div class="swiper-slide"><img src="/images/Dummy/client-8.png" class="img-fluid" alt=""></div>
+            </div>
+            <div class="swiper-pagination mb-4"></div>
+          </div>
+        </div>
+  
+      </section><!-- End Clients Section -->
+
+
+      
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials">
+
+        <div class="container" data-aos="fade-up">
+  
+         
+
+          <header class="section-header text-left mt-5 mb-5 pt-5">
+            <h2 class="text-primary-own fw-bold">Mentors</h2>
+            <p class="text-primary-own">Participate, Showcase Skills & Gain CV Points through online & offline opportunities of your interest & make your mark!
+          </p>
+          </header>
+
+  
+          <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="200">
+            <div class="swiper-wrapper">
+  
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
+                  </p>
+                  <div class="profile mt-auto">
+                    <img src="/images/Dummy/testimonials-1.jpg" class="testimonial-img" alt="">
+                    <h3>Saul Goodman</h3>
+                    <h4>Ceo &amp; Founder</h4>
+                  </div>
+                </div>
+              </div><!-- End testimonial item -->
+  
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                  </p>
+                  <div class="profile mt-auto">
+                    <img src="/images/Dummy/testimonials-2.jpg" class="testimonial-img" alt="">
+                    <h3>Sara Wilsson</h3>
+                    <h4>Designer</h4>
+                  </div>
+                </div>
+              </div><!-- End testimonial item -->
+  
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                  </p>
+                  <div class="profile mt-auto">
+                    <img src="/images/Dummy/testimonials-3.jpg" class="testimonial-img" alt="">
+                    <h3>Jena Karlis</h3>
+                    <h4>Store Owner</h4>
+                  </div>
+                </div>
+              </div><!-- End testimonial item -->
+  
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                  </p>
+                  <div class="profile mt-auto">
+                    <img src="/images/Dummy/testimonials-4.jpg" class="testimonial-img" alt="">
+                    <h3>Matt Brandon</h3>
+                    <h4>Freelancer</h4>
+                  </div>
+                </div>
+              </div><!-- End testimonial item -->
+  
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                  </p>
+                  <div class="profile mt-auto">
+                    <img src="/images/Dummy/testimonials-5.jpg" class="testimonial-img" alt="">
+                    <h3>John Larson</h3>
+                    <h4>Entrepreneur</h4>
+                  </div>
+                </div>
+              </div><!-- End testimonial item -->
+  
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+  
+        </div>
+  
+      </section><!-- End Testimonials Section -->
+
+ <!-- ======= Counts Section ======= -->
+ <section id="counts" class="counts">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row gy-4">
+
+        <div class="col-lg-3 col-md-6">
+          <div class="count-box">
+            <i class="bi bi-emoji-smile"></i>
+            <div>
+              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Happy Clients</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="count-box">
+            <i class="bi bi-journal-richtext" style="color: #ee6c20;"></i>
+            <div>
+              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Projects</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="count-box">
+            <i class="bi bi-headset" style="color: #15be56;"></i>
+            <div>
+              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Hours Of Support</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <div class="count-box">
+            <i class="bi bi-people" style="color: #bb0852;"></i>
+            <div>
+              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Mentors</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section><!-- End Counts Section -->
+
+
+  <!-- ======= Portfolio Section ======= -->
+  <section id="portfolio" class="portfolio">
+
+    <div class="container" data-aos="fade-up">
+
+        <header class="section-header text-left mt-5 mb-5">
+            <h2 class="text-primary-own fw-bold">Products</h2>
+            <p class="text-primary-own">Participate, Showcase Skills & Gain CV Points through online & offline opportunities of your interest & make your mark!
+          </p>
+          </header>
+
+      <div class="row" data-aos="fade-up" data-aos-delay="100">
+        <div class="col-lg-12 d-flex justify-content-center">
+          <ul id="portfolio-flters">
+            <li data-filter="*" class="filter-active">All</li>
+            <li data-filter=".filter-app">App</li>
+            <li data-filter=".filter-card">Card</li>
+            <li data-filter=".filter-web">Web</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          <div class="portfolio-wrap">
+            <img src="/images/Dummy/portfolio-1.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>App 1</h4>
+              <p>App</p>
+              <div class="portfolio-links">
+                <a href="/images/Dummy/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfokio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>
+                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="portfolio-wrap">
+            <img src="/images/Dummy/portfolio-2.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Web 3</h4>
+              <p>Web</p>
+              <div class="portfolio-links">
+                <a href="/images/Dummy/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Web 3"><i class="bi bi-plus"></i></a>
+                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          <div class="portfolio-wrap">
+            <img src="/images/Dummy/portfolio-3.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>App 2</h4>
+              <p>App</p>
+              <div class="portfolio-links">
+                <a href="/images/Dummy/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfokio-lightbox" title="App 2"><i class="bi bi-plus"></i></a>
+                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+          <div class="portfolio-wrap">
+            <img src="/images/Dummy/portfolio-4.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Card 2</h4>
+              <p>Card</p>
+              <div class="portfolio-links">
+                <a href="/images/Dummy/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Card 2"><i class="bi bi-plus"></i></a>
+                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="portfolio-wrap">
+            <img src="/images/Dummy/portfolio-5.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Web 2</h4>
+              <p>Web</p>
+              <div class="portfolio-links">
+                <a href="/images/Dummy/portfolio-5.jpg" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Web 2"><i class="bi bi-plus"></i></a>
+                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          <div class="portfolio-wrap">
+            <img src="/images/Dummy/portfolio-6.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>App 3</h4>
+              <p>App</p>
+              <div class="portfolio-links">
+                <a href="/images/Dummy/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfokio-lightbox" title="App 3"><i class="bi bi-plus"></i></a>
+                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+          <div class="portfolio-wrap">
+            <img src="/images/Dummy/portfolio-7.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Card 1</h4>
+              <p>Card</p>
+              <div class="portfolio-links">
+                <a href="/images/Dummy/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Card 1"><i class="bi bi-plus"></i></a>
+                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+          <div class="portfolio-wrap">
+            <img src="/images/Dummy/portfolio-8.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Card 3</h4>
+              <p>Card</p>
+              <div class="portfolio-links">
+                <a href="/images/Dummy/portfolio-8.jpg" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Card 3"><i class="bi bi-plus"></i></a>
+                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+          <div class="portfolio-wrap">
+            <img src="/images/Dummy/portfolio-9.jpg" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>Web 3</h4>
+              <p>Web</p>
+              <div class="portfolio-links">
+                <a href="/images/Dummy/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfokio-lightbox" title="Web 3"><i class="bi bi-plus"></i></a>
+                <a href="portfolio-details.html" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section><!-- End Portfolio Section -->
+
+
+
+
+
+      <!-- Internships  -->
+<section class="internships mb-5 mt-5">
+    <div class="container" data-aos="fade-up">
+  
+        <header class="section-header text-left mt-5 mb-5 pt-5">
+          <h2 class="text-primary-own fw-bold">Explore Internships</h2>
+          <p class="text-primary-own">Participate, Showcase Skills & Gain CV Points through online & offline opportunities of your interest & make your mark!
+        </p>
+        </header>
+
+
+        <div class="slides-3 swiper" data-aos="fade-up" data-aos-delay="100">
+            <div class="swiper-wrapper">
+  
+              <div class="swiper-slide">
+                <div class="internship-wrap">
+                  <div class="internship-item">
+                    
+                  <a href="/images/Dummy/app-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="/images/Dummy/portfolio-1.jpg" class="img-fluid" alt=""></a>
+                    <p>
+                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus.
+                    </p>
+                    <div class="d-flex justify-content-center justify-content-lg watch-courses-btn">
+                      <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="internship-wrap">
+                  <div class="internship-item">
+                    
+                  <a href="/images/Dummy/app-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="/images/Dummy/portfolio-2.jpg" class="img-fluid" alt=""></a>
+                    <p>
+                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus.
+                    </p>
+                    <div class="d-flex justify-content-center justify-content-lg watch-courses-btn">
+                      <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="internship-wrap">
+                  <div class="internship-item">
+                    
+                  <a href="/images/Dummy/app-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="/images/Dummy/portfolio-3.jpg" class="img-fluid" alt=""></a>
+                    <p>
+                      Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus.
+                    </p>
+                    <div class="d-flex justify-content-center justify-content-lg watch-courses-btn">
+                      <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- End courses item -->
+  
+             
+  
+            </div>
+           
+          </div>
+          <div class="swiper-button-next-unique"></div>
+          <div class="swiper-button-prev-unique"></div>
         
-        <% }else { %>
-            <%- include('../Navbar/InitNavbar.ejs') %>
-        <% } %>
+      </div>
+</section>
+
+
+      <!-- Internships  -->
+
+      <!--  project repository  -->
+      <section class="projectrepos mb-5 mt-5">
+        <div class="container" data-aos="fade-up">
+      
+            <header class="section-header text-left mt-5 mb-5 pt-5">
+              <h2 class="text-primary-own fw-bold">Explore Project Repositories </h2>
+              <p class="text-primary-own">covers Projects in each Sector across India
+            </p>
+            </header>
+
+            <div class="slides-4 swiper" data-aos="fade-up" data-aos-delay="100">
+                <div class="swiper-wrapper">
+      
+                  <div class="swiper-slide">
+                    <div class="projectrepo-wrap">
+                      <!-- <div class="projectrepo-item"> -->
+                        <div class="courses">
+                        <div class="course-item">
+                            <img src="/images/Dummy/portfolio-4.jpg" class="img-fluid" alt="...">
+                            <div class="course-content">
+                              <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4>Web Development</h4>
+                              </div>
+              
+                              <h3><a href="course-details.html">Website Design</a></h3>
+                              <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
+                              <div class="trainer d-flex justify-content-between align-items-center">
+                                <div class="trainer-profile d-flex align-items-center">
+                                  <img src="/images/Dummy/team-1.jpg" class="img-fluid" alt="">
+                                  <span>Antonio</span>
+                                </div>
+                                <div class="trainer-rank d-flex align-items-center">
+                                  <i class="fa fa-user"></i>&nbsp;50
+                                  &nbsp;&nbsp;
+                                  <i class="fa fa-heart"></i>&nbsp;65
+                                </div>
+                              </div>
+                            <!-- </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="swiper-slide">
+                    <div class="projectrepo-wrap">
+                      <!-- <div class="projectrepo-item"> -->
+                        <div class="courses">
+                        <div class="course-item">
+                            <img src="/images/Dummy/portfolio-5.jpg" class="img-fluid" alt="...">
+                            <div class="course-content">
+                              <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4>Web Development</h4>
+                              </div>
+              
+                              <h3><a href="course-details.html">Website Design</a></h3>
+                              <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
+                              <div class="trainer d-flex justify-content-between align-items-center">
+                                <div class="trainer-profile d-flex align-items-center">
+                                  <img src="/images/Dummy/team-2.jpg" class="img-fluid" alt="">
+                                  <span>Antonio</span>
+                                </div>
+                                <div class="trainer-rank d-flex align-items-center">
+                                  <i class="fa fa-user"></i>&nbsp;50
+                                  &nbsp;&nbsp;
+                                  <i class="fa fa-heart"></i>&nbsp;65
+                                </div>
+                              </div>
+                            <!-- </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="swiper-slide">
+                    <div class="projectrepo-wrap">
+                      <!-- <div class="projectrepo-item"> -->
+                        <div class="courses">
+                        <div class="course-item">
+                            <img src="/images/Dummy/portfolio-6.jpg" class="img-fluid" alt="...">
+                            <div class="course-content">
+                              <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4>Web Development</h4>
+                              </div>
+              
+                              <h3><a href="course-details.html">Website Design</a></h3>
+                              <p>Et architecto provident deleniti facere repellat nobis iste. Id facere quia quae dolores dolorem tempore.</p>
+                              <div class="trainer d-flex justify-content-between align-items-center">
+                                <div class="trainer-profile d-flex align-items-center">
+                                  <img src="/images/Dummy/team-3.jpg" class="img-fluid" alt="">
+                                  <span>Antonio</span>
+                                </div>
+                                <div class="trainer-rank d-flex align-items-center">
+                                  <i class="fa fa-user"></i>&nbsp;50
+                                  &nbsp;&nbsp;
+                                  <i class="fa fa-heart"></i>&nbsp;65
+                                </div>
+                              </div>
+                            <!-- </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                  <!-- End courses item -->
+      
+                 
+      
+                </div>
+                <!-- <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div> -->
+              </div>
 
 
 
 
+            </div>
+            </section>
+      <!-- project repository  -->
+
+
+      <!--  research paper  -->
+      <!-- <section class="researchpapers mb-5 mt-5">
+        <div class="container" data-aos="fade-up">
+      
+            <header class="section-header text-left mt-5 mb-5 pt-5">
+              <h2 class="text-primary-own fw-bold">Explore Research Papers </h2>
+              <p class="text-primary-own">covers Projects in each Sector across India
+            </p>
+            </header>
+
+            
 
 
 
 
+            </div>
+            </section> -->
+      <!-- research paper  -->
 
-
-        
-        <!-- Fotter -->
-        <%- include('../Footer/Footer.ejs') %>
-
-
+      <!-- footer  -->
+      <%- include('../Footer/Footer.ejs') %>
 
 
 </body>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script> -->
+<!-- <script src="assets/vendor/glightbox/js/glightbox.min.js"></script> -->
+<script src="/js/Home/isotope.pkgd.min.js"></script>
+
+<script src="/js/Home//purecounter_vanilla.js"></script>
+
+<script src="/js/Home/aos.js"></script>
+<script src="/js/Home/swiper-bundle.min.js"></script>
+
+<script src="/js/Home/home.js"></script>
 
 </html>
