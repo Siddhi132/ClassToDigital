@@ -20,7 +20,7 @@ const uploadIndustrialProject=async(req,res)=>{
       }
       catch (err) {
         console.log('err', err);
-        res.send({ status: false, statusCode: 500, message: "Industrial project not added" });
+        res.send({ status: false, statusCode: 500, message: "Error during Adding Industrial project" });
       }
 }
 
@@ -62,7 +62,7 @@ const getAllIndustrialProjects = async (req, res) => {
     }
     catch (err) {
       console.log('err', err);
-      res.send({ status: false, statusCode: 400, 'message': "Industrial Projects not found" });
+      res.send({ status: false, statusCode: 500, 'message': "Error During Getting all Industrial Projects" });
     }
   }
 
@@ -110,7 +110,7 @@ const getAllIndustrialProjects = async (req, res) => {
     }
     catch (err) {
       console.log("err", err);
-      res.send({ status: false, statusCode: 400, message: "Industrial Project not applied" });
+      res.send({ status: false, statusCode: 500, message: "Error during Industrial Project apply.." });
     }
   
   }

@@ -4,6 +4,7 @@ const session = require('express-session');
 const mongoDBSession = require('connect-mongodb-session')(session);
 const bodyParser = require('body-parser');
 const connectDB = require('./database/connect');
+const errorHandler = require('./middleware/errorHandler/ErrorHandler');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -27,8 +28,10 @@ app.use(session({
 // Set up routes
 app.use('/', require('./routes/index'));
 app.use('/api', require('./routes/api'));
-
-
+app.use(errorHandler  );
+app.get('*', (req, res) => {
+  res.render('404/404', { title: req.url });
+});
 // make pubblic folder static
 app.use(express.static('public'));
 

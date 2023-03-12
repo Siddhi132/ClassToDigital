@@ -20,7 +20,7 @@ const uploadInternship = async (req, res) => {
   }
   catch (err) {
     console.log("err", err);
-    res.send({ status: false, statusCode: 500, message: "Internship not added" });
+    res.send({ status: false, statusCode: 500, message: "Error during upload Internship" });
   }
 
 
@@ -65,7 +65,7 @@ const getAllInternship = async (req, res) => {
   }
   catch (err) {
     console.log('err', err);
-    res.send({ status: false, statusCode: 400, 'message': "Internship not found" });
+    res.send({ status: false, statusCode: 500, 'message': "Error during getting internships" });
   }
 }
 
@@ -113,7 +113,7 @@ const applyForInternship = async (req, res) => {
   }
   catch (err) {
     console.log("err", err);
-    res.send({ status: false, statusCode: 400, message: "Internship not applied" });
+    res.send({ status: false, statusCode: 500, message: "Error During applying internships" });
   }
 
 }
