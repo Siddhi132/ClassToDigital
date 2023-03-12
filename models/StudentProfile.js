@@ -6,7 +6,7 @@ const studentProfileSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  
+
   name: {
     type: String,
     required: true
@@ -21,28 +21,45 @@ const studentProfileSchema = new mongoose.Schema({
     required: true
   },
   phone: {
-    type: String
+    type: String,
+    default:"Na"
   },
   education: {
-    type: String
+    type: String,
+    default:"Na"
+
   },
   stream: {
-    type: String
+    type: String,
+    default:"Na"
+
+  },
+  description: {
+    type: String,
+    default: "NA"
 },
   college: {
-    type: String
+    type: String,
+    default:"Na"
+
   },
   university: {
-    type: String
+    type: String,
+    default:"Na"
+
   },
   branch: {
-    type: String
+    type: String,
+    default:"Na"
+
   },
   semester: {
-    type: Number
+    type: Number,
   },
   state: {
-    type: String
+    type: String,
+    default:"Na"
+
   },
   date: {
     type: Date,
@@ -53,35 +70,51 @@ const studentProfileSchema = new mongoose.Schema({
     default: 0
   },
   internships: [{
-    type:Array,
-    
+    type: Array,
+
   }],
   industrialProjects: [{
-    type:Array,
-    
+    type: Array,
+
   }],
 
   sellProducts: [{
-    type:Array,
+    type: Array,
   }],
 
   projectRepository: [{
-    type:Array,
+    type: Array,
   }],
 
   researchPapers: [{
-    type:Array,
+    type: Array,
   }],
 
   resume: {
     name: {
       type: String,
-      required: true,
-  },
-  path: {
+    },
+    path: {
       type: String,
-      required: true,
+    }
   },
+  resumeIDP: {
+    name: {
+      type: String,
+    },
+    path: {
+      type: String,
+    }
+  },
+  profileImage: {
+    name: {
+      type: String,
+      default: "Default Avatar"
+    },
+    path: {
+      type: String,
+      default: "\\images\\profile\\defaultAvatar.png"
+    }
   },
   notifications: [{
     notification: {
@@ -90,10 +123,10 @@ const studentProfileSchema = new mongoose.Schema({
     notificationtype: {
       type: String
     },
-    
+
   }],
 
-  
+
 });
 
 // Hash the password before saving the user to the database

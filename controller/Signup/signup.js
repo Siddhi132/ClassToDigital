@@ -53,7 +53,7 @@ const verifyUserForSignup =  async (req, res) => {
       res.send({ status:true,statusCode:200,message: 'User created successfully.' });
     } catch (error) {
       console.log("error this is ", error);
-      res.send({status:false,statusCode:500, message: 'Error creating user. ' });
+      res.send({status:false,statusCode:500, message: 'Error during creating user. ' });
     }
 }
 

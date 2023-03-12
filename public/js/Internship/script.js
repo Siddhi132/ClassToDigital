@@ -160,7 +160,7 @@ function filterinternships() {
           </button>`;
           }
           else if (userId != "" && userRole != "student") {
-           
+
           }
           else {
             card += `<a href="/login"><button class="btn btn-secondary" id="login">
@@ -179,7 +179,7 @@ function filterinternships() {
 
       }
       else {
-        card = `<div class="card" style="width:100%">
+        card = `<div class="card" style="width:100%; height:fit-content;">
       <div class="card-body" style="padding:0px">
         <h5 class="card-title">${data.message}</h5>
       </div>`;
@@ -197,12 +197,13 @@ function filterinternships() {
 fetch('/api/Categories')
   .then(res => res.json())
   .then(data => {
-    console.log(data.data.categories[0]);
+    console.log("data: hey", data.data.categories[0]);
     let internships = data.data.categories[0].internship;
     let studentProfile = data.data.categories[0].studentProfile;
     let categories = internships.category;
     let locations = internships.location;
     let modeOfInternships = internships.modeOfInternship;
+    console.log(internships, studentProfile, categories, locations, modeOfInternships);
     categories.forEach(category => {
       $('#category').append(`<option value="${category}">${category}</option>`);
     });
@@ -223,7 +224,7 @@ fetch('/api/Categories')
     let branch = studentProfile.branch;
     let semester = studentProfile.semester;
     let state = studentProfile.state;
-
+    console.log("all data ", education, stream, college, university, branch, semester, state);
     education.forEach(education => {
       $('#education').append(`<option value="${education}">${education}</option>`);
     });
@@ -289,6 +290,8 @@ fetch('/api/profile?' + new URLSearchParams(data), {
   .then(data => {
     console.log("i am ", data);
     if (data.statusCode == 200) {
+      console.log('data.data.user', data.data.user);
+
       $('#name').val(data.data.user.name);
       $('#email').val(data.data.user.email);
       $('#phone').val(data.data.user.phone);
@@ -319,7 +322,7 @@ $(document).on('click', '.applynow', function (e) {
       You have already applied for this internship
       <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
     </div>`);
-    window.scrollTo(0, 0)
+      window.scrollTo(0, 0)
 
       break;
     }
@@ -346,105 +349,135 @@ $hideFilter.on('click', function () {
 
 // submit internship application form 
 $(document).on('click', "#submitInternshipApp", function (e) {
-  var internshipId = $(this).attr('data-internshipId');
-  var resumeData = $('#resumeFile').prop('files')[0];
-  var dataValidation = {
-    "userId": userId,
-    "internshipId": internshipId
+
+  // let form = document.getElementById("internshipAppForm");
+  // if (form.checkValidity() === false) {
+  //   form.reportValidity();
+  // }
+
+
+
+
+
+
+var internshipId = $(this).attr('data-internshipId');
+var resumeData = $('#resumeFile').prop('files')[0];
+var dataValidation = {
+  "userId": userId,
+  "internshipId": internshipId
+}
+var data2 = {}
+var formData = $('#internshipAppForm').serializeArray();
+for (var i = 0; i < formData.length; i++) {
+  data2[formData[i].name] = formData[i].value;
+}
+
+console.log('resume data', resumeData);
+
+console.log('form old data 2', data2);
+data2["resumeFile"] = resumeData;
+console.log('form new data2', data2);
+if($('#resumeFile').prop('files')[0] == undefined){
+  console.log("resume empty");
+  $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  Please upload your resume
+  <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+</div>`);
+  return;
+}
+
+for (var key in data2) {
+
+  if (data2[key] == "Na") {
+    console.log("empty value");
+    $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+      Please fill all the fields
+      <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>`);
+    return;
   }
-  var data2 = {}
-  var formData = $('#internshipAppForm').serializeArray();
-  for (var i = 0; i < formData.length; i++) {
-    data2[formData[i].name] = formData[i].value;
-  }
+}
+if (data2["semester"] == "") {
+  console.log("sem empty");
+  $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Please fill all the fields
+    <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+  </div>`);
+  return;
+}
 
-  console.log('resume data', resumeData);
-
-  console.log('form old data 2', data2);
-  data2["resumeFile"] = resumeData;
-  console.log('form new data2', data2);
-
-  var resumeformData = new FormData();
-  resumeformData.append('resumeFile', resumeData);
-  //  make a global variabl
+var resumeformData = new FormData();
+resumeformData.append('resumeFile', resumeData);
+//  make a global variabl
 
 
 
 
-  fetch("/resumeUpload", {
-    method: 'POST',
-    body: resumeformData
-  })
-    .then(res => res.json())
-    .then(data => {
-      console.log("fiel upload, data", data);
-      console.log("fiel upload, data", data.file);
-      var responseResumeDataFromAPI = data.file;
-      var resumeData = {
-        "name": responseResumeDataFromAPI.filename,
-        "path": responseResumeDataFromAPI.path
+fetch("/resumeUpload", {
+  method: 'POST',
+  body: resumeformData
+})
+  .then(res => res.json())
+  .then(data => {
+    console.log("fiel upload, data", data);
+    console.log("fiel upload, data", data.file);
+    var responseResumeDataFromAPI = data.file;
+    var resumeData = {
+      "name": responseResumeDataFromAPI.filename,
+      "path": responseResumeDataFromAPI.path.replace("public", "")
+    }
+    data2['resume'] = resumeData;
+
+
+    fetch('/api/applyForInternship', {
+      method: 'POST',
+      body: JSON.stringify(dataValidation),
+      headers: {
+        'Content-Type': 'application/json'
       }
-      data2['resume'] = resumeData;
-      for (var key in data2) {
-        if (data2[key] == "") {
-          // console.log("empty value");
-          $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
-          Please fill all the fields
-          <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
-        </div>`);
-          return;
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data.statusCode == 200) {
+          fetch("/api/profile", {
+            method: "post",
+            body: JSON.stringify({ data: data2, "id": userId, "role": userRole }),
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+            .then(resp => resp.json())
+            .then(data123 => {
+              console.log("dummy...", data123);
+              $('#applyNowModal').modal('hide');
+              $('#successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+            ${data.message}
+            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+          </div>`);
+              window.scrollTo(0, 0);
+            })
+            .catch(err => {
+              console.log(err);
+            })
+
         }
-      }
-
-      fetch('/api/applyForInternship', {
-        method: 'POST',
-        body: JSON.stringify(dataValidation),
-        headers: {
-          'Content-Type': 'application/json'
+        else {
+          $('#applyNowModal').modal('hide');
+          $('#errorAlert').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            ${data.message}
+            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+          </div>`);
+          window.scrollTo(0, 0);
         }
       })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          if (data.statusCode == 200) {
-            fetch("/api/profile", {
-              method: "post",
-              body: JSON.stringify({ data: data2, "id": userId, "role": userRole }),
-              headers: {
-                "Content-Type": "application/json"
-              }
-            })
-              .then(resp => resp.json())
-              .then(data123 => {
-                console.log("dummy...", data123);
-                $('#applyNowModal').modal('hide');
-                $('#successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
-            ${data.message}
-            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
-          </div>`);
-                window.scrollTo(0, 0);
-              })
-              .catch(err => {
-                console.log(err);
-              })
-
-          }
-          else {
-            $('#applyNowModal').modal('hide');
-            $('#errorAlert').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            ${data.message}
-            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
-          </div>`);
-            window.scrollTo(0, 0);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    })
-    .catch(err => {
-      console.log("fiel upload, err", err);
-    })
+      .catch(err => {
+        console.log(err);
+      });
+  })
+  .catch(err => {
+    console.log("fiel upload, err", err);
+  })
 
 
 
@@ -532,6 +565,7 @@ $(document).on('click', "#submitInternshipApp", function (e) {
   //   });
 
   // $('#internshipAppForm').submit();
+
 
 
 });

@@ -41,7 +41,7 @@
                                         <div class="card-body p-md-5 text-black">
                                             <h3 class="mb-5 text-uppercase main-heading">Upload Product Details</h3>
 
-                                            <form method="post" action="/uploadProduct" id="addProductform">
+                                            <form method="post" action="/uploadProduct" id="addProductform" enctype="multipart/form-data">
                                                 <div class="form-outline mb-4">
                                                     <input type="text" id="productTitle" name="productTitle"
                                                         class="form-control form-control-lg" required />
@@ -120,8 +120,8 @@
                                                         <label class="form-label" for="photos">Photos</label>
 
                                                         <input type="file" id="photos"
-                                                        name="photos[]"
-                                                        class="form-control  form-control-lg" required />
+                                                        name="productPhotos"
+                                                        class="form-control  form-control-lg" required multiple/>
                                                         </div>
 
                                                    

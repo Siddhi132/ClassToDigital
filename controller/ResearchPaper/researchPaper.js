@@ -41,7 +41,7 @@ const uploadResearchPaper = async (req, res) => {
   }
   catch (err) {
     console.log("err", err);
-    res.send({ status: false, statusCode: 500, message: "Research paper not added" });
+    res.send({ status: false, statusCode: 500, message: "Error During Adding Research Paper" });
   }
 
 }
@@ -75,7 +75,7 @@ const getAllResearchPapers = async (req, res) => {
   }
   catch (err) {
     console.log('err', err);
-    res.send({ status: false, statusCode: 400, 'message': "Research Papers not found" });
+    res.send({ status: false, statusCode: 500, 'message': "Error During fetching Research Paper" });
   }
 }
 
@@ -85,14 +85,15 @@ const addCommentinResearchPaper = async (req, res) => {
     var data = {
       useremail:req.body.userEmail,
       userid: req.body.userId,
-      comment: req.body.comment
+      comment: req.body.comment,
+      userRole: req.body.userRole
     }
     const val = await ResearchPaper.findByIdAndUpdate(researchPaperId, { $push: { forumDiscussion: data } });
     console.log("val", val);
     res.send({ status: true, statusCode: 200, message: "Comment added successfully" });
   }
   catch (err) {
-    res.send({ status: false, statusCode: 400, message: "Comment not added" });
+    res.send({ status: false, statusCode: 500, message: "Error During Add Comment in research paper" });
   }
 
 };
@@ -110,7 +111,7 @@ const getAllComments = async (req, res) => {
     }
   }
   catch (err) {
-    res.send({ status: false, statusCode: 500, message: "Comment not found" });
+    res.send({ status: false, statusCode: 500, message: "Error During getting all comments" });
 
   }
 }

@@ -6,19 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research paper details</title>
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-    <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
+ 
 </head>
 
 <body>
+   <!-- Navbar  -->
+   <% if(login){ %>
+    <% if(typeof role!="undefined" && role){ %>
+        <% if(role=="student"){ %>
+            <%- include('../Navbar/StudentNavbar.ejs') %>
+        <% }else if(role=="mentor"){ %>
+            <%- include('../Navbar/MentorNavbar.ejs') %>
+        <% }else if(role=="admin"){ %>
+            <%- include('../Navbar/AdminNavbar.ejs') %>
+        <% }else if(role=="company"){ %>
+            <%- include('../Navbar/CompanyNavbar.ejs') %>
+        <% } %>
+    <% } %>
+    
+    <% }else { %>
+        <%- include('../Navbar/InitNavbar.ejs') %>
+    <% } %>
 
 
     <% researchPaper.data.allResearchPaper.forEach(function(item){ %>
-        <main class="mt-5 pt-4">
+        <main class="mt-2 pt-4">
             <div class="container mt-5 card" style="padding: 1em;">
                 <div class="row">
                   
@@ -142,12 +154,12 @@
 
 
 
-            <!-- Fotter -->
-            <%- include('../Footer/Footer.ejs') %>
+        
+        <!-- Fotter -->
+        <%- include('../Footer/Footer.ejs') %>
 
 
 </body>
-<!-- MDB -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+
 <script src="/js/ResearchPaper/researchPaperDetail.js" userid="<%= userId %>" researchpaperid="<%= researchPaper.data.allResearchPaper[0]._id %>"></script>
 </html>
