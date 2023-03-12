@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>CodePen - Real Estate</title>
+  <title>Class To Digital</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css'>
@@ -256,7 +256,7 @@ if (userId != null && userRole == "student") {
               <h5 class="modal-title" id="exampleModalLabel">Your application</h5>
               <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modalformalert"></div>
+            <div id="modalformalert"></div>
             <div class="modal-body">
 
 
@@ -280,42 +280,42 @@ if (userId != null && userRole == "student") {
                 <div class="mb-4">
                   <select class="form-select form-select-lg" id="branch" name="branch"
                     aria-label="Default select example" required>
-                    <option value="" selected>Choose Branch</option>
+                    <option value="Na" selected>Choose Branch</option>
 
                   </select>
                 </div>
                 <div class="mb-4">
                   <select class="form-select form-select-lg" id="college" name="college"
                     aria-label="Default select example" required>
-                    <option value="" selected>Choose college</option>
+                    <option value="Na" selected>Choose college</option>
 
                   </select>
                 </div>
                 <div class="mb-3">
                   <select class="form-select form-select-lg" id="education" name="education"
                     aria-label="Default select example" required>
-                    <option value="" selected>Choose education</option>
+                    <option value="Na" selected>Choose education</option>
 
                   </select>
                 </div>
                 <div class="mb-3">
                   <select class="form-select form-select-lg" id="state" name="state" aria-label="Default select example"
                     required>
-                    <option value="" selected>Choose state</option>
+                    <option value="Na" selected>Choose state</option>
 
                   </select>
                 </div>
                 <div class="mb-3">
                   <select class="form-select form-select-lg" id="stream" name="stream"
                     aria-label="Default select example" required>
-                    <option value="" selected>Choose stream</option>
+                    <option value="Na" selected>Choose stream</option>
 
                   </select>
                 </div>
                 <div class="mb-3">
                   <select class="form-select form-select-lg" id="university" name="university"
                     aria-label="Default select example" required>
-                    <option value="" selected>Choose university</option>
+                    <option value="Na" selected>Choose university</option>
 
                   </select>
                 </div>
@@ -328,7 +328,7 @@ if (userId != null && userRole == "student") {
                 </div>
                 <div class="mb-3">
                   <label for="resume" class="form-label">Resume</label>
-                  <input class="form-control" type="file" id="resumeFile" name="resume" required>
+                  <input class="form-control" type="file" id="resumeFile" name="resume" required accept=".pdf">
                 </div>
 
 

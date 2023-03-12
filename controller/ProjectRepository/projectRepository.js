@@ -31,20 +31,26 @@ const uploadProjectRepository = async (req, res) => {
     }
     catch (err) {
         console.log("err", err);
-        res.send({ status: false, statusCode: 500, message: "ProjectRepository not added" });
+        res.send({ status: false, statusCode: 500, message: "Error During adding ProjectRepository" });
     }
 
 }
 
 const getProjectRepository = async (req, res) => {
-    if (Object.keys(req.query).length > 0) {
-        const val = await ProjectRepository.find(req.query.request);
-        res.status(200).send({ "status": true, "statusCode": 200, "message": "ProjectRepository found successfully", "data": { "ProjectRepository": val } });
+    try{
+        if (Object.keys(req.query).length > 0) {
+            const val = await ProjectRepository.find(req.query.request);
+            res.status(200).send({ "status": true, "statusCode": 200, "message": "ProjectRepository found successfully", "data": { "ProjectRepository": val } });
+        }
+        else {
+            const val = await ProjectRepository.find();
+            res.status(200).send({ "status": true, "statusCode": 200, "message": "ProjectRepository found successfully", "data": { "ProjectRepository": val } });
+    
+        }
     }
-    else {
-        const val = await ProjectRepository.find();
-        res.status(200).send({ "status": true, "statusCode": 200, "message": "ProjectRepository found successfully", "data": { "ProjectRepository": val } });
-
+    catch (err) {
+        console.log("err", err);
+        res.send({ status: false, statusCode: 500, message: "Error During getting ProjectRepository" });
     }
 }
 

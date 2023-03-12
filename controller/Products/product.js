@@ -5,6 +5,15 @@ const MentorProfile = require('../../models/MentorProfile');
 const uploadProduct = async (req, res) => {
     try {
         const newProduct = new Product(req.body.data);
+        console.log("req.body.data photos data",req.body.data.photosData);
+
+        for (let i = 0; i < req.body.data.photosData.length; i++) {
+            newProduct.photos.push({ name: req.body.data.photosData[i].filename, path: req.body.data.photosData[i].path.replace("public","" ) });
+        }
+        console.log("newProduct updated product data",newProduct);
+
+        // newProduct.photos.name =  req.body.data.uploadFileData.productImage[0].filename;
+        // newProduct.photos.path = req.body.data.uploadFileData.productImage[0].filename;
         const val = await newProduct.save();
         const role=req.body.role;
         console.log("req.body",req.body);
@@ -38,7 +47,7 @@ const uploadProduct = async (req, res) => {
       }
       catch (err) {
         console.log("err", err);
-        res.send({ status: false, statusCode: 500, message: "Product not added" });
+        res.send({ status: false, statusCode: 500, message: "Error During Adding Product" });
       }
     
 }
@@ -68,7 +77,7 @@ const getProducts = async (req, res) => {
   }
   catch (err) {
     console.log('err', err);
-    res.send({ status: false, statusCode: 400, 'message': "Product not found" });
+    res.send({ status: false, statusCode: 500, 'message': "Error during getting  products" });
   }
 
 }

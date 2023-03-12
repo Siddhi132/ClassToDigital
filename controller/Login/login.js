@@ -59,7 +59,7 @@ const verifyUserForLogin = async (req, res) => {
     res.send({status:true, statusCode:200,"data": { "user": user,'token': token } , 'message': 'Logged in successfully.'});
   } catch (error) {
     console.log('error', error);
-    res.send({status:false,statusCode:500, message: 'Error logging in.' });
+    res.send({status:false,statusCode:500, message: 'Error during login. ' });
   }
 };
 
