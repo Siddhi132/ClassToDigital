@@ -71,9 +71,9 @@
       <div class="allProducts">
 
         <!-- foreach loop for products.data.allProducts  -->
-
+<%  var index=0; %>
         <% products.data.allProducts.forEach(function(product){ %>
-
+<% index=index+1; %>
 
           <div class="row justify-content-center mb-3">
             <div class="col-md-12 col-xl-10">
@@ -81,14 +81,14 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                      <div id="carouselExampleControls" class="carousel slide" data-mdb-ride="carousel">
+                      <div id="carouselExampleControls<%= index %>" class="carousel slide" data-mdb-ride="carousel">
                         <div class="carousel-inner">
                           
                           
                         <% product.photos.forEach(function(photo){  %>                   
-                          <div class="carousel-item active">
-                            <img src="<%- photo.path %>" class="d-block w-100"
-                            alt="Wild Landscape" />                               
+                          <div class="carousel-item active" style="text-align: center;text-align: -webkit-center; text-align: -moz-center; ">
+                            <img style="height: 180px;" src="<%- photo.path %>" class="img-thumbnail d-block"
+                            alt="Product" />                               
                         </div>
                         <% }) %>
 
@@ -97,12 +97,12 @@
 
                           
                         </div>
-                        <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleControls"
+                        <button style="color:#1c4980;" class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleControls<%= index %>"
                           data-mdb-slide="prev">
                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                           <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-mdb-target="#carouselExampleControls"
+                        <button style="color:#1c4980;" class="carousel-control-next" type="button" data-mdb-target="#carouselExampleControls<%= index %>"
                           data-mdb-slide="next">
                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
                           <span class="visually-hidden">Next</span>
@@ -234,7 +234,7 @@
      
       if (category != "" && conditionRating != "") {
         $(".allProducts .row").each(function () {
-          if ($(this).find('#categoryName').text().toLowerCase().indexOf(category.toLowerCase()) != -1 && $(this).find('#conditionRatingVal').text().toLowerCase().indexOf(conditionRating.toLowerCase()) != -1) {
+          if ($(this).find('#categoryName').text().toLowerCase().indexOf(category.toLowerCase()) != -1 && parseInt($(this).find('#conditionRatingVal').text().toLowerCase()) >= parseInt((conditionRating.toLowerCase()))) {
             $(this).show();
           } else {
             $(this).hide();
