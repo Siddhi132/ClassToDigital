@@ -41,6 +41,9 @@
                                                                 <% internship.forEach(function(item){ %>
                                                                     <!--Main layout-->
                                                                     <main class="pt-4 mb-2">
+                                                                        <div id="loader">
+                                                                            <img src="loader.gif" alt="Loading...">
+                                                                          </div>
                                                                         <div id="alreadyAppliedAlert"></div>
                                                                         <div id="errorAlert"></div>
                                                                         <div id="successAlert"></div>
@@ -108,7 +111,7 @@
                                                                                                 <%= item.location %>
                                                                                             </span>
                                                                                         <div class="mb-3">
-                                                                                            <div style=""
+                                                                                            <div 
                                                                                                 class="mainDetailsInternship mb-3">
                                                                                                 <a href="">
                                                                                                     <span

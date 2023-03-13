@@ -151,7 +151,22 @@
                         </div>
                         <div id="internship-content">
                             
-                            internship
+                          <div class="pagetitle">
+                            <h1>Internships</h1>
+                            <nav>
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item">Users</li>
+                                <li class="breadcrumb-item active">Internships</li>
+                              </ol>
+                            </nav>
+                          </div>
+                          <section>
+                            <div class="container py-5 " id="internship-container-profile">
+
+
+                            </div>
+                          </section>
                         </div>
                         <div id="default-content" >
                             <div class="pagetitle">
@@ -546,6 +561,6 @@
  <!-- partial -->
             <script src='https://unpkg.com/@popperjs/core@2'></script>
             <script src="js/Profile/script.js"></script>
-            <script src="js/Profile/manageProf.js"></script>
+            <script src="js/Profile/manageProf.js" userInternships="<%= user.internships %>"></script>
 
 </html>

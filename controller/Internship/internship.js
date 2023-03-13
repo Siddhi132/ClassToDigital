@@ -5,17 +5,32 @@ const uploadInternship = async (req, res) => {
 
   try {
     const newInternship = new Internship(req.body);
-    const val = await newInternship.save();
-    CompanyProfile.findOneAndUpdate({ _id: req.body.companyId }, { $push: { internships: val._id } }, (err, existingUser) => {
-      if (!err) {
-        res.send({ status: true, statusCode: 200, message: "Internship addedd successfully" });
+    CompanyProfile.findById(req.body.companyId, (err, existingUser) => {
+      if (!existingUser) {
+        return res.send({ status: false, statusCode: 400, message: "No user available" });
+        console.log("n ew Internship oiii 1", newInternship);
+
       }
       else {
-        console.log("err", err);
-        res.send({ status: false, statusCode: 400, message: "Internship not added" });
-      }
-
+        newInternship.companyImage.path = existingUser.profileImage.path;
+        newInternship.companyImage.name = existingUser.profileImage.name;
+        console.log("newInternship oiii 2", newInternship);
+        const val = newInternship.save();
+        CompanyProfile.findOneAndUpdate({ _id: req.body.companyId }, { $push: { internships: val._id } }, (err, existingUser) => {
+          if (!err) {
+            res.send({ status: true, statusCode: 200, message: "Internship addedd successfully" });
+          }
+          else {
+            console.log("err", err);
+            res.send({ status: false, statusCode: 400, message: "Internship not added" });
+          }
+    
+        })
+      }   
     })
+
+    
+    
 
   }
   catch (err) {
@@ -118,4 +133,24 @@ const applyForInternship = async (req, res) => {
 
 }
 
-module.exports = { uploadInternship, getAllInternship, applyForInternship };
+
+
+
+const getInternshipById = async (req, res) => {
+  try {
+    const val = await Internship.findById(req.query.id);
+    if (!val) {
+      res.send({ status: false, statusCode: 400, 'message': "No internship found" });
+    }
+    else {
+      res.send({ status: true, statusCode: 200, 'message': 'Internship found successfully', data: { 'internship': val } });
+    }
+  }
+  catch (err) {
+    console.log('err', err);
+    res.send({ status: false, statusCode: 500, 'message': "Error during getting internships" });
+  }
+}
+
+
+module.exports = { uploadInternship, getAllInternship, applyForInternship, getInternshipById };

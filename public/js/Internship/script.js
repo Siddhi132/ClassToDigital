@@ -10,6 +10,18 @@ let data = {
 }
 var alreadyAppliedInternships;
 
+// JavaScript code to show and hide loader component
+function showLoader() {
+  document.getElementById("loader").style.display = "block";
+}
+
+function hideLoader() {
+  document.getElementById("loader").style.display = "none";
+}
+
+
+
+
 // slider value change 
 if ($priceSlider.slider) {
   $priceSlider.slider({
@@ -192,11 +204,12 @@ function filterinternships() {
     );
 }
 
-
+showLoader();
 // categories in filter section and modal form of apply 
 fetch('/api/Categories')
   .then(res => res.json())
   .then(data => {
+    hideLoader();
     console.log("data: hey", data.data.categories[0]);
     let internships = data.data.categories[0].internship;
     let studentProfile = data.data.categories[0].studentProfile;
@@ -282,12 +295,13 @@ $(document).on('keyup', "#searchCompany", function (e) {
 
 
 // autofill value in modal 
-
+showLoader();
 fetch('/api/profile?' + new URLSearchParams(data), {
   method: 'GET',
 })
   .then(res => res.json())
   .then(data => {
+    hideLoader();
     console.log("i am ", data);
     if (data.statusCode == 200) {
       console.log('data.data.user', data.data.user);
@@ -412,13 +426,14 @@ resumeformData.append('resumeFile', resumeData);
 
 
 
-
+showLoader();
 fetch("/resumeUpload", {
   method: 'POST',
   body: resumeformData
 })
   .then(res => res.json())
   .then(data => {
+    
     console.log("fiel upload, data", data);
     console.log("fiel upload, data", data.file);
     var responseResumeDataFromAPI = data.file;
@@ -440,6 +455,7 @@ fetch("/resumeUpload", {
       .then(data => {
         console.log(data);
         if (data.statusCode == 200) {
+          
           fetch("/api/profile", {
             method: "post",
             body: JSON.stringify({ data: data2, "id": userId, "role": userRole }),
@@ -449,6 +465,7 @@ fetch("/resumeUpload", {
           })
             .then(resp => resp.json())
             .then(data123 => {
+              hideLoader();
               console.log("dummy...", data123);
               $('#applyNowModal').modal('hide');
               $('#successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">

@@ -143,7 +143,7 @@ router.post('/login', (req, res, next) => {
     })
     .catch((error) => {
       console.log("this i want", error);
-      res.send({ status: false, statusCode: 500, message: "Login failed" })
+      res.render('Home/Login', { message: "Invalid Email or Password", status: false, statusCode:500 });
     });
 
 
@@ -241,7 +241,10 @@ router.get('/mentors', (req, res, next) => {
 // Internship 
 router.get('/uploadInternship', isLoginRequired, (req, res) => {
   if (req.session.userRole == "company") {
-    res.render('Internship/UploadInternship');
+    login = 1;
+    var role = req.session.userRole;
+
+    res.render('Internship/UploadInternship', { login, role });
   }
   else {
     res.redirect('/');
@@ -252,10 +255,12 @@ router.post('/uploadInternship', isLoginRequired, (req, res, next) => {
   req.body.companyId = req.session.userId;
   axios.post(process.env.BASE_URL + '/api/uploadInternship', req.body)
     .then((response) => {
+      var login = 1;
+      var role = req.session.userRole;
       if(response.data.statusCode == 500){
         next(response.data.message);
       }
-      res.render('Internship/UploadInternship', { "message": response.data });
+      res.render('Internship/UploadInternship', { "message": response.data , login , role});
     })
     .catch((error) => {
       res.render('Internship/UploadInternship', { "message": error });
@@ -313,7 +318,9 @@ router.get("/internships", (req, res, next) => {
 
 router.get('/uploadIndustrialProject', (req, res) => {
   if (req.session.userRole == "company") {
-    res.render('IndustrialProject/UploadIndustrialProject');
+    var login = 1;
+    var role = req.session.userRole;
+    res.render('IndustrialProject/UploadIndustrialProject', { login, role });
   }
   else {
     res.redirect('/');
@@ -325,10 +332,12 @@ router.post('/uploadIndustrialProject', isLoginRequired, (req, res,next) => {
   req.body.companyId = req.session.userId;
   axios.post(process.env.BASE_URL + '/api/uploadIndustrialProject', req.body)
     .then((response) => {
+      var login = 1;
+      var role = req.session.userRole;
       if(response.data.statusCode == 500){
         next(response.data.message);
       }
-      res.render('IndustrialProject/UploadIndustrialProject', { "message": response.data });
+      res.render('IndustrialProject/UploadIndustrialProject', { "message": response.data , login , role});
     })
     .catch((error) => {
       res.render('IndustrialProject/UploadIndustrialProject', { "message": error });
@@ -385,7 +394,9 @@ router.get("/industrialProjects", (req, res, next) => {
 // Research Paper
 router.get('/uploadResearchPaper', isLoginRequired, (req, res) => {
   if (req.session.userRole == "mentor" || req.session.userRole == "student") {
-    res.render('ResearchPaper/UploadResearchPaper');
+    var login = 1
+    var role = req.session.userRole;
+    res.render('ResearchPaper/UploadResearchPaper', {login , role});
   }
   else {
     res.redirect('/');
@@ -398,11 +409,13 @@ router.post('/uploadResearchPaper', isLoginRequired, (req, res, next) => {
   console.log("req.body", req.body);
   axios.post(process.env.BASE_URL + '/api/uploadResearchPaper', req.body)
     .then((response) => {
+      var login = 1;
+      var role = req.session.userRole;
       if(response.data.statusCode == 500){
         next(response.data.message);
       }
       console.log("response", response.data);
-      res.render('ResearchPaper/UploadResearchPaper', { "message": response.data });
+      res.render('ResearchPaper/UploadResearchPaper', { "message": response.data, login, role });
     })
     .catch((error) => {
       console.log(error);
@@ -459,7 +472,9 @@ router.get('/researchPapers', (req, res,next) => {
 // Product section 
 router.get("/uploadProduct", isLoginRequired, (req, res) => {
   if (req.session.userRole == "mentor" || req.session.userRole == "student") {
-    res.render('SellProduct/UploadProduct');
+    var login = 1;
+    var role = req.session.userRole;
+    res.render('SellProduct/UploadProduct', {login, role});
   }
   else {
     res.redirect('/');
@@ -478,10 +493,12 @@ router.post("/uploadProduct", isLoginRequired,uploadFile.array("productPhotos",
   req.body.photosData = req.files;
   axios.post(process.env.BASE_URL + '/api/uploadProduct', { "data": req.body, "role": role })
     .then((response) => {
+      var login = 1;
+      var role = req.session.userRole;
       if(response.data.statusCode == 500){
         next(response.data.message);
       }
-      res.render('SellProduct/UploadProduct', { "message": response.data });
+      res.render('SellProduct/UploadProduct', { "message": response.data, login, role });
     })
     .catch((error) => {
       console.log(error);
@@ -516,7 +533,14 @@ router.get("/products", (req, res, next) => {
 
 //  project repository
 router.get('/uploadProjectRepository', isLoginRequired, (req, res) => {
-  res.render('ProjectRepository/uploadProjectRepository');
+  if (!req.session.userId) {
+    login = 0;
+  }
+  else {
+    login = 1;
+    var role = req.session.userRole;
+  }
+  res.render('ProjectRepository/uploadProjectRepository', {login, role} );
 });
 
 
