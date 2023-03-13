@@ -10,6 +10,7 @@ const researchPaperScheme=new mongoose.Schema({
     noteDetails:{type:String,required:true},
     skillsRequired:{type:String,required:true},
     userId:{type:String,required:true},
+    needof:{type:String,required:true},
     category:{type:String,required:true},
     forumDiscussion:{type:Array},
 

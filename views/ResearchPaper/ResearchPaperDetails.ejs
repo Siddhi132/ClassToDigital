@@ -37,12 +37,13 @@
                     <div class="col-md-12">
                       
                         <div class="">
-                            <div class="d-flex justify-content-between flex-wrap-reverse">
-                            <strong>
+                            <div class="d-flex flex-wrap-reverse">
+                            <strong class="me-auto">
                                 <h2 class="mb-3">
                                     <%= item.title %>
                                 </h2>
                             </strong>
+                            <p class="me-3 bg-light mb-3 mb-sm-0 p-3"><%= item.needof %></p>
                             <button class="btn btn-primary btn-sm mb-3 mb-sm-0">Chat for colloboartaion</button>
                         </div>
 
@@ -133,7 +134,7 @@
                         <div class="form-floating">
                             <input type="hidden" id="researchPaperId" name="researchPaperId" value="<%= researchPaper.data.allResearchPaper[0]._id  %>">
                             <textarea class="form-control" placeholder="Leave a comment here" id="comment" name="comment"
-                                style="height: 100px"></textarea>
+                                style="height: 100px" required></textarea>
                             <label for="floatingTextarea2">Comments</label>
                         </div>
                         <br>
