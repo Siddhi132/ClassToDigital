@@ -29,10 +29,10 @@
         spaceBetween: 40
       },
 
-      768:{
-        slidesPerView: 2,
-        spaceBetween: 40
-      },
+      // 768:{
+      //   slidesPerView: 3,
+      //   spaceBetween: 40
+      // },
 
       1200: {
         slidesPerView: 3,
@@ -106,7 +106,7 @@
         spaceBetween: 40
       },
 
-      950:{
+      990:{
         slidesPerView: 3,
         spaceBetween: 40
       },
@@ -147,10 +147,10 @@ new Swiper('.slides-4', {
         spaceBetween: 40
       },
 
-      950:{
-        slidesPerView: 2,
-        spaceBetween: 40
-      },
+      // 950:{
+      //   slidesPerView: 2,
+      //   spaceBetween: 40
+      // },
       1200: {
         slidesPerView: 3,
       }

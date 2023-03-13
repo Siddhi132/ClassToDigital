@@ -37,6 +37,16 @@ const AdminProfileSchema = new mongoose.Schema({
     },
     
   }],
+  profileImage: {
+    name: {
+      type: String,
+      default: "Default Avatar"
+    },
+    path: {
+      type: String,
+      default: "\\images\\profile\\defaultAvatar.png"
+    }
+  }
 
   
 });
