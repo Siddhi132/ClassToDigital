@@ -237,7 +237,7 @@ console.log('userInternships', userInternships);
 
 for (var i = 0; i < userInternships.length; i++) {
     var internship = userInternships[i];
-    fetch('/api/getAllIntenship?request=' + internship, {
+    fetch('/api/getInternshipById?id=' + internship, {
         method: 'GET',
     }
     )
