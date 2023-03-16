@@ -28,21 +28,28 @@ const uploadIndustrialProject=async(req,res)=>{
 const getAllIndustrialProjects = async (req, res) => {
     console.log('req.query length', Object.keys(req.query).length);
     console.log("id..",req.query.id);
-  
+  var filter;
     try {
       if (Object.keys(req.query).length > 0) {
         console.log('req.query here', req.query);
         let val;
         let enableApplyButton=true;
         if(req.query.request){
+          if(typeof (req.query.request)==="object"){
+            filter= req.query.request;
+       }
+       else{
+            filter= JSON.parse(decodeURIComponent(req.query.request));
+
+       }
           const existingUser = await StudentProfile.findById(req.query.id);
           console.log("existingUser",existingUser);
           if(existingUser){
-          if (existingUser.industrialProjects.includes(req.query.request._id)) {
+          if (existingUser.industrialProjects.includes(filter._id)) {
             enableApplyButton = false;
           }
         }
-        val = await IndustrialProjects.find(req.query.request);
+        val = await IndustrialProjects.find(filter);
         }
         else{
         val = await IndustrialProjects.find(req.query).where('stipend').gte(parseInt(req.query.stipend));
@@ -115,4 +122,24 @@ const getAllIndustrialProjects = async (req, res) => {
   
   }
 
-module.exports={ uploadIndustrialProject,getAllIndustrialProjects,applyForIndustrialProject };
+  const getIndustrialProjectById = async (req, res) => {
+    try {
+      const val = await IndustrialProjects.findById(req.query.id);
+      if (val) {
+        res.send({ status: true, statusCode: 200, 'message': 'Industrial Project found successfully', data:{'IndustrialProject': val} });
+      }
+      else {
+        res.send({ status: false, statusCode: 404, 'message': "0 Industrial Project found" });
+      }
+
+    }
+    catch (err) {
+      console.log('err', err);
+      res.send({ status: false, statusCode: 500, 'message': "Error During Getting Industrial Project" });
+    }
+
+  }
+
+
+
+module.exports={ uploadIndustrialProject,getAllIndustrialProjects,applyForIndustrialProject, getIndustrialProjectById};

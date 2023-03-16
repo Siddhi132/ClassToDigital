@@ -200,19 +200,46 @@ const updateProfile = async (req, res) => {
 
         }
         else if (role == "mentor") {
-            const newData = {
-                name: req.body.data.name,
-                phone: req.body.data.phone,
-                education: req.body.data.education,
-                location: req.body.data.location,
-                background: req.body.data.background,
-                subcategory: req.body.data.subcategory,
-                AreaOfIntrest: req.body.data.AreaOfIntrest,
-                Specialization: req.body.data.Specialization,
-                college: req.body.data.college,
-                university: req.body.data.university,
-                branch: req.body.data.branch
+            console.log('req.body.data', req.body.data);
+            var newData;
+            if(req.body.data.profileImage){
+                newData = {
+                    name: req.body.data.name,
+                    phone: req.body.data.phone,
+                    education: req.body.data.education,
+                    location: req.body.data.location,
+                    background: req.body.data.background,
+                    AreaOfIntrest: req.body.data.AreaOfIntrest,
+                    Specialization: req.body.data.Specialization,
+                    college: req.body.data.college,
+                    university: req.body.data.university,
+                    branch: req.body.data.branch,
+                    description:req.body.data.description,
+                    typeOfMentor: req.body.data.typeOfMentor,
+                    profileImage: {
+                        name: req.body.data.profileImage.filename,
+                        path: req.body.data.profileImage.path.replace('public', ''),
+                    }
+
+                }
             }
+            else{
+                 newData = {
+                    name: req.body.data.name,
+                    phone: req.body.data.phone,
+                    education: req.body.data.education,
+                    location: req.body.data.location,
+                    background: req.body.data.background,
+                    AreaOfIntrest: req.body.data.AreaOfIntrest,
+                    Specialization: req.body.data.Specialization,
+                    college: req.body.data.college,
+                    university: req.body.data.university,
+                    branch: req.body.data.branch,
+                    description:req.body.data.description,
+                    typeOfMentor: req.body.data.typeOfMentor
+                }
+            }
+           
             // console.log('updateFields', updateFields);
             // Check if a user with the same email already exists
             const existingUser = await MentorProfile.findById(id);
