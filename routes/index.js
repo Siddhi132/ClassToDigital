@@ -166,7 +166,12 @@ router.get('/profile', isLoginRequired, async (req, res, next) => {
       var role = response.data.data.user.role;
       console.log("role here", role);
       // flag = 1;
+      if(role=="student"){
       res.render('Profile/Profile', { "user": response.data.data.user, role, login });
+      }
+      else if(role=="mentor"){
+        res.render('Profile/MentorProfile', { "user": response.data.data.user, role, login });
+      }
     })
     .catch((error) => {
       console.log(error);
@@ -181,6 +186,7 @@ router.post('/profile', isLoginRequired, uploadFile.single("profileImage"), asyn
   console.log("in profile file", req.file);
   
   req.body.profileImage = req.file;
+  console.log("req.body", req.body);
   axios.post(process.env.BASE_URL + '/api/profile', { "id": req.session.userId, "role": req.session.userRole, "data": req.body })
     .then((response) => {
       if(response.data.statusCode == 500){
@@ -556,13 +562,21 @@ router.post('/uploadProjectRepository', isLoginRequired, uploadFile.fields(
   console.log("req.files befor ajax", req.files);
   req.body.uploadFileData = req.files;
   var userId = req.session.userId;
-  axios.post(process.env.BASE_URL + '/api/uploadProjectRepository', req.body, { params: { "userId": userId } })
+  console.log("req gone wrong", req.session);
+  axios.post(process.env.BASE_URL + '/api/uploadProjectRepository', req.body, { params: { "userId": userId, "userRole":req.session.userRole } })
 
     .then((response) => {
       if(response.data.statusCode == 500){
         next(response.data.message);
       }
-      res.render('ProjectRepository/uploadProjectRepository', { "message": response.data });
+      if (!req.session.userId) {
+        login = 0;
+      }
+      else {
+        login = 1;
+        var role = req.session.userRole;
+      }
+      res.render('ProjectRepository/uploadProjectRepository', { login, role,"message": response.data });
     })
     .catch((error) => {
       res.render('ProjectRepository/uploadProjectRepository', { "message": error });

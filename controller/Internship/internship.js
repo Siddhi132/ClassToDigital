@@ -8,8 +8,6 @@ const uploadInternship = async (req, res) => {
     CompanyProfile.findById(req.body.companyId, (err, existingUser) => {
       if (!existingUser) {
         return res.send({ status: false, statusCode: 400, message: "No user available" });
-        console.log("n ew Internship oiii 1", newInternship);
-
       }
       else {
         newInternship.companyImage.path = existingUser.profileImage.path;
@@ -46,21 +44,29 @@ const uploadInternship = async (req, res) => {
 const getAllInternship = async (req, res) => {
   console.log('req.query length', Object.keys(req.query).length);
   console.log("id..", req.query.id);
-
+  var filter;
   try {
     if (Object.keys(req.query).length > 0) {
       console.log('req.query here', req.query);
       let val;
       let enableApplyButton = true;
+
       if (req.query.request) {
+        if(typeof (req.query.request)==="object"){
+          filter= req.query.request;
+          }
+     else{
+          filter= JSON.parse(decodeURIComponent(req.query.request));
+     }
+        console.log("filter", filter);
         const existingUser = await StudentProfile.findById(req.query.id);
         console.log("existingUser", existingUser);
         if (existingUser) {
-          if (existingUser.internships.includes(req.query.request._id)) {
+          if (existingUser.internships.includes(filter._id)) {
             enableApplyButton = false;
           }
         }
-        val = await Internship.find(req.query.request);
+        val = await Internship.find(filter);
       }
       else {
         val = await Internship.find(req.query).where('stipend').gte(parseInt(req.query.stipend));

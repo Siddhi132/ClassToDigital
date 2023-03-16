@@ -49,13 +49,21 @@ const uploadResearchPaper = async (req, res) => {
 const getAllResearchPapers = async (req, res) => {
   console.log('req.query length', Object.keys(req.query).length);
   console.log("id..", req.query);
+  var filter;
   try {
     if (Object.keys(req.query).length > 0) {
       console.log('req.query here', req.query);
       let val;
       if (req.query.request) {
+        if(typeof (req.query.request)==="object"){
+          filter= req.query.request;
+     }
+     else{
+          filter= JSON.parse(decodeURIComponent(req.query.request));
 
-        val = await ResearchPaper.find(req.query.request);
+     }
+
+        val = await ResearchPaper.find(filter);
       }
       else {
         val = await ResearchPaper.find(req.query);
@@ -116,4 +124,22 @@ const getAllComments = async (req, res) => {
   }
 }
 
-module.exports = { uploadResearchPaper, getAllResearchPapers, addCommentinResearchPaper, getAllComments };
+const getResearchPaperById = async (req, res) => {
+  try {
+    const val = await ResearchPaper.findById(req.query.id);
+    if (!val) {
+      res.send({ status: false, statusCode: 400, 'message': "No Reseach paper found" });
+    }
+    else {
+      res.send({ status: true, statusCode: 200, 'message': 'Reseach paper found successfully', data: { 'researchPaper': val } });
+    }
+  }
+  catch (err) {
+    console.log('err', err);
+    res.send({ status: false, statusCode: 500, 'message': "Error during getting Reseach paper" });
+  }
+}
+
+
+
+module.exports = { uploadResearchPaper, getAllResearchPapers, addCommentinResearchPaper, getAllComments , getResearchPaperById};
