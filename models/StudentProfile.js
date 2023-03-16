@@ -82,6 +82,10 @@ const studentProfileSchema = new mongoose.Schema({
     type: Array,
   }],
 
+  mentor: [{
+    type: Array,
+  }],
+
   projectRepository: [{
     type: Array,
   }],

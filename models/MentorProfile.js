@@ -20,26 +20,40 @@ const mentorSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: true,
+        default: "NA"
     },
     education: {
-        type: String
+        type: String,
+        default: "NA"
+
     },
     college: {
-        type: String
+        type: String,
+        default: "NA"
+
     },
     university: {
-        type: String
+        type: String,
+        default: "NA"
+
     },
     branch: {
-        type: String
+        type: String,
+        default: "NA"
+
     },
+   
 
     background: {
-        type: String
+        type: String,
+        default: "NA"
+
     },
     location: {
-        type: String
+        type: String,
+        default: "NA"
+
     },
     date: {
         type: Date,
@@ -49,16 +63,20 @@ const mentorSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    typeOfMentor: {
+        type: String,
+        default: "NA"
+    },
     AreaOfIntrest: {
         type: String,
-        default: 0
+        default: "NA"
     },
 
     Specialization: {
         type: String,
-        default: 0
+        default: "NA"
     },
-    Description: {
+    description: {
         type: String,
         default: "NA"
     },
@@ -76,9 +94,10 @@ const mentorSchema = new mongoose.Schema({
     },
     mentee: [{
         type: Array,
+        
 
     }],
-    researchPaper: [{
+    researchPapers: [{
         type: Array,
 
     }],

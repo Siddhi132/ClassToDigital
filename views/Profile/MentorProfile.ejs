@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ClassToDigital Profile</title>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css'>
+    <link rel='stylesheet' href='https://unpkg.com/css-pro-layout@1.1.0/dist/css/css-pro-layout.css'>
+    <link rel='stylesheet'
+        href='https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap'>
+    <link rel="stylesheet" href="styles/Profile/style.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
+    <style>
+      @media only screen and (max-width: 767px) {
+  /* .dataTables_wrapper {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .dataTables_wrapper table {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .dataTables_wrapper table th,
+  .dataTables_wrapper table td {
+    white-space: nowrap;
+    font-size: 14px;
+    padding: 10px;
+  }
+  
+  .dataTables_wrapper table td:first-child {
+    font-weight: bold;
+  } */
+}
+
+    </style>
+</head>
+<body>
+
+        <!-- Navbar  -->
+        <% if(login){ %>
+            <% if(typeof role!="undefined" && role){ %>
+                <% if(role=="student"){ %>
+                    <%- include('../Navbar/StudentNavbar.ejs') %>
+                <% }else if(role=="mentor"){ %>
+                    <%- include('../Navbar/MentorNavbar.ejs') %>
+                <% }else if(role=="admin"){ %>
+                    <%- include('../Navbar/AdminNavbar.ejs') %>
+                <% }else if(role=="company"){ %>
+                    <%- include('../Navbar/CompanyNavbar.ejs') %>
+                <% } %>
+            <% } %>
+            
+            <% }else { %>
+                <%- include('../Navbar/InitNavbar.ejs') %>
+            <% } %>
+    
+
+            
+                <div class="profile-container ">
+                    <!-- partial:index.partial.html -->
+            <div class="layout has-sidebar fixed-sidebar fixed-header">
+                <aside id="sidebar" class="sidebar break-point-sm has-bg-image" style="height: 100vh;">
+                    <a id="btn-collapse" class="sidebar-collapser"><i class="ri-arrow-left-s-line"></i></a>
+
+                    <div class="sidebar-layout">
+                        <div class="sidebar-header">
+                            <div class="pro-sidebar-logo">
+                                <div><%- user.name[0] %></div>
+                                <h5> Hi! <%- user.name.charAt(0).toUpperCase() + user.name.slice(1).toLowerCase() %> </h5>
+                            </div>
+                        </div>
+                        <div class="sidebar-content">
+                            <nav class="menu open-current-submenu">
+                                <ul>
+                                    <li class="menu-header"><span> GENERAL </span></li>
+                                    <li class="menu-item">
+                                        <a href="#"  id="profile-btn">
+                                            <span class="menu-icon">
+                                                <i class="ri-vip-diamond-fill"></i>
+                                            </span>
+                                            <span class="menu-title">Profile</span>
+                                            <span class="menu-suffix">
+                                                <!-- <span class="badge primary">collect coin</span> -->
+                                            </span>
+                                        </a>
+                                 
+                                    </li>
+                                    <li class="menu-item ">
+                                        <a href="#" id="profile-addmentee-btn">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+                                            </span>
+                                            <span class="menu-title">Add mentee</span>
+                                        </a>
+                                     
+                                    </li>
+                                    <li class="menu-item ">
+                                        <a href="#" id="profile-product-btn">
+                                            <span class="menu-icon">
+                                                <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+                                            </span>
+                                            <span class="menu-title">Products</span>
+                                        </a>
+                             
+                                    </li>
+                                    <li class="menu-item ">
+                                        <a href="#" id="profile-projectrepo-btn">
+                                            <span class="menu-icon">
+                                                <i class="fa-sharp fa-solid fa-diagram-project"></i>
+                                            </span>
+                                            <span class="menu-title">Project Repository</span>
+                                        </a>
+                                 
+                                    </li>
+                                  
+                                    <li class="menu-item ">
+                                        <a href="#"  id="profile-research-btn">
+                                            <span class="menu-icon">
+                                                <i class="fa-sharp fa-solid fa-book"></i>
+                                            </span>
+                                            <span class="menu-title">Research Papers</span>
+                                        </a>
+                               
+                                    </li>
+                                    <!-- <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li>
+                                    <li class="menu-item">
+                                        <a href="#">
+                                            <span class="menu-icon">
+                                                <i class="ri-book-2-fill"></i>
+                                            </span>
+                                            <span class="menu-title">Documentation</span>
+                                            <span class="menu-suffix">
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="#">
+                                            <span class="menu-icon">
+                                                <i class="ri-calendar-fill"></i>
+                                            </span>
+                                            <span class="menu-title">Calendar</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="#">
+                                            <span class="menu-icon">
+                                                <i class="ri-service-fill"></i>
+                                            </span>
+                                            <span class="menu-title">Examples</span>
+                                        </a>
+                                    </li> -->
+                                </ul>
+                            </nav>
+                        </div>
+                        
+                    </div>
+                </aside>
+                <div id="overlay" class="overlay"></div>
+                <div class="layout">
+                    <main class="content">
+                       
+                        <div>
+                            <a id="btn-toggle" href="#" class="sidebar-toggler break-point-sm">
+                              <i class="ri-menu-line ri-xl"></i>
+                            </a>
+                        </div>
+                        <div id="addmentee-content">
+                          <div class="pagetitle mb-4">
+                            <h1>Add Mentee</h1>
+                          </div>
+                          <div id="addmenteealert" class=" mt-2 mb-2"></div>
+                          <form id="addmenteeForm"  method="post" class="mb-3 mt-2 d-flex flex-wrap">
+                            <div class="form-outline mb-1 col-lg-2 col-md-6 col-sm-12"  style="width:100%; max-width:36rem;">
+                              <input type="email" name="menteeemail" id="menteeemail" class="form-control" required />
+                              <label class="form-label" for="form2Example1">student Email address</label>
+                            </div>
+                            <!-- <input type="submit" class="col-md-6 btn btn-primary mb-4" value="Add" > -->
+                            <button type="submit" class="btn btn-primary col-lg-2 col-md-6 col-6 col-6 mb-1">Add</button>
+
+                          </form>
+                          <section id="addmentee-content-inner">
+                            <div class="container-fluid">
+                              <table style="" class="shadow-4-strong mt-5 table-hover table table-borderless" id="example">
+                                <thead class="thead-dark mt-4">
+                                  <tr>
+                                    <th>Email</th>
+                                    <th></th>
+                                    
+                                  </tr>
+                                </thead>
+                                <tbody id="menteelist">
+                                </tbody>
+                              </table>
+                            </div>
+                            
+                          </section>
+                        </div>
+                        <div id="default-content" >
+                            <div class="pagetitle">
+                                <h1>Profile</h1>
+                                <nav>
+                                  <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                    <li class="breadcrumb-item">Users</li>
+                                    <li class="breadcrumb-item active">Profile</li>
+                                  </ol>
+                                </nav>
+                              </div>
+                              <section class="section profile">
+                                <div class="row">
+                                  <div class="col-xl-4">
+                          
+                                    <div class="card">
+                                      <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                          
+                                        <img src="<%= user.profileImage.path%>" alt="Profile Image Not Uploaded" class="">
+                                        <h2><%= user.name%></h2>
+                                        <h3 class="mt-2"><%= user.branch %></h3>
+                                        <div class="social-links mt-2">
+                                          <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                                          <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                                          <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                                          <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                        </div>
+                                      </div>
+                                    </div>
+                          
+                                  </div>
+                          
+                                  <div class="col-xl-8">
+                          
+                                    <div class="card">
+                                      <div class="card-body pt-3">
+                                        <!-- Bordered Tabs -->
+                                        <ul class="nav nav-tabs nav-tabs-bordered">
+                          
+                                          <li class="nav-item">
+                                            <button class="nav-link active" data-mdb-toggle="tab" data-mdb-target="#profile-overview">Overview</button>
+                                          </li>
+                          
+                                          <li class="nav-item">
+                                            <button class="nav-link" data-mdb-toggle="tab" data-mdb-target="#profile-edit">Edit Profile</button>
+                                          </li>
+                          
+                                          <!-- <li class="nav-item">
+                                            <button class="nav-link" data-mdb-toggle="tab" data-mdb-target="#profile-settings">Settings</button>
+                                          </li> -->
+                          
+                                          <!-- <li class="nav-item">
+                                            <button class="nav-link" data-mdb-toggle="tab" data-mdb-target="#profile-change-password">Change Password</button>
+                                          </li> -->
+                          
+                                        </ul>
+                                        <div class="tab-content pt-2">
+                          
+                                          <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                            <h5 class="card-title">About</h5>
+                                            <p class="small fst-italic"><%= user.description %></p>
+                          
+                                            <h5 class="card-title">Profile Details</h5>
+                          
+                                            <div class="row">
+                                              <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                              <div class="col-lg-9 col-md-8"><%= user.name%></div>
+                                            </div>
+                          
+                                            <div class="row">
+                                              <div class="col-lg-3 col-md-4 label">College</div>
+                                              <div class="col-lg-9 col-md-8"><%= user.college%></div>
+                                            </div>
+                          
+                                            <div class="row">
+                                              <div class="col-lg-3 col-md-4 label">University</div>
+                                              <div class="col-lg-9 col-md-8"><%= user.university%></div>
+                                            </div>
+                          
+                                            <div class="row">
+                                              <div class="col-lg-3 col-md-4 label">Education</div>
+                                              <div class="col-lg-9 col-md-8"><%= user.education%></div>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-lg-3 col-md-4 label">Branch</div>
+                                              <div class="col-lg-9 col-md-8"><%= user.branch%></div>
+                                            </div>
+                                            
+                          
+                                            <div class="row">
+                                              <div class="col-lg-3 col-md-4 label">Location</div>
+                                              <div class="col-lg-9 col-md-8"><%= user.location%></div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">typeOfMentor</div>
+                                                <div class="col-lg-9 col-md-8"><%= user.typeOfMentor%></div>
+                                              </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Background</div>
+                                                <div class="col-lg-9 col-md-8"><%= user.background%></div>
+                                              </div>
+
+                                              <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Area of interest</div>
+                                                <div class="col-lg-9 col-md-8"><%= user.AreaOfIntrest%></div>
+                                              </div>
+                                              <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Specialization</div>
+                                                <div class="col-lg-9 col-md-8"><%= user.Specialization%></div>
+                                              </div>
+
+                                              <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Mentee</div>
+                                                <div class="col-lg-9 col-md-8"><%= user.mentee.length %></div>
+                                              </div>
+                          
+                                            <div class="row">
+                                              <div class="col-lg-3 col-md-4 label">Phone</div>
+                                              <div class="col-lg-9 col-md-8"><%= user.phone%></div>
+                                            </div>
+                          
+                                            <div class="row">
+                                              <div class="col-lg-3 col-md-4 label">Email</div>
+                                              <div class="col-lg-9 col-md-8"><%= user.email%></div>
+                                            </div>
+                          
+                                          </div>
+                          
+                                          <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                          
+                                            <!-- Profile Edit Form -->
+                                            <form method="post" action="/profile" enctype="multipart/form-data">
+                                              <div class="row mb-3">
+                                                <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <img src="<%= user.profileImage.path%>" alt="Profile" class="image-preview">
+                                                  <div class="pt-2">
+                                                    
+                                                    
+                                                    <div class="upload-btn-wrapper">
+                                                        <button class="btn btn-primary btn-sm"><i class="fa fa-upload" aria-hidden="true" title="Upload new profile image"></i></button>
+                                                        <input type="file" name="profileImage" onchange="previewImage()" />
+                                                      </div>
+                                                    <!-- <div class="upload-btn-wrapper">
+                                                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"  title="Remove my profile image"></i></button>
+                                                        <input type="file" name="fileUpload" />
+                                                      </div> -->
+                                                        
+                                                    </div>
+                                                    
+                                                  
+                                                </div>
+                                              </div>
+                          
+                                              <div class="row mb-3">
+                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <input name="name" type="text" class="form-control" id="fullName" value="<%= user.name%>">
+                                                </div>
+                                              </div>
+
+                                              <div class="row mb-3">
+                                                <label for="background" class="col-md-4 col-lg-3 col-form-label">background</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <input name="background" type="text" class="form-control" id="background" value="<%= user.background%>">
+                                                </div>
+                                              </div>
+
+                                              <div class="row mb-3">
+                                                <label for="AreaOfIntrest" class="col-md-4 col-lg-3 col-form-label">AreaOfIntrest</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <input name="AreaOfIntrest" type="text" class="form-control" id="AreaOfIntrest" value="<%= user.AreaOfIntrest%>">
+                                                </div>
+                                              </div>
+                          
+                                              <div class="row mb-3">
+                                                <label for="description" class="col-md-4 col-lg-3 col-form-label">About</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <textarea name="description" class="form-control" id="description" style="height: 100px"><%= user.description%></textarea>
+                                                </div>
+                                              </div>
+                                             
+                                       
+                                             
+                                              <div class="row mb-3">
+                                                <label for="College" class="col-md-4 col-lg-3 col-form-label">College</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                <select class="form-select form-select-lg" id="collegeName" name="college" aria-label="Default select example" required="">
+                                                        <option value="<%= user.college%>" selected disabled><%= user.college%></option>
+
+                                                </select>
+                                                </div>
+
+                                               
+                                              </div>
+
+                                              <div class="row mb-3">
+                                                <label for="Specialization" class="col-md-4 col-lg-3 col-form-label">Specialization</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                <select class="form-select form-select-lg" id="SpecializationName" name="Specialization" aria-label="Default select example" required="">
+                                                        <option value="<%= user.Specialization%>" selected disabled><%= user.Specialization%></option>
+
+                                                </select>
+                                                </div>
+
+                                               
+                                              </div>
+
+                                              <div class="row mb-3">
+                                                <label for="University" class="col-md-4 col-lg-3 col-form-label">University</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  
+                                                  <select class="form-select form-select-lg" id="universityName" name="university" aria-label="Default select example" required="">
+                                                    <option value="<%= user.university%>" selected disabled><%= user.university%></option>
+
+                                                 </select>
+                                                </div>
+                                              </div>
+                          
+                                              <div class="row mb-3">
+                                                <label for="education" class="col-md-4 col-lg-3 col-form-label">Education</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                 
+                                                  <select class="form-select form-select-lg" id="educationName" name="education" aria-label="Default select example" required="">
+                                                    <option value="<%= user.education%>" selected disabled><%= user.education%></option>
+
+                                                 </select>
+                                                </div>
+                                              </div>
+                                             
+                                              <div class="row mb-3">
+                                                <label for="branch" class="col-md-4 col-lg-3 col-form-label">Branch</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                
+                                                  <select class="form-select form-select-lg" id="branchName" name="branch" aria-label="Default select example" required="">
+                                                    <option value="<%= user.branch%>" selected disabled><%= user.branch%></option>
+
+                                                 </select>
+                                                </div>
+                                              </div>
+
+                                              <div class="row mb-3">
+                                                <label for="typeOfMentor" class="col-md-4 col-lg-3 col-form-label">typeOfMentor</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                
+                                                  <select class="form-select form-select-lg" id="typeOfMentorName" name="typeOfMentor" aria-label="Default select example" required="">
+                                                    <option value="<%= user.typeOfMentor%>" selected disabled><%= user.typeOfMentor%></option>
+
+                                                 </select>
+                                                </div>
+                                              </div>
+                                              
+                                              <div class="row mb-3">
+                                                <label for="location" class="col-md-4 col-lg-3 col-form-label">Location</label>
+                                                <div class="col-md-8 col-lg-9">
+                                 
+                                                  <select class="form-select form-select-lg" id="stateName" name="location" aria-label="Default select example">
+                                                    <option value="<%= user.state%>" selected disabled><%= user.location%></option>
+
+                                                 </select>
+                                                </div>
+                                              </div>
+                                           
+            
+                          
+                                        
+                          
+                                              <div class="row mb-3">
+                                                <label for="phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input type="number" class="form-control" id="phone" name="phone"  value="<%= user.phone%>">
+                                                </div>
+                                              </div>
+                                              <div class="row mb-3">
+                                                <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <div name="email" type="email" class="form-control" id="Email" value=""><%= user.email%></div>
+                                                </div>
+                                              </div>
+                          
+                                              <div class="row mb-3">
+                                                <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
+                                                </div>
+                                              </div>
+                          
+                                              <div class="row mb-3">
+                                                <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
+                                                </div>
+                                              </div>
+                          
+                                              <div class="row mb-3">
+                                                <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
+                                                </div>
+                                              </div>
+                          
+                                              <div class="row mb-3">
+                                                <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                                                </div>
+                                              </div>
+                          
+                                              <div class="text-center">
+                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                              </div>
+                                            </form><!-- End Profile Edit Form -->
+                          
+                                          </div>
+                          
+                                          <div class="tab-pane fade pt-3" id="profile-settings">
+                          
+                                            <!-- Settings Form -->
+                                            <form>
+                          
+                                              <div class="row mb-3">
+                                                <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                                                    <label class="form-check-label" for="changesMade">
+                                                      Changes made to your account
+                                                    </label>
+                                                  </div>
+                                                  <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="newProducts" checked>
+                                                    <label class="form-check-label" for="newProducts">
+                                                      Information on new products and services
+                                                    </label>
+                                                  </div>
+                                                  <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="proOffers">
+                                                    <label class="form-check-label" for="proOffers">
+                                                      Marketing and promo offers
+                                                    </label>
+                                                  </div>
+                                                  <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
+                                                    <label class="form-check-label" for="securityNotify">
+                                                      Security alerts
+                                                    </label>
+                                                  </div>
+                                                </div>
+                                              </div>
+                          
+                                              <div class="text-center">
+                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                              </div>
+                                            </form><!-- End settings Form -->
+                          
+                                          </div>
+                          
+                                          <div class="tab-pane fade pt-3" id="profile-change-password">
+                                            <!-- Change Password Form -->
+                                            <form>
+                          
+                                              <div class="row mb-3">
+                                                <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <input name="password" type="password" class="form-control" id="currentPassword">
+                                                </div>
+                                              </div>
+                          
+                                              <div class="row mb-3">
+                                                <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                                </div>
+                                              </div>
+                          
+                                              <div class="row mb-3">
+                                                <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                  <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                                </div>
+                                              </div>
+                          
+                                              <div class="text-center">
+                                                <button type="submit" class="btn btn-primary">Change Password</button>
+                                              </div>
+                                            </form><!-- End Change Password Form -->
+                          
+                                          </div>
+                          
+                                        </div><!-- End Bordered Tabs -->
+                          
+                                      </div>
+                                    </div>
+                          
+                                  </div>
+                                </div>
+                              </section>
+                            <!-- default-content -->
+                        </div>
+                        <div id="product-content">
+                            Products 
+                            <div class="allProductList">
+
+                            </div>
+                        </div>
+                        <div id="projectrepo-content">
+                             <div id="projectrepo-content-inner" class="row">
+
+                             </div>
+                        </div>
+                        <div id="research-content">
+                            Research
+                        </div>
+                        
+                    </main>
+                     
+                        
+
+                    <div class="overlay"></div>
+                </div>
+            </div>
+                </div>
+
+        
+        <!-- Fotter -->
+        <%- include('../Footer/Footer.ejs') %>
+</body>   
+ <!-- partial -->
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+            <script src='https://unpkg.com/@popperjs/core@2'></script>
+            <script src="js/Profile/script.js"></script>
+            <script src="js/Profile/mentorProf.js" userId="<%= user._id %>" userRole="<%= user.role  %>"></script>
+
+</html>

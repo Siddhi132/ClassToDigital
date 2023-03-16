@@ -6,13 +6,13 @@ const {showProfile, updateProfile}=require('../controller/Profile/profile');
 const {getMentors}=require('../controller/Mentor/mentor');
 const {Categories}=require('../controller/Categories/category');
 const {uploadInternship,getAllInternship,applyForInternship, getInternshipById}=require('../controller/Internship/internship');
-const {uploadIndustrialProject,getAllIndustrialProjects,applyForIndustrialProject}=require('../controller/IndustrialProject/industrialProject');
-const {uploadResearchPaper, getAllResearchPapers, addCommentinResearchPaper, getAllComments}=require('../controller/ResearchPaper/researchPaper');
+const {getIndustrialProjectById,uploadIndustrialProject,getAllIndustrialProjects,applyForIndustrialProject}=require('../controller/IndustrialProject/industrialProject');
+const {getResearchPaperById,uploadResearchPaper, getAllResearchPapers, addCommentinResearchPaper, getAllComments}=require('../controller/ResearchPaper/researchPaper');
 const {getUserById}=require('../controller/Profile/userDetailById');
 const {uploadProduct,getProducts}=require('../controller/Products/product');
 const { uploadProjectRepository, getProjectRepository} = require('../controller/ProjectRepository/projectRepository');
 const {addNotification, getNotification, deleteNotification} = require('../controller/Notification/notification');
-
+const {addMentee,getMentee} = require('../controller/Profile/mentorProfile');
 router.route("/signup").post(verifyUserForSignup);
 router.route("/login").post(verifyUserForLogin);
 router.get('/profile',showProfile);
@@ -21,7 +21,9 @@ router.get('/getMentors', getMentors);
 router.post("/uploadInternship", uploadInternship);
 router.get("/Categories",Categories);
 router.get("/allInternship",getAllInternship);
-router.get("/getInternshipById",getInternshipById)
+router.get("/getInternshipById",getInternshipById);
+router.get("/getIndustrialProjectById",getIndustrialProjectById);
+router.get("/getResearchPaperById",getResearchPaperById);
 router.get("/allIndustrialProjects",getAllIndustrialProjects);
 router.post('/applyForInternship', applyForInternship);
 router.post('/applyForIndustrialProject', applyForIndustrialProject);
@@ -38,7 +40,8 @@ router.get('/getProjectRepository',getProjectRepository);
 router.post('/addNotification', addNotification);
 router.get('/getNotification', getNotification);
 router.get('/deleteNotification', deleteNotification);
-
+router.post('/addMentee',addMentee);
+router.get('/getMentee',getMentee);
 
 
 
