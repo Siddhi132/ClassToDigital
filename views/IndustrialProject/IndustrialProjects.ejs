@@ -10,11 +10,11 @@
 
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css'>
   <link rel="stylesheet" href="css/Internship_IndustrialProject/style.css">
-<style>
-  body{
+  <style>
+    body {
       background-color: #f6f9ff !important;
     }
-</style>
+  </style>
 </head>
 
 <body>
@@ -23,97 +23,102 @@
 
   <% if(login){ %>
     <% if(typeof role!="undefined" && role){ %>
-        <% if(role=="student"){ %>
-            <%- include('../Navbar/StudentNavbar.ejs') %>
-        <% }else if(role=="mentor"){ %>
+      <% if(role=="student" ){ %>
+        <%- include('../Navbar/StudentNavbar.ejs') %>
+          <% }else if(role=="mentor" ){ %>
             <%- include('../Navbar/MentorNavbar.ejs') %>
-        <% }else if(role=="admin"){ %>
-            <%- include('../Navbar/AdminNavbar.ejs') %>
-        <% }else if(role=="company"){ %>
-            <%- include('../Navbar/CompanyNavbar.ejs') %>
-        <% } %>
-    <% } %>
-    
-    <% }else { %>
-        <%- include('../Navbar/InitNavbar.ejs') %>
-    <% } %>
+              <% }else if(role=="admin" ){ %>
+                <%- include('../Navbar/AdminNavbar.ejs') %>
+                  <% }else if(role=="company" ){ %>
+                    <%- include('../Navbar/CompanyNavbar.ejs') %>
+                      <% } %>
+                        <% } %>
+
+                          <% }else { %>
+                            <%- include('../Navbar/InitNavbar.ejs') %>
+                              <% } %>
 
 
-  <div class="container internship-container">
+                                <div class="container internship-container">
 
-    <div class="sidebar">
-      <a href="#!" id="hide-filter-btn"><i class="fa fa-long-arrow-left"></i></a>
+                                  <div class="sidebar">
+                                    <a href="#!" id="hide-filter-btn"><i class="fa fa-long-arrow-left"></i></a>
 
-      <h5><i class="fa fa-filter"></i>FILTER</h5>
-      <div class="select-options">
-        <form method="get" action="/industrialProjects" id="filterForm">
-          <select class="form-select mb-3" aria-label="Default select example" id="category" name="category">
-            <option selected value="">Choose Category</option>
+                                    <h5><i class="fa fa-filter"></i>FILTER</h5>
+                                    <div class="select-options">
+                                      <form method="get" action="/industrialProjects" id="filterForm">
+                                        <select class="form-select mb-3" aria-label="Default select example"
+                                          id="category" name="category">
+                                          <option selected value="">Choose Category</option>
 
-          </select>
-
-
-          <select class="form-select mb-3" aria-label="Default select example" id="location" name="location">
-            <option selected value="">Choose Location</option>
-
-          </select>
-
-          <select class="form-select mb-3" aria-label="Default select example" id="modeOfIndustrialProject"
-            name="modeOfIndustrialProject">
-            <option selected value="">Choose Mode of Industrial Projects</option>
-
-          </select>
-      </div>
+                                        </select>
 
 
+                                        <select class="form-select mb-3" aria-label="Default select example"
+                                          id="location" name="location">
+                                          <option selected value="">Choose Location</option>
 
+                                        </select>
 
-      <div id="checkboxes">
-        <label for="paidOrUnpaid">
-          <input type="checkbox" id="paidOrUnpaid" name="paidOrUnpaid">
-          <span class="text">Paid</span>
-        </label>
-        <label for="typeOfIndustrialProject">
-          <input type="checkbox" id="typeOfIndustrialProject" name="typeOfIndustrialProject">
-          <span class="text">Part-time</span>
-        </label>
+                                        <select class="form-select mb-3" aria-label="Default select example"
+                                          id="modeOfIndustrialProject" name="modeOfIndustrialProject">
+                                          <option selected value="">Choose Mode of Industrial Projects</option>
 
-      </div>
-
-      <p>Stipend</p>
-      <div class="sliders">
-        <div id="price-slider" class="slider"></div>
-        <div class="display-values">
-          <span class="start"></span>
-          <span class="end"></span>
-        </div>
-      </div>
-
-      <div>
-        <input type="submit" class="btn btn-primary" value="Apply filter" id="submitFilterForm">
-      </div>
-
-      </form>
+                                        </select>
+                                    </div>
 
 
 
 
-      <!--     <p>Radius</p>
+                                    <div id="checkboxes">
+                                      <label for="paidOrUnpaid">
+                                        <input type="checkbox" id="paidOrUnpaid" name="paidOrUnpaid">
+                                        <span class="text">Paid</span>
+                                      </label>
+                                      <label for="typeOfIndustrialProject">
+                                        <input type="checkbox" id="typeOfIndustrialProject"
+                                          name="typeOfIndustrialProject">
+                                        <span class="text">Part-time</span>
+                                      </label>
+
+                                    </div>
+
+                                    <p>Stipend</p>
+                                    <div class="sliders">
+                                      <div id="price-slider" class="slider"></div>
+                                      <div class="display-values">
+                                        <span class="start"></span>
+                                        <span class="end"></span>
+                                      </div>
+                                    </div>
+
+                                    <div>
+                                      <input type="submit" class="btn btn-primary" value="Apply filter"
+                                        id="submitFilterForm">
+                                    </div>
+
+                                    </form>
+
+
+
+
+                                    <!--     <p>Radius</p>
     <div id="radius-slider" class="slider"></div> -->
 
 
 
-    </div><!--side-bar end-->
+                                  </div><!--side-bar end-->
 
-    <main>
-      <a href="#!" id="filter-btn">Filter</a>
-      <header>
-        <form action="">
-          <input type="search" placeholder="Search By Company Name" id="searchCompany" style="background-color: #f6f9ff;">
-        </form>
+                                  <main>
+                                    <a href="#!" id="filter-btn">Filter</a>
+                                    <header>
+                                      <form action="">
+                                        <input type="search" placeholder="Search By Company Name" id="searchCompany"
+                                          style="background-color: #f6f9ff;">
+                                      </form>
 
-      </header>
-      <!-- <div class="second-header">
+                                    </header>
+                                    <!-- <div class="second-header">
         <div class="select-wrapper">
           <select>
             <option value="">Date descending</option>
@@ -122,243 +127,252 @@
 
       </div> -->
 
-      <!-- <% if(typeof industrialProject.message !='undefined' && industrialProject.message){ %>
+                                    <!-- <% if(typeof industrialProject.message !='undefined' && industrialProject.message){ %>
         <div class="alert alert-danger" role="alert">
           <%= industrialProject.message %>
         </div>
         <% } %> -->
-      <!-- <%= JSON.stringify(industrialProject.message) %> -->
-      <div id="differentRoleNotApply"></div>
-      <div id="alreadyAppliedAlert"></div>
-      <div id="successAlert"></div>
-      <div id="noOfIndustrialProjectFound" class="ms-3 noOfIndustrialProjectFound"></div>
-      <div class="listings">
+                                    <!-- <%= JSON.stringify(industrialProject.message) %> -->
+                                    <div id="differentRoleNotApply"></div>
+                                    <div id="alreadyAppliedAlert"></div>
+                                    <div id="successAlert"></div>
+                                    <div id="noOfIndustrialProjectFound" class="ms-3 noOfIndustrialProjectFound"></div>
+                                    <div class="listings">
 
-        <% industrialProject.data.allIndustrialProject.forEach(item=> {
-          %>
-          <div class="card">
+                                      <% industrialProject.data.allIndustrialProject.forEach(item=> {
+                                        %>
 
-            <div class="activeDeactive">
-              <% if(item.status){ %>
-                <span>Actively Hiring</span>
-                <% }else{ %>
-                  <span>Not Actively Hiring</span>
-                  <% } %>
-            </div>
-            <div class="row">
-              <div class="col-md-8">
-                <h4>
-                  <%= item.projectTitle %>
-                </h4>
-                <h6>
-                  <%= item.position %>
-                </h6>
-                <p id="companyName">
-                  <%= item.companyName %>
-                </p>
+                                        <% if(item.status){ %>
+                                          <div class="card" style="height:fit-content; width:100%">
+
+                                            <div class="activeDeactive">
+                                              <span>Actively Hiring</span>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-md-8">
+                                                <h4>
+                                                  <%= item.projectTitle %>
+                                                </h4>
+                                                <h6>
+                                                  <%= item.position %>
+                                                </h6>
+                                                <p id="companyName">
+                                                  <%= item.companyName %>
+                                                </p>
 
 
-              </div>
-              <div class="col-md-4">
-                <img src="images/Internship/IBM_logo_in.jpg" width="50%" alt="">
-              </div>
-            </div>
+                                              </div>
+                                              <div class="col-md-4">
+                                                <img src="images/Internship/IBM_logo_in.jpg"
+                                                  style="max-height: 7rem; height: 100%;" alt="">
+                                              </div>
+                                            </div>
 
-            <div class="row">
-              <p><i class="fa-solid fa-location-dot"></i>
-                <%= item.location %>
+                                            <div class="row">
+                                              <p><i class="fa-solid fa-location-dot"></i>
+                                                <%= item.location %>
 
-              </p>
-              <div class="col-md-3">
+                                              </p>
+                                              <div class="col-md-3">
 
-                <p><i class="fa-regular fa-circle-play"></i>Start date</p>
-                <p>
+                                                <p><i class="fa-regular fa-circle-play"></i>Start date</p>
+                                                <p>
 
-                  <%= item.dateOfPosting.slice(0,10) %>
+                                                  <%= item.dateOfPosting.slice(0,10) %>
 
-                </p>
-              </div>
-              <div class="col-md-3">
-                <p><i class="fa-regular fa-calendar"></i>Duration</p>
-                <p>
-                  <%= item.duration %>
-                </p>
-              </div>
-              <div class="col-md-3">
-                <p><i class="fa-solid fa-money-check"></i>Stipend</p>
-                <p>
-                  <%= item.stipend %>
-                </p>
-              </div>
-            </div>
-            <div class="paidOrUnpaid d-flex mb-3 justify-content-start flex-wrap">
-              <div class="ms-1 me-1  mb-3 mb-sm-0 ">
-                <span>
-                  <%= item.paidOrUnpaid %>
-                </span>
-              </div>
-              <div class="ms-1 me-1  mb-3 mb-sm-0">
-                <span><i class="fa-regular fa-clock"></i>
-                  <%= item.typeOfIndustrialProject %>
-                </span>
+                                                </p>
+                                              </div>
+                                              <div class="col-md-3">
+                                                <p><i class="fa-regular fa-calendar"></i>Duration</p>
+                                                <p>
+                                                  <%= item.duration %>
+                                                </p>
+                                              </div>
+                                              <div class="col-md-3">
+                                                <p><i class="fa-solid fa-money-check"></i>Stipend</p>
+                                                <p>
+                                                  <%= item.stipend %>
+                                                </p>
+                                              </div>
+                                            </div>
+                                            <div class="paidOrUnpaid d-flex mb-3 justify-content-start flex-wrap">
+                                              <div class="ms-1 me-1  mb-3 mb-sm-0 ">
+                                                <span>
+                                                  <%= item.paidOrUnpaid %>
+                                                </span>
+                                              </div>
+                                              <div class="ms-1 me-1  mb-3 mb-sm-0">
+                                                <span><i class="fa-regular fa-clock"></i>
+                                                  <%= item.typeOfIndustrialProject %>
+                                                </span>
 
-              </div>
-              <div class="ms-1 me-1  mb-3 mb-sm-0">
-                <span><i class="fa fa-home-user"></i>
-                  <%= item.modeOfIndustrialProject %>
-                </span>
+                                              </div>
+                                              <div class="ms-1 me-1  mb-3 mb-sm-0">
+                                                <span><i class="fa fa-home-user"></i>
+                                                  <%= item.modeOfIndustrialProject %>
+                                                </span>
 
-              </div>
-            </div>
-            <div class="totalApplication">
-              <p>
-                <i class="fa-regular fa-user"></i>
-                <%= item.totalNumberOfApplicants %>
-                  Applicants
-              </p>
-            </div>
-            <hr>
-            <div class="d-flex flex-row-reverse">
-              <div class="ms-2 me-2">
-                <a href="/industrialProjects?_id=<%= item._id %>"><button class="btn btn-primary" id="detailbtn">View
-                    Details</button></a>
-              </div>
-              <div id="applyNowBtnDynamic">
-                <% if (userId !=null && userRole=="student" ) { %>
-                  <button class="btn btn-secondary applynow" data-id="<%= item._id  %>">
-                    Apply now
+                                              </div>
+                                            </div>
+                                            <div class="totalApplication">
+                                              <p>
+                                                <i class="fa-regular fa-user"></i>
+                                                <%= item.totalNumberOfApplicants %>
+                                                  Applicants
+                                              </p>
+                                            </div>
+                                            <hr>
+                                            <div class="d-flex flex-row-reverse">
+                                              <div class="ms-2 me-2">
+                                                <a href="/industrialProjects?_id=<%= item._id %>"><button
+                                                    class="btn btn-primary" id="detailbtn">View
+                                                    Details</button></a>
+                                              </div>
+                                              <div id="applyNowBtnDynamic">
+                                                <% if (userId !=null && userRole=="student" ) { %>
+                                                  <button class="btn btn-secondary applynow" data-id="<%= item._id  %>">
+                                                    Apply now
 
-                  </button>
-                  <% } else if (userId !=null && userRole !="student" ) { %>
+                                                  </button>
+                                                  <% } else if (userId !=null && userRole !="student" ) { %>
 
-                    <% } else { %>
-                      <a href="/login"><button class="btn btn-secondary" id="login">
-                          Apply now
-                        </button></a>
+                                                    <% } else { %>
+                                                      <a href="/login"><button class="btn btn-secondary" id="login">
+                                                          Apply now
+                                                        </button></a>
 
-                      <% } %>
-
-
-
-                        %>
-              </div>
-
-            </div>
-
-
-          </div>
-          <% }); %>
+                                                      <% } %>
 
 
 
+                                                        
+                                              </div>
+
+                                            </div>
 
 
-      </div><!--listings end-->
+                                          </div>
+                                          <% } %>
 
-      <!-- apply Modal  -->
-      <div class="modal fade" id="applyNowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Your application</h5>
-              <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-
-            </div>
-            <div id="modalformalert"></div>
-
-            <div class="modal-body">
-
-
-              <form method="post" id="idpAppForm" enctype="multipart/form-data">
-                <div class="form-outline mb-4">
+                                            <% }); %>
 
 
 
-                  <input type="text" id="name" name="name" class="form-control form-control-lg" required />
-                  <label class="form-label" for="name">Name</label>
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="text" id="email" name="email" class="form-control form-control-lg" required />
-                  <label class="form-label" for="email">Email</label>
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="number" pattern="[0-9]{10}" id="phone" name="phone" class="form-control form-control-lg"
-                    required />
-                  <label class="form-label" for="phone">Phone</label>
-                </div>
-                <div class="mb-4">
-                  <select class="form-select form-select-lg" id="branch" name="branch"
-                    aria-label="Default select example" required>
-                    <option value="" selected>Choose Branch</option>
-
-                  </select>
-                </div>
-                <div class="mb-4">
-                  <select class="form-select form-select-lg" id="college" name="college"
-                    aria-label="Default select example" required>
-                    <option value="Na" selected>Choose college</option>
-
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <select class="form-select form-select-lg" id="education" name="education"
-                    aria-label="Default select example" required>
-                    <option value="Na" selected>Choose education</option>
-
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <select class="form-select form-select-lg" id="state" name="state" aria-label="Default select example"
-                    required>
-                    <option value="Na" selected>Choose state</option>
-
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <select class="form-select form-select-lg" id="stream" name="stream"
-                    aria-label="Default select example" required>
-                    <option value="Na" selected>Choose stream</option>
-
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <select class="form-select form-select-lg" id="university" name="university"
-                    aria-label="Default select example" required>
-                    <option value="Na" selected>Choose university</option>
-
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <select class="form-select form-select-lg" id="semester" name="semester"
-                    aria-label="Default select example" required>
-                    <option value="" selected>Choose semester</option>
-
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="resume" class="form-label">Resume</label>
-                  <input class="form-control" type="file" id="resumeFileIDP" name="resume" required accept=".pdf">
-                </div>
 
 
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal" id="CloseModal">Close</button>
-              <button type="button" class="btn btn-primary" id="submitIDPApp">Submit</button>
-            </div>
-            </form>
+                                    </div><!--listings end-->
 
-          </div>
-        </div>
-      </div>
+                                    <!-- apply Modal  -->
+                                    <div class="modal fade" id="applyNowModal" tabindex="-1"
+                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Your application</h5>
+                                            <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                                              aria-label="Close"></button>
 
-    </main>
+                                          </div>
+                                          <div id="modalformalert"></div>
+
+                                          <div class="modal-body">
+
+
+                                            <form method="post" id="idpAppForm" enctype="multipart/form-data">
+                                              <div class="form-outline mb-4">
 
 
 
-  </div>
-  <!-- Footer -->
-  <%- include('../Footer/Footer.ejs') %>
+                                                <input type="text" id="name" name="name"
+                                                  class="form-control form-control-lg" required />
+                                                <label class="form-label" for="name">Name</label>
+                                              </div>
+                                              <div class="form-outline mb-4">
+                                                <input type="text" id="email" name="email"
+                                                  class="form-control form-control-lg" required />
+                                                <label class="form-label" for="email">Email</label>
+                                              </div>
+                                              <div class="form-outline mb-4">
+                                                <input type="number" pattern="[0-9]{10}" id="phone" name="phone"
+                                                  class="form-control form-control-lg" required />
+                                                <label class="form-label" for="phone">Phone</label>
+                                              </div>
+                                              <div class="mb-4">
+                                                <select class="form-select form-select-lg" id="branch" name="branch"
+                                                  aria-label="Default select example" required>
+                                                  <option value="" selected>Choose Branch</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-4">
+                                                <select class="form-select form-select-lg" id="college" name="college"
+                                                  aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose college</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <select class="form-select form-select-lg" id="education"
+                                                  name="education" aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose education</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <select class="form-select form-select-lg" id="state" name="state"
+                                                  aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose state</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <select class="form-select form-select-lg" id="stream" name="stream"
+                                                  aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose stream</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <select class="form-select form-select-lg" id="university"
+                                                  name="university" aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose university</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <select class="form-select form-select-lg" id="semester" name="semester"
+                                                  aria-label="Default select example" required>
+                                                  <option value="" selected>Choose semester</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <label for="resume" class="form-label">Resume</label>
+                                                <input class="form-control" type="file" id="resumeFileIDP" name="resume"
+                                                  required accept=".pdf">
+                                              </div>
+
+
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal"
+                                              id="CloseModal">Close</button>
+                                            <button type="button" class="btn btn-primary"
+                                              id="submitIDPApp">Submit</button>
+                                          </div>
+                                          </form>
+
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </main>
+
+
+
+                                </div>
+                                <!-- Footer -->
+                                <%- include('../Footer/Footer.ejs') %>
 
 </body>
 <!-- partial -->

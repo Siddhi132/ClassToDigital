@@ -81,110 +81,115 @@ function filterinternships() {
         data.data.allinternship.forEach(item => {
           if (item.status) {
             activeDeactive = 'Actively Hiring';
-          }
-          else {
-            activeDeactive = 'Not Actively Hiring';
-          }
-          card += ` <div class="card">
+            card += ` <div class="card" style="width:100%; height:fit-content;">
 
-       <div class="activeDeactive">
+            <div class="activeDeactive">
+                
+                  <span>${activeDeactive}</span>
+                  
            
-             <span>${activeDeactive}</span>
-             
-      
-       </div>
-       <div class="row">
-           <div class="col-md-8">
-               <h4>
-                   ${item.position}
-               </h4>
-               <p id="companyName">
-                 ${item.companyName}
-               </p>
-               <p><i class="fa-solid fa-location-dot"></i>
-                 ${item.location}
-       
-             </p>
-       
-           </div>
-           <div class="col-md-4">
-               <img src="images/Internship/IBM_logo_in.jpg" width="50%" alt="">
-           </div>
-       </div>
-       
-       <div class="row">
-           <div class="col-md-3">
-               <p><i class="fa-regular fa-circle-play"></i>Start date</p>
-               <p>
-       
-                 ${item.dateOfPosting.slice(0, 10)}
-                 
-               </p>
-           </div>
-           <div class="col-md-3">
-               <p><i class="fa-regular fa-calendar"></i>Duration</p>
-               <p>
-                   ${item.duration}
-               </p>
-           </div>
-           <div class="col-md-3">
-               <p><i class="fa-solid fa-money-check"></i>Stipend</p>
-               <p>
-                   ${item.stipend}
-               </p>
-           </div>
-       </div>
-       <div class="paidOrUnpaid d-flex mb-3">
-           <div class="ms-1 me-1">
-               <span>
-                   ${item.paidOrUnpaid}
-               </span>
-           </div>
-           <div class="ms-1 me-1">
-               <span><i class="fa-regular fa-clock"></i>
-                 ${item.typeOfInternship}
-               </span>
-       
-           </div>
-           <div class="ms-1 me-1">
-               <span><i class="fa fa-home-user"></i>
-                 ${item.modeOfInternship}
-               </span>
-       
-           </div>
-       </div>
-       <div class="totalApplication">
-           <p>
-             <i class="fa-regular fa-user"></i>
-             ${item.totalNumberOfApplicants}
-             Applicants
-           </p>
-           </div>
-       <hr>
-       <div class="d-flex flex-row-reverse">
-           <div class="ms-2 me-2">
-               <a href="internships?_id=${item._id}" ><button class="btn btn-primary" id="detailbtn">View Details</button></a>
-           </div>`;
-          if (userId != "" && userRole == "student") {
-            card += `  <button class="btn btn-secondary applynow"  data-id="${item._id}">
-            Apply now
-
-          </button>`;
-          }
-          else if (userId != "" && userRole != "student") {
-
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>
+                        ${item.position}
+                    </h4>
+                    <p id="companyName">
+                      ${item.companyName}
+                    </p>
+                    <p><i class="fa-solid fa-location-dot"></i>
+                      ${item.location}
+            
+                  </p>
+            
+                </div>
+                <div class="col-md-4">
+                    <img src="images/Internship/IBM_logo_in.jpg" style="max-height: 7rem; height: 100%;" alt="">
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <p><i class="fa-regular fa-circle-play"></i>Start date</p>
+                    <p>
+            
+                      ${item.dateOfPosting.slice(0, 10)}
+                      
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p><i class="fa-regular fa-calendar"></i>Duration</p>
+                    <p>
+                        ${item.duration}
+                    </p>
+                </div>
+                <div class="col-md-3">
+                    <p><i class="fa-solid fa-money-check"></i>Stipend</p>
+                    <p>
+                        ${item.stipend}
+                    </p>
+                </div>
+            </div>
+            <div class="paidOrUnpaid d-flex mb-3">
+                <div class="ms-1 me-1">
+                    <span>
+                        ${item.paidOrUnpaid}
+                    </span>
+                </div>
+                <div class="ms-1 me-1">
+                    <span><i class="fa-regular fa-clock"></i>
+                      ${item.typeOfInternship}
+                    </span>
+            
+                </div>
+                <div class="ms-1 me-1">
+                    <span><i class="fa fa-home-user"></i>
+                      ${item.modeOfInternship}
+                    </span>
+            
+                </div>
+            </div>
+            <div class="totalApplication">
+                <p>
+                  <i class="fa-regular fa-user"></i>
+                  ${item.totalNumberOfApplicants}
+                  Applicants
+                </p>
+                </div>
+            <hr>
+            <div class="d-flex flex-row-reverse">
+                <div class="ms-2 me-2">
+                    <a href="internships?_id=${item._id}" ><button class="btn btn-primary" id="detailbtn">View Details</button></a>
+                </div>`;
+               if (userId != "" && userRole == "student") {
+                 card += `  <button class="btn btn-secondary applynow"  data-id="${item._id}">
+                 Apply now
+     
+               </button>`;
+               }
+               else if (userId != "" && userRole != "student") {
+     
+               }
+               else {
+                 card += `<a href="/login"><button class="btn btn-secondary" id="login">
+                 Apply now
+               </button></a>`;
+               }
+     
+     
+               card += ` </div>
+            
+            
+            </div>`;
           }
           else {
-            card += `<a href="/login"><button class="btn btn-secondary" id="login">
-            Apply now
-          </button></a>`;
-          }
-
-
-          card += ` </div>
-       
-       
-       </div>`;
+            card = `<div class="card" style="width:100%; height:fit-content;">
+            <div class="card-body" style="padding:0px">
+              <h5 class="card-title">No internship found</h5>
+            </div>`;
+              $('.listings').html(card);
+              $('#noOfInternshipFound').text("");          }
+     
         });
         console.log("card", card);
         $('.listings').html(card);

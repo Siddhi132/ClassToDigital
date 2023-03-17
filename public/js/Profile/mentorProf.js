@@ -239,7 +239,7 @@ profileProductBtn.addEventListener("click", function () {
       <div class="card-footer" style="display: none;">
         <h5 class="text-uppercase text-primary">Notes</h5>
         <p>
-        `+ productData[i].note + `<span class="hideDetail"><i
+        `+ productData[i].note + `<span class="hideDetail" style="float:right;"><i
                 class=" text-primary fa-sharp fa-solid fa-arrow-up"></i></span>
         </p>
       </div>
