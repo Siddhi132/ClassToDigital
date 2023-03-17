@@ -1,14 +1,9 @@
 const StudentProfile = require('../../models/StudentProfile');
-// const IndustrialProjects = require('../models/industrialProject');
-// const sellProduct = require('../models/sellProduct');
 
-// const Internship = require('../models/internship');
-// const User = require('../../models/Users');
 const MentorProfile = require('../../models/MentorProfile');
 const AdminProfile = require('../../models/AdminProfile');
 const CompanyProfile = require('../../models/CompanyProfile');
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
+
 
 
 const showProfile = async (req, res) => {
