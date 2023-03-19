@@ -209,41 +209,31 @@ function previewImage() {
 var internshipContainer = document.getElementById("internship-container-profile");
 var idpContainer = document.getElementById("idp-container-profile");
 var researchContainer = document.getElementById("research-container-profile");
+var productContainer = document.getElementById("product-container-profile");
+var mentorContainer = document.getElementById("mentor-container-profile");
 var userInternships = document.currentScript.getAttribute('userInternships').split(',');
 var userIdp = document.currentScript.getAttribute('userIdp').split(',');
 var userResearch = document.currentScript.getAttribute('userResearch').split(',');
+var userProducts = document.currentScript.getAttribute('userProducts').split(',');
+var mentors = document.currentScript.getAttribute('mentors').split(',');
+var userId = document.currentScript.getAttribute('userId');
 console.log('userInternships', userInternships);
 console.log('userIdp', userIdp);
 console.log('userResearch', userResearch);
-
-
-// fetch('/api/getUserById?userId=' + userId, {
-//     method: 'GET',
-// }
-// )
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log('Success:', data);
-//         if (data.statusCode == 200) {
-//             userEmail = data.userDetails.email;
-//             userRole = data.userDetails.role;
-//             console.log(userEmail);
-//             console.log(userRole);
-//         }
-//         else {
-//             alert("Something went wrong");
-//         }
-
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error);
-//     }
-//     );
+console.log('userProducts', userProducts);
+console.log('mentors', mentors);
 
 
 
+
+console.log('Success: maro data aaray', dataArray);
+
+showLoader();
 for (var i = 0; i < userInternships.length; i++) {
+
   var internship = userInternships[i];
+  // alert(dataArray.length);
+
   fetch('/api/getInternshipById?id=' + internship, {
     method: 'GET',
   }
@@ -251,6 +241,7 @@ for (var i = 0; i < userInternships.length; i++) {
     .then(response => response.json())
     .then(data => {
       var internship = data.data.internship;
+      var internshipStatus = "pending";
       console.log('Success:', data.data.internship);
       internshipContainer.innerHTML += `   <div class="row justify-content-center mb-3">
             <div class="col-md-12 col-xl-10">
@@ -280,10 +271,12 @@ for (var i = 0; i < userInternships.length; i++) {
                       </p>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                    <h6 class="mb-1 me-1" id="${internship._id}"> ${internshipStatus}</h6>
                     <div class="d-flex flex-row align-items-center mb-1">
+
                     <h6 class="mb-1 me-1"> ${internship.modeOfInternship}</h5>
                   </div>
-                  <h6 class="text-success"> ${internship.category}</h6>
+                  <h6 class=""> ${internship.category}</h6>
                       <div class="d-flex flex-column mt-4">
                         
                         <a href="/internships?_id=${internship._id}"><button class="btn btn-primary" id="detailbtn">View
@@ -308,6 +301,8 @@ for (var i = 0; i < userInternships.length; i++) {
 
 for (var i = 0; i < userIdp.length; i++) {
   var idp = userIdp[i];
+  // var idpStatus = dataArray[1][i].status;
+  var idpStatus = "pending";;
   fetch('/api/getIndustrialProjectById?id=' + idp, {
     method: 'GET',
   }
@@ -344,10 +339,12 @@ for (var i = 0; i < userIdp.length; i++) {
                   </p>
                 </div>
                 <div class="col-md-4 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                <h6 class="mb-1 me-1"id='${insustrialProject._id}'">  ${idpStatus}</h6>
                   <div class="d-flex flex-row align-items-center mb-1">
+
                     <h6 class="mb-1 me-1"> ${insustrialProject.modeOfIndustrialProject}</h5>
                   </div>
-                  <h6 class="text-success"> ${insustrialProject.category}</h6>
+                  <h6 class=""> ${insustrialProject.category}</h6>
                   <div class="d-flex flex-column mt-4">
                     
                     <a href="/industrialProjects?_id=${insustrialProject._id}"><button class="btn btn-primary" id="detailbtn">View
@@ -411,7 +408,7 @@ for (var i = 0; i < userResearch.length; i++) {
       console.log("data rs", data)
       var research = data.data.researchPaper;
       console.log('Success data:', research);
-      researchContainer.innerHTML  += `   <div class="row justify-content-center mb-3">
+      researchContainer.innerHTML += `   <div class="row justify-content-center mb-3">
       <div class="col-md-12 col-xl-10">
         <div class="card shadow-0 border rounded-3">
           <div class="card-body">
@@ -432,8 +429,8 @@ for (var i = 0; i < userResearch.length; i++) {
                 <div class="mt-1 mb-0 text-muted small">
                 <h6 style="font-weight:bold">Team Members</h6>
                   ${research.teamMembers.split(",").map((member) => {
-                    return `<span>${member} |</span>`
-                  }).join("")}
+        return `<span>${member} |</span>`
+      }).join("")}
   
             
                 </div>
@@ -447,7 +444,7 @@ for (var i = 0; i < userResearch.length; i++) {
             </div>
                 <div class="d-flex flex-column mt-4">
                   
-                  <a href="/internships?_id=${research._id}"><button class="btn btn-primary" id="detailbtn">View
+                  <a href="/researchPapers?_id=${research._id}"><button class="btn btn-primary" id="detailbtn">View
                   Details</button></a>
                 </div>
               </div>
@@ -458,7 +455,7 @@ for (var i = 0; i < userResearch.length; i++) {
     </div>
     
 `;
-    } 
+    }
     )
     .catch((error) => {
       console.error('Error:', error);
@@ -466,5 +463,218 @@ for (var i = 0; i < userResearch.length; i++) {
     );
 
 
+}
+
+
+
+fetch("/api/getProducts?userId=" + userId)
+
+  .then(response => response.json())
+  .then(data => {
+    console.log("data kaka", data);
+    var productData = data.data.allProducts;
+    console.log("productDataLength", productData);
+
+    var productDataLength = data.data.allProducts.length;
+
+    var productDataHtml = "";
+    for (var i = 0; i < productDataLength; i++) {
+      console.log("productData[i]", productData[i]);
+
+      productDataHtml += `
+<div class="row justify-content-center mb-3">
+<div class="col-md-12 col-xl-10">
+  <div class="card shadow-3-strong border rounded-3">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+          <div id="carouselExampleControls`+ i + `" class="carousel slide" data-mdb-ride="carousel">
+            <div class="carousel-inner">`;
+
+
+      productData[i].photos.forEach(function (photo) {
+        productDataHtml += ` <div class="carousel-item active" style="text-align: center;text-align: -webkit-center; text-align: -moz-center; ">
+                <img style="height: 180px;" src="`+ photo.path + `" class="img-thumbnail d-block"
+                alt="Product" />                               
+            </div>`;
+      })
+
+
+
+
+
+      productDataHtml += `</div>
+            <button style="color:#1c4980;" class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleControls`+ i + `"
+              data-mdb-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button style="color:#1c4980;" class="carousel-control-next" type="button" data-mdb-target="#carouselExampleControls`+ i + `"
+              data-mdb-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-6">
+          <h5 id="productName">
+            `+ productData[i].productTitle + `
+          </h5>
+          <div class="d-flex flex-row">
+            <div class="text-primary mb-1 me-2">
+              <span id="conditionRatingVal" style="display:none;">
+                `+ parseInt(JSON.stringify(productData[i].conditionRating)) + `
+              </span>`;
+      console.log(productData[i].conditionRating);
+      for (var j = 0; j < parseInt(JSON.stringify(productData[i].conditionRating)); j++) {
+        productDataHtml += `<i class="fa fa-star"></i>`;
+      }
+
+
+
+
+
+      productDataHtml += `   </div>
+          </div>
+          <div class="mt-1 mb-0  small">
+            <span class="text-primary"> • </span>
+            <span id="categoryName">
+              `+ productData[i].category + `
+            </span>
+            <span class="text-primary"> • </span>
+            <span>
+            `+ productData[i].location + `
+            </span>   
+
+          </div>
+          <div class="mb-2 text-muted small">
+            <span class="text-primary"> • </span>
+            <span>Date Of Purchase :  `+ productData[i].dateOfPurchase.slice(0, 10) + `</span>
+
+          </div>
+
+        </div>
+        <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start d-flex flex-column ">
+          <!-- <div class="d-flex flex-row align-items-center mb-1"> -->
+          <span class="text-primary text-end">Message <i class="fa fa-comment"></i></span>
+
+          <h4 class="mb-1 me-1">
+          `+ productData[i].price + ` Rs.
+          </h4>
+          <!-- chat icon  -->
+          <!-- </div> -->
+          <!-- <div class="d-flex flex-column mt-4"> -->
+          <button class="btn btn-primary mt-auto showDetail" type="button">Details</button>
+
+          <!-- </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="card-footer" style="display: none;">
+      <h5 class="text-uppercase text-primary">Notes</h5>
+      <p>
+      `+ productData[i].note + `<span class="hideDetail" style="float:right;"><i
+              class=" text-primary fa-sharp fa-solid fa-arrow-up"></i></span>
+      </p>
+    </div>
+  </div>
+</div>
+</div>`;
+    }
+    $('#product-container-profile').html(productDataHtml);
   }
- 
+  );
+
+
+
+for (var i = 0; i < mentors.length; i++) {
+  var mentorId = mentors[i];
+  fetch("/api/getMentors?_id=" + mentorId)
+    .then(response => response.json())
+    .then(data => {
+      console.log("data mentors", data);
+      var mentor = data.data.mentors[0];
+      console.log("mentor", mentor);
+      mentorContainer.innerHTML += `
+        <div class="card mentor-card"
+        style="border-radius: 15px;">
+        <div
+            class="card-body text-center">
+            <div class="mt-3 mb-4">
+                <img src="${mentor.profileImage.path}"
+                    class="rounded-circle img-fluid"
+                    style="width: 100px;" />
+            </div>
+            <h4  class="mb-2 mentordetails">
+                    ${mentor.name}
+            </h4>
+            <h4 class="mb-2 mentordetails" id="typeMentor">
+                    ${mentor.typeOfMentor}
+            </h4>
+            <h4 class="mb-2 mentordetails" id="specMentor">
+                    ${mentor.Specialization}
+            </h4>
+            <p
+                class=" text-muted mb-4">
+                @${mentor.AreaOfIntrest}
+                 <span
+                        class="mx-2"><br></span>
+                    <a href="#!">
+                    ${mentor.college}
+                    </a>
+            </p>
+
+            <a
+                href="/mentors?_id=${mentor._id}"><button
+                    type="button"
+                    class="btn btn-dark btn-rounded btn-sm ">
+                    View More
+                    Details
+                </button></a>
+        </div>
+    </div>`
+
+
+    })
+
+}
+
+
+var dataArray = [];
+fetch('/api/getUserById?userId=' + userId, {
+  method: 'GET',
+}
+)
+  .then(response => response.json())
+  .then(data => {
+    hideLoader();
+    // console.log('Success: maro data', data.userDetails);
+    const internshipsArray = data.userDetails.internships.map(({ internshipId, status }) => ({ id: internshipId, status }));
+    const idpsArray = data.userDetails.industrialProjects.map(({ industrialProjectId, status }) => ({ id: industrialProjectId, status }));
+    console.log('Success: maro data int', internshipsArray);
+    console.log('Success: maro data idp', idpsArray);
+    dataArray.push(internshipsArray);
+    dataArray.push(idpsArray);
+
+
+    for (var j = 0; j < dataArray.length; j++) {
+      for (var k = 0; k < dataArray[j].length; k++) {
+        if (dataArray[j][k].status == 'pending') {
+          dataArray[j][k].status = '<span class="badge rounded-pill bg-warning text-dark">Pending</span>';
+        }
+        else if (dataArray[j][k].status == 'hired') {
+          dataArray[j][k].status = '<span class="badge rounded-pill bg-success">Hired</span>';
+        }
+        else if (dataArray[j][k].status == 'rejected') {
+          dataArray[j][k].status = '<span class="badge rounded-pill bg-danger">Rejected</span>';
+        }
+
+        $("#"+dataArray[j][k].id).html(dataArray[j][k].status);
+      }
+    }
+
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  }
+  );

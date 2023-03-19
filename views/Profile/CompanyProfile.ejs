@@ -9,8 +9,7 @@
     <link rel='stylesheet'
         href='https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&amp;display=swap'>
     <link rel="stylesheet" href="styles/Profile/style.css">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 
 </head>
 <body>
@@ -73,15 +72,7 @@
                                         </a>
                                      
                                     </li>
-                                    <li class="menu-item ">
-                                        <a href="#" id="profile-product-btn">
-                                            <span class="menu-icon">
-                                                <i class="fa-sharp fa-solid fa-cart-shopping"></i>
-                                            </span>
-                                            <span class="menu-title">Products</span>
-                                        </a>
-                             
-                                    </li>
+                  
                                     <li class="menu-item ">
                                         <a href="#" id="profile-idp-btn">
                                             <span class="menu-icon">
@@ -91,51 +82,8 @@
                                         </a>
                                  
                                     </li>
-                                    <li class="menu-item ">
-                                        <a href="#" id="profile-mentors-btn">
-                                            <span class="menu-icon">
-                                                <i class="fa-solid fa-chalkboard-user"></i>
-                                            </span>
-                                            <span class="menu-title">Mentors</span>
-                                        </a>
+
                                    
-                                    </li>
-                                    <li class="menu-item ">
-                                        <a href="#"  id="profile-research-btn">
-                                            <span class="menu-icon">
-                                                <i class="fa-sharp fa-solid fa-book"></i>
-                                            </span>
-                                            <span class="menu-title">Research Papers</span>
-                                        </a>
-                               
-                                    </li>
-                                    <!-- <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-icon">
-                                                <i class="ri-book-2-fill"></i>
-                                            </span>
-                                            <span class="menu-title">Documentation</span>
-                                            <span class="menu-suffix">
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-icon">
-                                                <i class="ri-calendar-fill"></i>
-                                            </span>
-                                            <span class="menu-title">Calendar</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-icon">
-                                                <i class="ri-service-fill"></i>
-                                            </span>
-                                            <span class="menu-title">Examples</span>
-                                        </a>
-                                    </li> -->
                                 </ul>
                             </nav>
                         </div>
@@ -152,17 +100,17 @@
                             </a>
                         </div>
                         <div id="internship-content">
+                            
                           <div class="pagetitle">
                             <h1>Internships</h1>
                             <nav>
                               <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item">Users</li>
+                                <li class="breadcrumb-item"><a href="/">Home</a></li>
                                 <li class="breadcrumb-item active">Internships</li>
                               </ol>
                             </nav>
                           </div>
-                          <section class="">
+                          <section>
                             <div class="container py-5 scrollable-section profile-scroll" id="internship-container-profile">
 
 
@@ -174,8 +122,7 @@
                                 <h1>Profile</h1>
                                 <nav>
                                   <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                    <li class="breadcrumb-item">Users</li>
+                                    <li class="breadcrumb-item"><a href="/">Home</a></li>
                                     <li class="breadcrumb-item active">Profile</li>
                                   </ol>
                                 </nav>
@@ -187,7 +134,7 @@
                                     <div class="card">
                                       <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                           
-                                        <img src="<%= user.profileImage.path%>" alt="Profile Image Not Uploaded" >
+                                        <img src="<%= user.profileImage.path%>" alt="Profile Image Not Uploaded" class="">
                                         <h2><%= user.name%></h2>
                                         <h3 class="mt-2"><%= user.branch %></h3>
                                         <div class="social-links mt-2">
@@ -238,36 +185,14 @@
                                               <div class="col-lg-9 col-md-8"><%= user.name%></div>
                                             </div>
                           
-                                            <div class="row">
-                                              <div class="col-lg-3 col-md-4 label">College</div>
-                                              <div class="col-lg-9 col-md-8"><%= user.college%></div>
-                                            </div>
-                          
-                                            <div class="row">
-                                              <div class="col-lg-3 col-md-4 label">University</div>
-                                              <div class="col-lg-9 col-md-8"><%= user.university%></div>
-                                            </div>
-                          
-                                            <div class="row">
-                                              <div class="col-lg-3 col-md-4 label">Education</div>
-                                              <div class="col-lg-9 col-md-8"><%= user.education%></div>
-                                            </div>
-                                            <div class="row">
-                                              <div class="col-lg-3 col-md-4 label">Branch</div>
-                                              <div class="col-lg-9 col-md-8"><%= user.branch%></div>
-                                            </div>
-                                            <div class="row">
-                                              <div class="col-lg-3 col-md-4 label">Stream</div>
-                                              <div class="col-lg-9 col-md-8"><%= user.stream%></div>
-                                            </div>
-                                            <div class="row">
-                                              <div class="col-lg-3 col-md-4 label">Semester</div>
-                                              <div class="col-lg-9 col-md-8"><%= user.semester%></div>
-                                            </div>
-                          
+                                           
                                             <div class="row">
                                               <div class="col-lg-3 col-md-4 label">State</div>
                                               <div class="col-lg-9 col-md-8"><%= user.state%></div>
+                                            </div>
+                                            <div class="row">
+                                              <div class="col-lg-3 col-md-4 label">Company Category</div>
+                                              <div class="col-lg-9 col-md-8"><%= user.category%></div>
                                             </div>
                           
                           
@@ -292,7 +217,6 @@
                                                 <div class="col-md-8 col-lg-9">
                                                   <img src="<%= user.profileImage.path%>" alt="Profile" class="image-preview">
                                                   <div class="pt-2">
-                                                    
                                                     
                                                     <div class="upload-btn-wrapper">
                                                         <button class="btn btn-primary btn-sm"><i class="fa fa-upload" aria-hidden="true" title="Upload new profile image"></i></button>
@@ -325,74 +249,29 @@
                                              
                                        
                                              
-                                              <div class="row mb-3">
-                                                <label for="College" class="col-md-4 col-lg-3 col-form-label">College</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                <select class="form-select form-select-lg" id="collegeName" name="college" aria-label="Default select example" required="">
-                                                        <option value="<%= user.college%>" selected disabled><%= user.college%></option>
-
-                                                </select>
-                                                </div>
-
-                                               
-                                              </div>
-                                              <div class="row mb-3">
-                                                <label for="University" class="col-md-4 col-lg-3 col-form-label">University</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                  
-                                                  <select class="form-select form-select-lg" id="universityName" name="university" aria-label="Default select example" required="">
-                                                    <option value="<%= user.university%>" selected disabled><%= user.university%></option>
-
-                                                 </select>
-                                                </div>
-                                              </div>
+                                             
+                           
                           
-                                              <div class="row mb-3">
-                                                <label for="education" class="col-md-4 col-lg-3 col-form-label">Education</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                 
-                                                  <select class="form-select form-select-lg" id="educationName" name="education" aria-label="Default select example" required="">
-                                                    <option value="<%= user.education%>" selected disabled><%= user.education%></option>
-
-                                                 </select>
-                                                </div>
-                                              </div>
-                                              <div class="row mb-3">
-                                                <label for="stream" class="col-md-4 col-lg-3 col-form-label">Stream</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                 
-                                                  <select class="form-select form-select-lg" id="streamName" name="stream" aria-label="Default select example" required="">
-                                                    <option value="<%= user.stream%>" selected disabled><%= user.stream%></option>
-
-                                                 </select>
-                                                </div>
-                                              </div>
-                                              <div class="row mb-3">
-                                                <label for="branch" class="col-md-4 col-lg-3 col-form-label">Branch</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                
-                                                  <select class="form-select form-select-lg" id="branchName" name="branch" aria-label="Default select example" required="">
-                                                    <option value="<%= user.branch%>" selected disabled><%= user.branch%></option>
-
-                                                 </select>
-                                                </div>
-                                              </div>
-                                              <div class="row mb-3">
-                                                <label for="semester" class="col-md-4 col-lg-3 col-form-label">Semester</label>
-                                                <div class="col-md-8 col-lg-9">
-                                                  
-                                                  <select class="form-select form-select-lg" id="semesterName" name="semester" aria-label="Default select example" required="">
-                                                    <option value="<%= user.semester%>" selected disabled><%= user.semester%></option>
-
-                                                 </select>
-                                                </div>
-                                              </div>
+                                             
+                   
+                           
                                               <div class="row mb-3">
                                                 <label for="state" class="col-md-4 col-lg-3 col-form-label">State</label>
                                                 <div class="col-md-8 col-lg-9">
                                  
                                                   <select class="form-select form-select-lg" id="stateName" name="state" aria-label="Default select example" required="">
                                                     <option value="<%= user.state%>" selected disabled><%= user.state%></option>
+
+                                                 </select>
+                                                </div>
+                                              </div>
+                                           
+                                              <div class="row mb-3">
+                                                <label for="state" class="col-md-4 col-lg-3 col-form-label">Category</label>
+                                                <div class="col-md-8 col-lg-9">
+                                 
+                                                  <select class="form-select form-select-lg" id="categoryName" name="category" aria-label="Default select example" required="">
+                                                    <option value="<%= user.category%>" selected disabled><%= user.category%></option>
 
                                                  </select>
                                                 </div>
@@ -533,30 +412,13 @@
                                 </div>
                               </section>
                         </div>
-                        <div id="product-content">
-                          <div class="pagetitle">
-                            <h1>Product</h1>
-                            <nav>
-                              <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                <li class="breadcrumb-item">Users</li>
-                                <li class="breadcrumb-item active">Product</li>
-                              </ol>
-                            </nav>
-                          </div> 
-                          <section>
-                            <div class="container py-5 scrollable-section profile-scroll" id="product-container-profile">
-                                        
-                            </div>
-                          </section>
-                        </div>
+                       
                         <div id="idp-content">
                           <div class="pagetitle">
                             <h1>Industrial Projects</h1>
                             <nav>
                               <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                <li class="breadcrumb-item">Users</li>
                                 <li class="breadcrumb-item active">Industrial Projects</li>
                               </ol>
                             </nav>
@@ -568,40 +430,54 @@
                             </div>
                           </section>
                         </div>
-                        <div id="research-content">
+                        
+                        <div id="applicants-content" style="display: none;">
                           <div class="pagetitle">
-                            <h1>Reserach Paper</h1>
+                            <h1>Applicants</h1>
                             <nav>
                               <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                <li class="breadcrumb-item">Users</li>
-                                <li class="breadcrumb-item active">Reserach Paper</li>
+                                <li class="breadcrumb-item active">Applicants</li>
                               </ol>
                             </nav>
                           </div>
                           <section>
-                            <div class="container py-5 scrollable-section profile-scroll" id="research-container-profile">
-                                        
+                            <div class="container py-5 scrollable-section profile-scroll" id="applicants-container-profile">
+
+                              <table id="applicants-table" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>College</th>
+                                        <th>Semester</th>
+                                        <th>Resume</th>
+                                        <th>View Profile</th>
+                                        <th>Action</th>
+                                        <th>Status</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="applicants-table-tbody">
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>College</th>
+                                      <th>Semester</th>
+                                      <th>Resume</th>
+                                      <th>View Profile</th>
+                                      <th>Action</th>
+                                      <th>Status</th>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
                             </div>
                           </section>
                         </div>
-                        <div id="mentor-content">
-                          <div class="pagetitle">
-                            <h1>Mentors</h1>
-                            <nav>
-                              <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                <li class="breadcrumb-item">Users</li>
-                                <li class="breadcrumb-item active">Mentor</li>
-                              </ol>
-                            </nav>
-                          </div>
-                          <section>
-                            <div class="container py-5 scrollable-section profile-scroll" id="mentor-container-profile">
-                                        
-                            </div>
-                          </section>
-                        </div>
+                        
+                        
                     </main>
                      
                         
@@ -610,24 +486,16 @@
                 </div>
             </div>
                 </div>
-                <% var internshipIds = []; %>
-                <% for (var i = 0; i < user.internships.length; i++) { %>
-                <% internshipIds.push(user.internships[i].internshipId); %>
-                <% } %>
-                
-                <% var idpIds = []; %>
-                <% for (var i = 0; i < user.industrialProjects.length; i++) { %>
-                <% idpIds.push(user.industrialProjects[i].industrialProjectId); %>
-                <% } %>
+
         
       <!-- Fotter -->
         <%- include('../Footer/Footer.ejs') %>
 </body>   
  <!-- partial -->
-<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-
+ <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <script type="text/javascript" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
             <script src='https://unpkg.com/@popperjs/core@2'></script>
             <script src="js/Profile/script.js"></script>
-            <script src="js/Profile/manageProf.js" userInternships="<%= internshipIds %>", userIdp="<%= idpIds %>" userResearch="<%= user.researchPapers %>" userProducts="<%= user.sellProducts %>" userId="<%= user._id %>" mentors="<%= user.mentor %>" ></script>
+            <script src="js/Profile/companyProf.js" userInternships="<%= user.internships %>", userIdp="<%= user.industrialProjects %>" userId="<%= user._id %>" appliedStudents="<%= user.appliedStudents %>"></script>
 
 </html>

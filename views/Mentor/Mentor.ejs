@@ -141,8 +141,8 @@
                 <div class="row upper-profile-section">
 
                     <div class="details-left-section col-md-5 mentor-detail-image">
-                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
-                            class="rounded-circle z-depth-2 mentor-image" alt="100x100">
+                        <img src="<%- item.profileImage.path -%>"
+                            class="rounded-circle z-depth-2 mentor-image" alt="100x100" style="width: 200px; height: 200px;">
 
                     </div>
 
@@ -153,7 +153,7 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
-                        <p><%- item.AreaOfIntrest -%></p>
+                        <p><span>Area Of Intrest</span> : <%- item.AreaOfIntrest -%></p></p>
 
 
                         <div class="d-flex ">
@@ -202,9 +202,9 @@
 
                             <div class="ms-4 detail-sec">
                                 <div class="batch-mentor">
-                                    <i class="fas fa-user"></i>&nbsp;&nbsp; Students
+                                    <i class="fas fa-user"></i>&nbsp;&nbsp; Mentees
                                 </div>
-                                <p>&nbsp;<%- item.mentee -%></p>
+                                <p>&nbsp;<%- item.mentee.length -%>
                             </div>
                         </div>
 
@@ -216,13 +216,12 @@
 
 
 
-
                 </div>
 
                 <hr>
                 <div class="brief-details-mentor-section">
                     <h3 class="card-title">About Me</h3>
-                    <p><%- item.Description -%></p>
+                    <p><%- item.description -%></p>
 
 
                     <br>
