@@ -163,7 +163,13 @@
 
                                               </div>
                                               <div class="col-md-4">
-                                                <img src="images/Internship/IBM_logo_in.jpg"
+                                                <img src="
+                                                <% if (item.companyImage.name !== item.companyId+'__profileImage.jpg') { %>
+                                                  <%= item.companyImage.path %>
+                                                <% } else { %>
+                                                  <%= '/uploadedData/profile/profileImages/' + item.companyImage.name %>
+                                                <% } %>
+                                                "
                                                   style="max-height: 7rem; height: 100%;" alt="">
                                               </div>
                                             </div>
@@ -191,7 +197,7 @@
                                               <div class="col-md-3">
                                                 <p><i class="fa-solid fa-money-check"></i>Stipend</p>
                                                 <p>
-                                                  <%= item.stipend %>
+                                                  <%= item.stipend %> INR
                                                 </p>
                                               </div>
                                             </div>

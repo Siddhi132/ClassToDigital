@@ -10,14 +10,7 @@ let data = {
 }
 var alreadyAppliedInternships;
 
-// JavaScript code to show and hide loader component
-function showLoader() {
-  document.getElementById("loader").style.display = "block";
-}
 
-function hideLoader() {
-  document.getElementById("loader").style.display = "none";
-}
 
 
 
@@ -77,9 +70,12 @@ function filterinternships() {
         var card = ``;
         var activeDeactive;
         var lengthOfArray = data.data.allinternship.length;
-        $('#noOfInternshipFound').text(lengthOfArray + " Internships Found");
+        // $('#noOfInternshipFound').text(lengthOfArray + " Internships Found");
+        $('.listings').html('');
+        var totalinternship = 0;
         data.data.allinternship.forEach(item => {
           if (item.status) {
+            totalinternship++;
             activeDeactive = 'Actively Hiring';
             card += ` <div class="card" style="width:100%; height:fit-content;">
 
@@ -126,23 +122,23 @@ function filterinternships() {
                 <div class="col-md-3">
                     <p><i class="fa-solid fa-money-check"></i>Stipend</p>
                     <p>
-                        ${item.stipend}
+                        ${item.stipend} INR
                     </p>
                 </div>
             </div>
-            <div class="paidOrUnpaid d-flex mb-3">
-                <div class="ms-1 me-1">
+            <div class="paidOrUnpaid d-flex mb-3 justify-content-start flex-wrap">
+                <div class="ms-1 me-1 mb-3 mb-sm-0 ">
                     <span>
                         ${item.paidOrUnpaid}
                     </span>
                 </div>
-                <div class="ms-1 me-1">
+                <div class="ms-1 me-1 mb-3 mb-sm-0 ">
                     <span><i class="fa-regular fa-clock"></i>
                       ${item.typeOfInternship}
                     </span>
             
                 </div>
-                <div class="ms-1 me-1">
+                <div class="ms-1 me-1 mb-3 mb-sm-0 ">
                     <span><i class="fa fa-home-user"></i>
                       ${item.modeOfInternship}
                     </span>
@@ -161,38 +157,43 @@ function filterinternships() {
                 <div class="ms-2 me-2">
                     <a href="internships?_id=${item._id}" ><button class="btn btn-primary" id="detailbtn">View Details</button></a>
                 </div>`;
-               if (userId != "" && userRole == "student") {
-                 card += `  <button class="btn btn-secondary applynow"  data-id="${item._id}">
+            if (userId != "" && userRole == "student") {
+              card += `  <button class="btn btn-secondary applynow"  data-id="${item._id}">
                  Apply now
      
                </button>`;
-               }
-               else if (userId != "" && userRole != "student") {
-     
-               }
-               else {
-                 card += `<a href="/login"><button class="btn btn-secondary" id="login">
+            }
+            else if (userId != "" && userRole != "student") {
+
+            }
+            else {
+              card += `<a href="/login"><button class="btn btn-secondary" id="login">
                  Apply now
                </button></a>`;
-               }
-     
-     
-               card += ` </div>
+            }
+
+
+            card += ` </div>
             
             
             </div>`;
+            $('.listings').append(card);
           }
-          else {
-            card = `<div class="card" style="width:100%; height:fit-content;">
-            <div class="card-body" style="padding:0px">
-              <h5 class="card-title">No internship found</h5>
-            </div>`;
-              $('.listings').html(card);
-              $('#noOfInternshipFound').text("");          }
-     
+
+
         });
+        if (totalinternship == 0) {
+          card = `<div class="card" style="width:100%; height:fit-content;">
+          <div class="card-body" style="padding:0px">
+            <h5 class="card-title">No Internship Found</h5>
+          </div>`;
+          $('.listings').html(card);
+          $('#noOfInternshipFound').text("");
+        }
+        else {
+          $('#noOfInternshipFound').text(totalinternship + " Internships Found");
+        }
         console.log("card", card);
-        $('.listings').html(card);
 
       }
       else {
@@ -321,11 +322,27 @@ fetch('/api/profile?' + new URLSearchParams(data), {
       $('#stream').val(data.data.user.stream);
       $('#university').val(data.data.user.university);
       $('#semester').val(data.data.user.semester);
+      
     }
     // submit modal and apply complete 
-    let arr = data.data.user.internships;
+
+  //   "internships":[
+  //   {
+  //     "internshipId": "640f62287f31e921ccb3d262",
+  //     "status": "pending",
+  //     "_id": {
+  //         "$oid": "6415d87aac27edd24d5facb0"
+  //     }
+  // }
+  //   ]
+
+
+
+    let arr = data.data.user.internships.map((item) => {
+      return item.internshipId;
+    })
     alreadyAppliedInternships = arr;
-    console.log(arr);
+    console.log("arr", arr);
   })
 
 
@@ -379,127 +396,127 @@ $(document).on('click', "#submitInternshipApp", function (e) {
 
 
 
-var internshipId = $(this).attr('data-internshipId');
-var resumeData = $('#resumeFile').prop('files')[0];
-var dataValidation = {
-  "userId": userId,
-  "internshipId": internshipId
-}
-var data2 = {}
-var formData = $('#internshipAppForm').serializeArray();
-for (var i = 0; i < formData.length; i++) {
-  data2[formData[i].name] = formData[i].value;
-}
+  var internshipId = $(this).attr('data-internshipId');
+  var resumeData = $('#resumeFile').prop('files')[0];
+  var dataValidation = {
+    "userId": userId,
+    "internshipId": internshipId
+  }
+  var data2 = {}
+  var formData = $('#internshipAppForm').serializeArray();
+  for (var i = 0; i < formData.length; i++) {
+    data2[formData[i].name] = formData[i].value;
+  }
 
-console.log('resume data', resumeData);
+  console.log('resume data', resumeData);
 
-console.log('form old data 2', data2);
-data2["resumeFile"] = resumeData;
-console.log('form new data2', data2);
-if($('#resumeFile').prop('files')[0] == undefined){
-  console.log("resume empty");
-  $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  console.log('form old data 2', data2);
+  data2["resumeFile"] = resumeData;
+  console.log('form new data2', data2);
+  if ($('#resumeFile').prop('files')[0] == undefined) {
+    console.log("resume empty");
+    $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
   Please upload your resume
   <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
 </div>`);
-  return;
-}
+    return;
+  }
 
-for (var key in data2) {
+  for (var key in data2) {
 
-  if (data2[key] == "Na") {
-    console.log("empty value");
-    $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    if (data2[key] == "Na") {
+      console.log("empty value");
+      $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
       Please fill all the fields
       <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
     </div>`);
-    return;
+      return;
+    }
   }
-}
-if (data2["semester"] == "") {
-  console.log("sem empty");
-  $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  if (data2["semester"] == "") {
+    console.log("sem empty");
+    $('#modalformalert').html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
     Please fill all the fields
     <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
   </div>`);
-  return;
-}
+    return;
+  }
 
-var resumeformData = new FormData();
-resumeformData.append('resumeFile', resumeData);
-//  make a global variabl
-
-
-
-showLoader();
-fetch("/resumeUpload", {
-  method: 'POST',
-  body: resumeformData
-})
-  .then(res => res.json())
-  .then(data => {
-    
-    console.log("fiel upload, data", data);
-    console.log("fiel upload, data", data.file);
-    var responseResumeDataFromAPI = data.file;
-    var resumeData = {
-      "name": responseResumeDataFromAPI.filename,
-      "path": responseResumeDataFromAPI.path.replace("public", "")
-    }
-    data2['resume'] = resumeData;
+  var resumeformData = new FormData();
+  resumeformData.append('resumeFile', resumeData);
+  //  make a global variabl
 
 
-    fetch('/api/applyForInternship', {
-      method: 'POST',
-      body: JSON.stringify(dataValidation),
-      headers: {
-        'Content-Type': 'application/json'
+
+  showLoader();
+  fetch("/resumeUpload", {
+    method: 'POST',
+    body: resumeformData
+  })
+    .then(res => res.json())
+    .then(data => {
+      
+      console.log("fiel upload, data", data);
+      console.log("fiel upload, data", data.file);
+      var responseResumeDataFromAPI = data.file;
+      var resumeData = {
+        "name": responseResumeDataFromAPI.filename,
+        "path": responseResumeDataFromAPI.path.replace("public", "")
       }
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        if (data.statusCode == 200) {
-          
-          fetch("/api/profile", {
-            method: "post",
-            body: JSON.stringify({ data: data2, "id": userId, "role": userRole }),
-            headers: {
-              "Content-Type": "application/json"
-            }
-          })
-            .then(resp => resp.json())
-            .then(data123 => {
-              hideLoader();
-              console.log("dummy...", data123);
-              $('#applyNowModal').modal('hide');
-              $('#successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
-            ${data.message}
-            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
-          </div>`);
-              window.scrollTo(0, 0);
-            })
-            .catch(err => {
-              console.log(err);
-            })
+      data2['resume'] = resumeData;
 
-        }
-        else {
-          $('#applyNowModal').modal('hide');
-          $('#errorAlert').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            ${data.message}
-            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
-          </div>`);
-          window.scrollTo(0, 0);
+
+      fetch('/api/applyForInternship', {
+        method: 'POST',
+        body: JSON.stringify(dataValidation),
+        headers: {
+          'Content-Type': 'application/json'
         }
       })
-      .catch(err => {
-        console.log(err);
-      });
-  })
-  .catch(err => {
-    console.log("fiel upload, err", err);
-  })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          if (data.statusCode == 200) {
+
+            fetch("/api/profile", {
+              method: "post",
+              body: JSON.stringify({ data: data2, "id": userId, "role": userRole }),
+              headers: {
+                "Content-Type": "application/json"
+              }
+            })
+              .then(resp => resp.json())
+              .then(data123 => {
+                hideLoader();
+                console.log("dummy...", data123);
+                $('#applyNowModal').modal('hide');
+                $('#successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+            ${data.message}
+            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+          </div>`);
+                window.scrollTo(0, 0);
+              })
+              .catch(err => {
+                console.log(err);
+              })
+
+          }
+          else {
+            $('#applyNowModal').modal('hide');
+            $('#errorAlert').html(`<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            ${data.message}
+            <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+          </div>`);
+            window.scrollTo(0, 0);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    })
+    .catch(err => {
+      console.log("fiel upload, err", err);
+    })
 
 
 
