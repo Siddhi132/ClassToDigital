@@ -25,6 +25,13 @@
     margin-left: 5px !important;
   }
 
+  .researchpapertext{
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
 </style>
 </head>
 
@@ -75,7 +82,7 @@
         <div class="card bg-light mb-3 repo-card">
           <div class="card-body">
             <h3 class="card-title"><%- item.title -%></h5>
-                <p class="card-text"><%- item.description -%></p>
+                <p class="card-text researchpapertext"><%- item.description -%></p>
                 <div class="mb-3">
                   <div style="display: flex; gap:2em">
                     <a href="" class="researchPaperDetails">

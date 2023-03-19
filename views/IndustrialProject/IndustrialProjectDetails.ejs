@@ -8,9 +8,9 @@
     <title>Industrial Project details</title>
     <link rel="stylesheet" href="styles/Internship/InternshipDetails.css">
     <style>
-        body{
-      background-color: #f6f9ff !important;
-    }
+        body {
+            background-color: #f6f9ff !important;
+        }
     </style>
 </head>
 
@@ -52,12 +52,13 @@
                                                                         <div class="container mt-4 ">
                                                                             <div class="row">
                                                                                 <div class="col-md-12">
-                                                                                    <h2 class="text-center text-uppercase text-primary ">
+                                                                                    <h2
+                                                                                        class="text-center text-uppercase text-primary ">
                                                                                         <%= item.projectTitle %>
                                                                                     </h2>
                                                                                     <h5 class="text-center ">
                                                                                         <%= item.companyName %>
-                                                                                            </h5>
+                                                                                    </h5>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -65,7 +66,9 @@
                                                                             style="padding: 1em;">
                                                                             <!--Grid row-->
                                                                             <div class="ms-4">
-                                                                                <h4><%= item.position %></h4>
+                                                                                <h4>
+                                                                                    <%= item.position %>
+                                                                                </h4>
                                                                             </div>
                                                                             <div class="row">
 
@@ -81,10 +84,12 @@
                                                                                             <% if (item.status=="true" )
                                                                                                 { %>
                                                                                                 <span
-                                                                                                    class="bagdeInternshipDetails  me-1 p-lg-1 mt-2">Actively Hiring</span>
+                                                                                                    class="bagdeInternshipDetails  me-1 p-lg-1 mt-2">Actively
+                                                                                                    Hiring</span>
                                                                                                 <% } else { %>
                                                                                                     <span
-                                                                                                        class="bagdeInternshipDetails  me-1 p-lg-1 mt-2">Close Hiring</span>
+                                                                                                        class="bagdeInternshipDetails  me-1 p-lg-1 mt-2">Close
+                                                                                                        Hiring</span>
                                                                                                     <% } %>
                                                                                                         <span
                                                                                                             class="badge-int-cat  me-1 p-lg-1 mt-2">
@@ -144,7 +149,7 @@
                                                                                                         <span
                                                                                                             class="text-black">
                                                                                                             <%= item.stipend
-                                                                                                                %>
+                                                                                                                %> INR
                                                                                                         </span>
 
                                                                                                     </p>
@@ -202,7 +207,7 @@
                                                                                         </strong>
 
                                                                                         <p>
-                                                                                            <%= item.briefDescription %>
+                                                                                            <%- item.briefDescription %>
                                                                                         </p>
 
 
@@ -212,8 +217,14 @@
                                                                                 <!--Grid column-->
                                                                                 <!--Grid column-->
                                                                                 <div class="col-md-4 mb-4">
-                                                                                    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg"
-                                                                                        class="img-fluid" alt="" />
+                                                                                    <img src="
+                                                                                    <% if (item.companyImage.name !== item.companyId+'__profileImage.jpg') { %>
+                                                                                      <%= item.companyImage.path %>
+                                                                                    <% } else { %>
+                                                                                      <%= '/uploadedData/profile/profileImages/' + item.companyImage.name %>
+                                                                                    <% } %>
+                                                                                    "
+                                                                                      style="margin: auto; height: fit-content;" alt="" class="img-fluid">
                                                                                 </div>
                                                                                 <!--Grid column-->
                                                                             </div>
@@ -230,7 +241,7 @@
                                                                                         Resposibilities</h4>
 
                                                                                     <p>
-                                                                                        <%= item.rolesAndResponsibilities
+                                                                                        <%- item.rolesAndResponsibilities
                                                                                             %>
                                                                                     </p>
                                                                                     <h4 class="my-4 h4">Perks</h4>
@@ -242,17 +253,18 @@
                                                                                     </h4>
 
                                                                                     <p>
-                                                                                        <%= item.whoCanApply%>
+                                                                                        <%- item.whoCanApply%>
                                                                                     </p>
                                                                                     <h4 class="my-4 h4">Criteria For
                                                                                         Selection</h4>
 
                                                                                     <p>
-                                                                                        <%= item.criteriaForSelection %>
+                                                                                        <%- item.criteriaForSelection %>
                                                                                     </p>
                                                                                     <h4 class="my-4 h5">Contact Details
                                                                                     </h4>
                                                                                     <p>
+
                                                                                         <%= item.contactDetails %>
                                                                                     </p>
                                                                                     <h4 class="my-4 h5">Other Details
@@ -264,7 +276,8 @@
                                                                                     </span>
                                                                                     <span
                                                                                         class="badge-int-appl  me-1 p-lg-1 mt-2">
-                                                                                        <%= item.modeOfIndustrialProject%>
+                                                                                        <%=
+                                                                                            item.modeOfIndustrialProject%>
                                                                                     </span>
 
 
@@ -290,7 +303,8 @@
 
                                                                                                 </button>
                                                                                                 <br>
-                                                                                                <small>You are not an student</small>
+                                                                                                <small>You are not an
+                                                                                                    student</small>
 
                                                                                                 <% } else { %>
                                                                                                     <a href="/login"><button
@@ -303,7 +317,7 @@
 
 
 
-                                                                                                    
+
                                                                                     </div>
 
                                                                                 </div>
@@ -312,100 +326,203 @@
                                                                             <!--Grid row-->
 
                                                                         </div>
+
+                                                                        <div class="container recommanded">
+                                                                            <header id="rec-header"
+                                                                                class="section-header text-left mt-5 mb-5 pt-5">
+
+
+                                                                            </header>
+
+                                                                            <div
+                                                                                class="row rec-inner text-center justify-content-center">
+
+                                                                            </div>
+                                                                        </div>
+
+
                                                                         <!-- apply Modal  -->
-      <div class="modal fade" id="applyNowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Your application</h5>
-              <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div id="modalformalert"></div>
-            <div class="modal-body">
+                                                                        <div class="modal fade" id="applyNowModal"
+                                                                            tabindex="-1"
+                                                                            aria-labelledby="exampleModalLabel"
+                                                                            aria-hidden="true">
+                                                                            <div
+                                                                                class="modal-dialog modal-dialog-scrollable">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-header">
+                                                                                        <h5 class="modal-title"
+                                                                                            id="exampleModalLabel">Your
+                                                                                            application</h5>
+                                                                                        <button type="button"
+                                                                                            class="btn-close"
+                                                                                            data-mdb-dismiss="modal"
+                                                                                            aria-label="Close"></button>
+                                                                                    </div>
+                                                                                    <div id="modalformalert"></div>
+                                                                                    <div class="modal-body">
 
 
-              <form method="post" id="idpAppForm" enctype="multipart/form-data">
-                <div class="form-outline mb-4"> 
-                  
+                                                                                        <form method="post"
+                                                                                            id="idpAppForm"
+                                                                                            enctype="multipart/form-data">
+                                                                                            <div
+                                                                                                class="form-outline mb-4">
 
 
-                  <input type="text" id="name" name="name" class="form-control form-control-lg" required />
-                  <label class="form-label" for="name">Name</label>
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="text" id="email" name="email" class="form-control form-control-lg" required />
-                  <label class="form-label" for="email">Email</label>
-                </div>
-                <div class="form-outline mb-4">
-                  <input type="number" pattern="[0-9]{10}" id="phone" name="phone" class="form-control form-control-lg"
-                    required />
-                  <label class="form-label" for="phone">Phone</label>
-                </div>
-                <div class="mb-4">
-                  <select class="form-select form-select-lg" id="branch" name="branch"
-                    aria-label="Default select example" required>
-                    <option value="Na" selected>Choose Branch</option>
 
-                  </select>
-                </div>
-                <div class="mb-4">
-                  <select class="form-select form-select-lg" id="college" name="college"
-                    aria-label="Default select example" required>
-                    <option value="Na" selected>Choose college</option>
+                                                                                                <input type="text"
+                                                                                                    id="name"
+                                                                                                    name="name"
+                                                                                                    class="form-control form-control-lg"
+                                                                                                    required />
+                                                                                                <label
+                                                                                                    class="form-label"
+                                                                                                    for="name">Name</label>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                class="form-outline mb-4">
+                                                                                                <input type="text"
+                                                                                                    id="email"
+                                                                                                    name="email"
+                                                                                                    class="form-control form-control-lg"
+                                                                                                    required />
+                                                                                                <label
+                                                                                                    class="form-label"
+                                                                                                    for="email">Email</label>
+                                                                                            </div>
+                                                                                            <div
+                                                                                                class="form-outline mb-4">
+                                                                                                <input type="number"
+                                                                                                    pattern="[0-9]{10}"
+                                                                                                    id="phone"
+                                                                                                    name="phone"
+                                                                                                    class="form-control form-control-lg"
+                                                                                                    required />
+                                                                                                <label
+                                                                                                    class="form-label"
+                                                                                                    for="phone">Phone</label>
+                                                                                            </div>
+                                                                                            <div class="mb-4">
+                                                                                                <select
+                                                                                                    class="form-select form-select-lg"
+                                                                                                    id="branch"
+                                                                                                    name="branch"
+                                                                                                    aria-label="Default select example"
+                                                                                                    required>
+                                                                                                    <option value="Na"
+                                                                                                        selected>Choose
+                                                                                                        Branch</option>
 
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <select class="form-select form-select-lg" id="education" name="education"
-                    aria-label="Default select example" required>
-                    <option value="Na" selected>Choose education</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="mb-4">
+                                                                                                <select
+                                                                                                    class="form-select form-select-lg"
+                                                                                                    id="college"
+                                                                                                    name="college"
+                                                                                                    aria-label="Default select example"
+                                                                                                    required>
+                                                                                                    <option value="Na"
+                                                                                                        selected>Choose
+                                                                                                        college</option>
 
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <select class="form-select form-select-lg" id="state" name="state" aria-label="Default select example"
-                    required>
-                    <option value="Na" selected>Choose state</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="mb-3">
+                                                                                                <select
+                                                                                                    class="form-select form-select-lg"
+                                                                                                    id="education"
+                                                                                                    name="education"
+                                                                                                    aria-label="Default select example"
+                                                                                                    required>
+                                                                                                    <option value="Na"
+                                                                                                        selected>Choose
+                                                                                                        education
+                                                                                                    </option>
 
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <select class="form-select form-select-lg" id="stream" name="stream"
-                    aria-label="Default select example" required>
-                    <option value="Na" selected>Choose stream</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="mb-3">
+                                                                                                <select
+                                                                                                    class="form-select form-select-lg"
+                                                                                                    id="state"
+                                                                                                    name="state"
+                                                                                                    aria-label="Default select example"
+                                                                                                    required>
+                                                                                                    <option value="Na"
+                                                                                                        selected>Choose
+                                                                                                        state</option>
 
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <select class="form-select form-select-lg" id="university" name="university"
-                    aria-label="Default select example" required>
-                    <option value="Na" selected>Choose university</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="mb-3">
+                                                                                                <select
+                                                                                                    class="form-select form-select-lg"
+                                                                                                    id="stream"
+                                                                                                    name="stream"
+                                                                                                    aria-label="Default select example"
+                                                                                                    required>
+                                                                                                    <option value="Na"
+                                                                                                        selected>Choose
+                                                                                                        stream</option>
 
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <select class="form-select form-select-lg" id="semester" name="semester"
-                    aria-label="Default select example" required>
-                    <option value="" selected>Choose semester</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="mb-3">
+                                                                                                <select
+                                                                                                    class="form-select form-select-lg"
+                                                                                                    id="university"
+                                                                                                    name="university"
+                                                                                                    aria-label="Default select example"
+                                                                                                    required>
+                                                                                                    <option value="Na"
+                                                                                                        selected>Choose
+                                                                                                        university
+                                                                                                    </option>
 
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="resume" class="form-label">Resume</label>
-                  <input class="form-control" type="file" id="resumeFileIDP" name="resume" required>
-                </div>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="mb-3">
+                                                                                                <select
+                                                                                                    class="form-select form-select-lg"
+                                                                                                    id="semester"
+                                                                                                    name="semester"
+                                                                                                    aria-label="Default select example"
+                                                                                                    required>
+                                                                                                    <option value=""
+                                                                                                        selected>Choose
+                                                                                                        semester
+                                                                                                    </option>
+
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="mb-3">
+                                                                                                <label for="resume"
+                                                                                                    class="form-label">Resume</label>
+                                                                                                <input
+                                                                                                    class="form-control"
+                                                                                                    type="file"
+                                                                                                    id="resumeFileIDP"
+                                                                                                    name="resume"
+                                                                                                    required>
+                                                                                            </div>
 
 
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal" id="CloseModal">Close</button>
-              <button type="button" class="btn btn-primary" id="submitIDPApp">Submit</button>
-            </div>
-          </form>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-secondary"
+                                                                                            data-mdb-dismiss="modal"
+                                                                                            id="CloseModal">Close</button>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-primary"
+                                                                                            id="submitIDPApp">Submit</button>
+                                                                                    </div>
+                                                                                    </form>
 
-          </div>
-        </div>
-      </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
 
 
 
@@ -423,6 +540,81 @@
 </body>
 
 
-<script type="text/javascript" src="/js/IndustrialProject/script.js" userId="<%= userId %>" userRole="<%= role %>"></script>
+<script type="text/javascript" src="/js/IndustrialProject/script.js" userId="<%= userId %>"
+    userRole="<%= role %>"></script>
+<script>
+
+    fetch('/api/allIndustrialProjects?stipend=0&category=<%= industrialProject[0].category %>', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(res => res.json())
+        .then(data => {
+            console.log("Hello", data.data);
+
+            var card = ``;
+            var element = data.data.allIndustrialProject;
+            var maxCount;
+            var flag = 0;
+
+            if (data.statusCode == 200) {
+
+                if (data.data.allIndustrialProject.length >= 3) {
+                    maxCount = 3;
+                }
+                else {
+                    maxCount = data.data.allIndustrialProject.length;
+                }
+
+                for (var i = 0; i <= maxCount - 1; i++) {
+
+                    if (element[i]._id != "<%= industrialProject[0]._id %>") {
+                        flag = 1;
+                        card += `<div class="card border border-1 me-5  col-md-3">
+                                                                                <div class="bg-image hover-overlay ripple"
+                                                                                    data-mdb-ripple-color="light">
+                                                                                    <img src=""
+                                                                                        class="img-fluid" />
+                                                                                    <a href="#!">
+                                                                                        <div class="mask"
+                                                                                            style="background-color: rgba(251, 251, 251, 0.15);">
+                                                                                        </div>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div class="card-body">
+                                                                                    <h5 class="card-title">${element[i].position}</h5>
+                                                                                    <p class="card-text">${element[i].companyName}
+                                                                                    </p>
+                                                                                    <p class="card-text">${element[i].skillsRequired}</p>
+                                                                                    <a href="#!"
+                                                                                        class="btn btn-primary">View Detail</a>
+                                                                                </div>
+                                                                            </div>`;
+                    }
+                };
+                if (flag != 0) {
+                    $('#rec-header').html(`<h2
+                                                                                        class="text-primary-own fw-bold">
+                                                                                        Recommanded Industrialproject </h2>
+                                                                                    <div
+                                                                                        class="d-flex justify-content-between">
+
+                                                                                        <p class="text-primary-own">
+                                                                                            covers Projects in each
+                                                                                            Sector across India</p>
+                                                                                        
+                                                                                    </div>`);
+                }
+
+                $('.rec-inner').html(card);
+            }
+
+        })
+
+
+
+</script>
 
 </html>

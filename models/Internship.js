@@ -9,7 +9,7 @@ const internshipScheme = new mongoose.Schema({
     briefDescription: { type: String, required: true },
     location: { type: String, required: true },
     duration: { type: String, required: true },
-    stipend: { type: Number, required: true },
+    stipend: { type: Number, required: true, default: 0 },
     skillsRequired: { type: String, required: true },
     numberOfOpenings: { type: Number, required: true },
     dateOfPosting: { type: Date, required: true, default: Date.now() },
@@ -32,10 +32,35 @@ const internshipScheme = new mongoose.Schema({
         path: {
             type: String
         }
-    }
+    },
+    
+    appliedStudents: [{
+        studentId: {
+          type: String,
+        },
+        status: {
+          type: String,
+          enum: ['pending', 'hired', 'rejected'],
+        }
+      }]
 
 
 });
+
+internshipScheme.pre('save', function(next) {
+    const rolesAndResponsibilities = this.rolesAndResponsibilities.replace(/\r\n|\r|\n/g, '<br>');
+    const briefDescription = this.briefDescription.replace(/\r\n|\r|\n/g, '<br>');
+    const whoCanApply = this.whoCanApply.replace(/\r\n|\r|\n/g, '<br>');
+    const criteriaForSelection = this.criteriaForSelection.replace(/\r\n|\r|\n/g, '<br>');
+    
+    this.criteriaForSelection = criteriaForSelection;
+    this.whoCanApply = whoCanApply;
+    this.briefDescription = briefDescription;
+    this.rolesAndResponsibilities = rolesAndResponsibilities;
+    
+    next();
+  });
+
 module.exports = mongoose.model("Internship", internshipScheme);
 
 
