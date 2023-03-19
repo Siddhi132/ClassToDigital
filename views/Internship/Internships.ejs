@@ -13,8 +13,9 @@
     body {
       background-color: #f6f9ff !important;
     }
+    
 
-    #loader {
+    /* #loader {
       display: none;
       position: fixed;
       z-index: 9999;
@@ -30,11 +31,15 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-    }
+    } */
+
+
+   
   </style>
 </head>
 
 <body>
+  
   <!-- partial:index.partial.html -->
   <% if(login){ %>
     <% if(typeof role!="undefined" && role){ %>
@@ -53,12 +58,11 @@
                             <%- include('../Navbar/InitNavbar.ejs') %>
                               <% } %>
 
-
+                          
                                 <div class="container internship-container">
-                                  <div id="loader">
-                                    <img src="loader.gif" alt="Loading...">
-                                  </div>
+                                 
                                   <div class="sidebar">
+                                 
                                     <a href="#!" id="hide-filter-btn"><i class="fa fa-long-arrow-left"></i></a>
 
                                     <h5><i class="fa fa-filter"></i>FILTER</h5>
@@ -67,7 +71,7 @@
                                         <select class="form-select mb-3" aria-label="Default select example"
                                           id="category" name="category">
                                           <option selected value="">Choose Category</option>
-
+                                          
                                         </select>
 
 
@@ -159,109 +163,114 @@
                                       <% internships.data.allinternship.forEach(item=> {
                                         %>
 
-                                            <% if(item.status){ %>
-                                              <div class="card" style="height:fit-content; width:100%">
+                                        <% if(item.status){ %>
+                                          <div class="card" style="height:fit-content; width:100%">
 
-                                              <div class="activeDeactive">
+                                            <div class="activeDeactive">
 
                                               <span>Actively Hiring</span>
-                                          </div>
-                                          <div class="row">
-                                            <div class="col-md-8 col-sm-8">
-                                              <h4>
-                                                <%= item.position %>
-                                              </h4>
-                                              <p id="companyName">
-                                                <%= item.companyName %>
-                                              </p>
-                                              <p><i class="fa-solid fa-location-dot"></i>
-                                                <%= item.location %>
-
-                                              </p>
-
                                             </div>
-                                            <div class="col-md-4 col-sm-4">
-                                              <img src=" <%= item.companyImage.path %>"
-                                                style="max-height: 7rem; height: 100%;" alt="">
-                                            </div>
-                                          </div>
+                                            <div class="row">
+                                              <div class="col-md-8 col-sm-8">
+                                                <h4>
+                                                  <%= item.position %>
+                                                </h4>
+                                                <p id="companyName">
+                                                  <%= item.companyName %>
+                                                </p>
+                                                <p><i class="fa-solid fa-location-dot"></i>
+                                                  <%= item.location %>
 
-                                          <div class="row">
-                                            <div class="col-md-3">
-                                              <p><i class="fa-regular fa-circle-play"></i>Start date</p>
+                                                </p>
+                                                <%= item.companyImage.name %>
+                                              </div>
+                                              <div class="col-md-4 col-sm-4">
+                                                <img src="
+                                              <% if (item.companyImage.name !== item.companyId+'__profileImage.jpg') { %>
+                                                <%= item.companyImage.path %>
+                                              <% } else { %>
+                                                <%= '/uploadedData/profile/profileImages/' + item.companyImage.name %>
+                                              <% } %>
+                                              " style="max-height: 7rem; height: 100%;" alt="">
+                                              </div>
+                                            </div>
+
+                                            <div class="row">
+                                              <div class="col-md-3">
+                                                <p><i class="fa-regular fa-circle-play"></i>Start date</p>
+                                                <p>
+
+                                                  <%= item.dateOfPosting.slice(0,10) %>
+
+                                                </p>
+                                              </div>
+                                              <div class="col-md-3">
+                                                <p><i class="fa-regular fa-calendar"></i>Duration</p>
+                                                <p>
+                                                  <%= item.duration %>
+                                                </p>
+                                              </div>
+                                              <div class="col-md-3">
+                                                <p><i class="fa-solid fa-money-check"></i>Stipend</p>
+                                                <p>
+                                                  <%= item.stipend %> INR
+                                                </p>
+                                              </div>
+                                            </div>
+                                            <div class="paidOrUnpaid d-flex mb-3 justify-content-start flex-wrap">
+                                              <div class="ms-1 me-1 mb-3 mb-sm-0 ">
+                                                <span>
+                                                  <%= item.paidOrUnpaid %>
+                                                </span>
+                                              </div>
+                                              <div class="ms-1 me-1 mb-3 mb-sm-0">
+                                                <span><i class="fa-regular fa-clock"></i>
+                                                  <%= item.typeOfInternship %>
+                                                </span>
+
+                                              </div>
+                                              <div class="ms-1 me-1 mb-3 mb-sm-0">
+                                                <span><i class="fa fa-home-user"></i>
+                                                  <%= item.modeOfInternship %>
+                                                </span>
+
+                                              </div>
+                                            </div>
+                                            <div class="totalApplication">
                                               <p>
-
-                                                <%= item.dateOfPosting.slice(0,10) %>
-
+                                                <i class="fa-regular fa-user"></i>
+                                                <%= item.totalNumberOfApplicants %>
+                                                  Applicants
                                               </p>
                                             </div>
-                                            <div class="col-md-3">
-                                              <p><i class="fa-regular fa-calendar"></i>Duration</p>
-                                              <p>
-                                                <%= item.duration %>
-                                              </p>
-                                            </div>
-                                            <div class="col-md-3">
-                                              <p><i class="fa-solid fa-money-check"></i>Stipend</p>
-                                              <p>
-                                                <%= item.stipend %>
-                                              </p>
-                                            </div>
-                                          </div>
-                                          <div class="paidOrUnpaid d-flex mb-3 justify-content-start flex-wrap">
-                                            <div class="ms-1 me-1 mb-3 mb-sm-0 ">
-                                              <span>
-                                                <%= item.paidOrUnpaid %>
-                                              </span>
-                                            </div>
-                                            <div class="ms-1 me-1 mb-3 mb-sm-0">
-                                              <span><i class="fa-regular fa-clock"></i>
-                                                <%= item.typeOfInternship %>
-                                              </span>
+                                            <hr>
+                                            <div class="d-flex flex-row-reverse">
+                                              <div class="ms-2 me-2">
+                                                <a href="/internships?_id=<%= item._id %>"><button
+                                                    class="btn btn-primary" id="detailbtn">View
+                                                    Details</button></a>
+                                              </div>
+                                              <div id="applyNowBtnDynamic">
+                                                <% if (userId !=null && userRole=="student" ) { %>
+                                                  <button class="btn btn-secondary applynow" data-id="<%= item._id  %>">
+                                                    Apply now
 
-                                            </div>
-                                            <div class="ms-1 me-1 mb-3 mb-sm-0">
-                                              <span><i class="fa fa-home-user"></i>
-                                                <%= item.modeOfInternship %>
-                                              </span>
+                                                  </button>
+                                                  <% } else if (userId !=null && userRole !="student" ) { %>
+                                                    <% } else { %>
+                                                      <a href="/login"><button class="btn btn-secondary" id="login">
+                                                          Apply now
+                                                        </button></a>
+
+                                                      <% } %>
+
+
+
+
+                                              </div>
 
                                             </div>
                                           </div>
-                                          <div class="totalApplication">
-                                            <p>
-                                              <i class="fa-regular fa-user"></i>
-                                              <%= item.totalNumberOfApplicants %>
-                                                Applicants
-                                            </p>
-                                          </div>
-                                          <hr>
-                                          <div class="d-flex flex-row-reverse">
-                                            <div class="ms-2 me-2">
-                                              <a href="/internships?_id=<%= item._id %>"><button class="btn btn-primary"
-                                                  id="detailbtn">View
-                                                  Details</button></a>
-                                            </div>
-                                            <div id="applyNowBtnDynamic">
-                                              <% if (userId !=null && userRole=="student" ) { %>
-                                                <button class="btn btn-secondary applynow" data-id="<%= item._id  %>">
-                                                  Apply now
-
-                                                </button>
-                                                <% } else if (userId !=null && userRole !="student" ) { %>
-                                                  <% } else { %>
-                                                    <a href="/login"><button class="btn btn-secondary" id="login">
-                                                        Apply now
-                                                      </button></a>
-
-                                                    <% } %>
-
-
-
-
-                                            </div>
-
-                                          </div>
-                                        </div>
                                           <% }%>
                                             <% }); %>
 
@@ -269,110 +278,109 @@
 
 
 
-                                        </div>
+                                    </div>
 
-                                        <!-- apply Modal  -->
-                                        <div class="modal fade" id="applyNowModal" tabindex="-1"
-                                          aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                          <div class="modal-dialog modal-dialog-scrollable">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Your application</h5>
-                                                <button type="button" class="btn-close" data-mdb-dismiss="modal"
-                                                  aria-label="Close"></button>
-                                              </div>
-                                              <div id="modalformalert"></div>
-                                              <div class="modal-body">
-
-
-                                                <form method="post" id="internshipAppForm"
-                                                  enctype="multipart/form-data">
-                                                  <div class="form-outline mb-4">
-
-
-
-                                                    <input type="text" id="name" name="name"
-                                                      class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="name">Name</label>
-                                                  </div>
-                                                  <div class="form-outline mb-4">
-                                                    <input type="text" id="email" name="email"
-                                                      class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="email">Email</label>
-                                                  </div>
-                                                  <div class="form-outline mb-4">
-                                                    <input type="number" pattern="[0-9]{10}" id="phone" name="phone"
-                                                      class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="phone">Phone</label>
-                                                  </div>
-                                                  <div class="mb-4">
-                                                    <select class="form-select form-select-lg" id="branch" name="branch"
-                                                      aria-label="Default select example" required>
-                                                      <option value="Na" selected>Choose Branch</option>
-
-                                                    </select>
-                                                  </div>
-                                                  <div class="mb-4">
-                                                    <select class="form-select form-select-lg" id="college"
-                                                      name="college" aria-label="Default select example" required>
-                                                      <option value="Na" selected>Choose college</option>
-
-                                                    </select>
-                                                  </div>
-                                                  <div class="mb-3">
-                                                    <select class="form-select form-select-lg" id="education"
-                                                      name="education" aria-label="Default select example" required>
-                                                      <option value="Na" selected>Choose education</option>
-
-                                                    </select>
-                                                  </div>
-                                                  <div class="mb-3">
-                                                    <select class="form-select form-select-lg" id="state" name="state"
-                                                      aria-label="Default select example" required>
-                                                      <option value="Na" selected>Choose state</option>
-
-                                                    </select>
-                                                  </div>
-                                                  <div class="mb-3">
-                                                    <select class="form-select form-select-lg" id="stream" name="stream"
-                                                      aria-label="Default select example" required>
-                                                      <option value="Na" selected>Choose stream</option>
-
-                                                    </select>
-                                                  </div>
-                                                  <div class="mb-3">
-                                                    <select class="form-select form-select-lg" id="university"
-                                                      name="university" aria-label="Default select example" required>
-                                                      <option value="Na" selected>Choose university</option>
-
-                                                    </select>
-                                                  </div>
-                                                  <div class="mb-3">
-                                                    <select class="form-select form-select-lg" id="semester"
-                                                      name="semester" aria-label="Default select example" required>
-                                                      <option value="" selected>Choose semester</option>
-
-                                                    </select>
-                                                  </div>
-                                                  <div class="mb-3">
-                                                    <label for="resume" class="form-label">Resume</label>
-                                                    <input class="form-control" type="file" id="resumeFile"
-                                                      name="resume" required accept=".pdf">
-                                                  </div>
-
-
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal"
-                                                  id="CloseModal">Close</button>
-                                                <button type="button" class="btn btn-primary"
-                                                  id="submitInternshipApp">Submit</button>
-                                              </div>
-                                              </form>
-
-                                            </div>
+                                    <!-- apply Modal  -->
+                                    <div class="modal fade" id="applyNowModal" tabindex="-1"
+                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Your application</h5>
+                                            <button type="button" class="btn-close" data-mdb-dismiss="modal"
+                                              aria-label="Close"></button>
                                           </div>
+                                          <div id="modalformalert"></div>
+                                          <div class="modal-body">
+
+
+                                            <form method="post" id="internshipAppForm" enctype="multipart/form-data">
+                                              <div class="form-outline mb-4">
+
+
+
+                                                <input type="text" id="name" name="name"
+                                                  class="form-control form-control-lg" required />
+                                                <label class="form-label" for="name">Name</label>
+                                              </div>
+                                              <div class="form-outline mb-4">
+                                                <input type="text" id="email" name="email"
+                                                  class="form-control form-control-lg" required />
+                                                <label class="form-label" for="email">Email</label>
+                                              </div>
+                                              <div class="form-outline mb-4">
+                                                <input type="number" pattern="[0-9]{10}" id="phone" name="phone"
+                                                  class="form-control form-control-lg" required />
+                                                <label class="form-label" for="phone">Phone</label>
+                                              </div>
+                                              <div class="mb-4">
+                                                <select class="form-select form-select-lg" id="branch" name="branch"
+                                                  aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose Branch</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-4">
+                                                <select class="form-select form-select-lg" id="college" name="college"
+                                                  aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose college</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <select class="form-select form-select-lg" id="education"
+                                                  name="education" aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose education</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <select class="form-select form-select-lg" id="state" name="state"
+                                                  aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose state</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <select class="form-select form-select-lg" id="stream" name="stream"
+                                                  aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose stream</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <select class="form-select form-select-lg" id="university"
+                                                  name="university" aria-label="Default select example" required>
+                                                  <option value="Na" selected>Choose university</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <select class="form-select form-select-lg" id="semester" name="semester"
+                                                  aria-label="Default select example" required>
+                                                  <option value="" selected>Choose semester</option>
+
+                                                </select>
+                                              </div>
+                                              <div class="mb-3">
+                                                <label for="resume" class="form-label">Resume</label>
+                                                <input class="form-control" type="file" id="resumeFile" name="resume"
+                                                  required accept=".pdf">
+                                              </div>
+
+
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal"
+                                              id="CloseModal">Close</button>
+                                            <button type="button" class="btn btn-primary"
+                                              id="submitInternshipApp">Submit</button>
+                                          </div>
+                                          </form>
+
                                         </div>
+                                      </div>
+                                    </div>
 
 
 

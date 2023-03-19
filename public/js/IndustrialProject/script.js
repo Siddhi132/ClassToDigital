@@ -54,11 +54,13 @@ function filterIndustrialProject() {
   }
   data['stipend'] = stipend;
   console.log("data123:", data);
+  showLoader()
   fetch('/api/allIndustrialProjects?' + new URLSearchParams(data), {
     method: 'GET',
   })
     .then(res => res.json())
     .then(data => {
+      hideLoader();
       console.log("data:", data);
       if (data.statusCode == 200) {
         var card = ``;
@@ -118,23 +120,23 @@ function filterIndustrialProject() {
                 <div class="col-md-3">
                     <p><i class="fa-solid fa-money-check"></i>Stipend</p>
                     <p>
-                        ${item.stipend}
+                        ${item.stipend} INR
                     </p>
                 </div>
             </div>
-            <div class="paidOrUnpaid d-flex mb-3">
-                <div class="ms-1 me-1">
+            <div class="paidOrUnpaid d-flex mb-3 justify-content-start flex-wrap">
+                <div class="ms-1 me-1 mb-3 mb-sm-0 ">
                     <span>
                         ${item.paidOrUnpaid}
                     </span>
                 </div>
-                <div class="ms-1 me-1">
+                <div class="ms-1 me-1 mb-3 mb-sm-0 ">
                     <span><i class="fa-regular fa-clock"></i>
                       ${item.typeOfIndustrialProject}
                     </span>
             
                 </div>
-                <div class="ms-1 me-1">
+                <div class="ms-1 me-1 mb-3 mb-sm-0 ">
                     <span><i class="fa fa-home-user"></i>
                       ${item.modeOfIndustrialProject}
                     </span>
@@ -207,9 +209,11 @@ function filterIndustrialProject() {
 
 
 // categories in filter section 
+showLoader();
 fetch('/api/Categories')
   .then(res => res.json())
   .then(data => {
+    hideLoader();
     console.log(data.data.categories[0].industrialProject);
     let industrialProjects = data.data.categories[0].industrialProject;
     let studentProfile = data.data.categories[0].studentProfile;
@@ -293,12 +297,13 @@ $(document).on('keyup', "#searchCompany", function (e) {
 
 
 // autofill value in modal 
-
+showLoader();
 fetch('/api/profile?' + new URLSearchParams(data), {
   method: 'GET',
 })
   .then(res => res.json())
   .then(data => {
+    hideLoader();
     console.log("i am ", data);
     if (data.statusCode == 200) {
       $('#name').val(data.data.user.name);
@@ -313,9 +318,11 @@ fetch('/api/profile?' + new URLSearchParams(data), {
       $('#semester').val(data.data.user.semester);
     }
     // submit modal and apply complete 
-    let arr = data.data.user.industrialProjects;
+    let arr = data.data.user.industrialProjects.map((item) => {
+      return item.industrialProjectId;
+    }
+    )
     alreadyAppliedIndustrialProjects = arr;
-    console.log(arr);
   });
 
 
@@ -433,6 +440,7 @@ $(document).on('click', "#submitIDPApp", function (e) {
   // resumeFileData.append('path', resumePath);
   // console.log(resumeFileData);
 
+  showLoader();
   fetch("/resumeUploadIDP", {
     method: 'POST',
     body: resumeformData
@@ -470,6 +478,7 @@ $(document).on('click', "#submitIDPApp", function (e) {
             })
               .then(resp => resp.json())
               .then(data123 => {
+                hideLoader();
                 console.log("dummy...", data123);
                 $('#applyNowModal').modal('hide');
                 $('#successAlert').html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -509,3 +518,4 @@ $(document).on('click', "#submitIDPApp", function (e) {
 
 
 });
+

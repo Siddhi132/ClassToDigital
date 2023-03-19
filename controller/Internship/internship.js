@@ -5,7 +5,7 @@ const uploadInternship = async (req, res) => {
 
   try {
     const newInternship = new Internship(req.body);
-    CompanyProfile.findById(req.body.companyId, (err, existingUser) => {
+    CompanyProfile.findById(req.body.companyId, async (err, existingUser) => {
       if (!existingUser) {
         return res.send({ status: false, statusCode: 400, message: "No user available" });
       }
@@ -13,7 +13,10 @@ const uploadInternship = async (req, res) => {
         newInternship.companyImage.path = existingUser.profileImage.path;
         newInternship.companyImage.name = existingUser.profileImage.name;
         console.log("newInternship oiii 2", newInternship);
-        const val = newInternship.save();
+        const val = await newInternship.save();
+        console.log('value -----------', val);
+        console.log('value -----------', val._id);
+        
         CompanyProfile.findOneAndUpdate({ _id: req.body.companyId }, { $push: { internships: val._id } }, (err, existingUser) => {
           if (!err) {
             res.send({ status: true, statusCode: 200, message: "Internship addedd successfully" });
@@ -97,10 +100,7 @@ const applyForInternship = async (req, res) => {
     if (!existingUser) {
       return res.send({ status: false, statusCode: 400, message: "No user available" });
     }
-    const InternshipData = {
-      internships: req.body.internshipId,
-    }
-
+    
     // increment one in total no of application in internship collection 
 
     Internship.findByIdAndUpdate(
@@ -118,17 +118,53 @@ const applyForInternship = async (req, res) => {
       }
     );
 
+    // appliedStudents: [{
+    //   studentId: {
+    //     type: String,
+    //   },
+    //   status: {
+    //     type: String,
+    //     enum: ['pending', 'hired', 'rejected'],
+    //   }
+    // }]
 
-    StudentProfile.findOneAndUpdate({ _id: id }, { $push: InternshipData }, (err, existingUser) => {
-      if (!err) {
-        res.send({ status: true, statusCode: 200, message: "Internship applied successfully" });
-      }
-      else {
-        console.log("err", err);
-        res.send({ status: false, statusCode: 400, message: "Internship not applied" });
-      }
+   
+      Internship.findByIdAndUpdate(
+        req.body.internshipId,
+        { $push: { appliedStudents: { studentId: id, status: 'pending' } } },
+        { new: true },
+        (err, result) => {
+          if (err) {
+            console.log("err", err);
+            res.send({ status: false, statusCode: 400, message: "Internship not applied" });
+          }
+          else {
+            console.log("result", result);
+          }
+        }
+      );
 
-    });
+        
+
+      const InternshipData = {
+        internshipId: req.body.internshipId,
+        status: 'pending',
+      }
+    StudentProfile.findByIdAndUpdate(
+      id,
+      { $push: { internships: InternshipData } },
+      { new: true },
+      (err, result) => {
+        if (err) {
+          console.log("err", err);
+          res.send({ status: false, statusCode: 400, message: "Internship not applied" });
+        }
+        else {
+          console.log("result", result);
+          res.send({ status: true, statusCode: 200, message: "Internship applied successfully" });
+        }
+      }
+    );
 
 
   }
@@ -158,5 +194,38 @@ const getInternshipById = async (req, res) => {
   }
 }
 
+const modifyApplicationStatus = async (req, res) => {
 
-module.exports = { uploadInternship, getAllInternship, applyForInternship, getInternshipById };
+  try {
+    const {studentId, status, internshipId } = req.body;
+    console.log("in studentId", studentId);
+    console.log("in    status", status);
+    console.log("in internshipId", internshipId);
+
+    Internship.findByIdAndUpdate(
+      internshipId,
+      { $set: { 'appliedStudents.$[elem].status': status } },
+      { arrayFilters: [{ 'elem.studentId': studentId }], new: true },
+      (err, result) => {
+        if (err) {
+          console.log("err", err);
+          res.send({ status: false, statusCode: 400, message: "Internship status is not changed" });
+        }
+        else {
+          console.log("result", result);
+          res.send({ status: true, statusCode: 200, message: "Internship status changed successfully", status: status });
+        }
+      }
+    );
+
+  }
+  catch (err) {
+    console.log("err", err);
+    res.send({ status: false, statusCode: 500, message: "Error During changing internships status" });
+  }
+}
+
+
+
+
+module.exports = { uploadInternship, getAllInternship, applyForInternship, getInternshipById ,modifyApplicationStatus};

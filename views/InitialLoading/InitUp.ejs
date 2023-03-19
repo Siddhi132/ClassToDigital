@@ -5,3 +5,25 @@
 <!-- MDB -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="styles/navbar.css">
+
+<!-- Preloader -->
+<!-- <div class="overlay-loader" id="pre-loader">
+    <div class="loader">
+    </div>
+</div> -->
+<div class="overlay-loader" id="pre-loader">
+    <div class="box-loader">
+        <div class="loader-37"></div>
+      </div>
+</div>
+
+<script>
+    // JavaScript code to show and hide loader component
+    function showLoader() {
+        document.getElementById("pre-loader").style.display = "block";
+    }
+
+    function hideLoader() {
+        document.getElementById("pre-loader").style.display = "none";
+    }
+</script>

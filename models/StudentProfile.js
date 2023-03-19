@@ -22,35 +22,35 @@ const studentProfileSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    default:"Na"
+    default: "Na"
   },
   education: {
     type: String,
-    default:"Na"
+    default: "Na"
 
   },
   stream: {
     type: String,
-    default:"Na"
+    default: "Na"
 
   },
   description: {
     type: String,
     default: "NA"
-},
+  },
   college: {
     type: String,
-    default:"Na"
+    default: "Na"
 
   },
   university: {
     type: String,
-    default:"Na"
+    default: "Na"
 
   },
   branch: {
     type: String,
-    default:"Na"
+    default: "Na"
 
   },
   semester: {
@@ -58,7 +58,7 @@ const studentProfileSchema = new mongoose.Schema({
   },
   state: {
     type: String,
-    default:"Na"
+    default: "Na"
 
   },
   date: {
@@ -70,12 +70,23 @@ const studentProfileSchema = new mongoose.Schema({
     default: 0
   },
   internships: [{
-    type: Array,
-
+    internshipId: {
+      type: String,
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'hired', 'rejected'],
+    }
   }],
-  industrialProjects: [{
-    type: Array,
 
+  industrialProjects: [{
+    industrialProjectId: {
+      type: String,
+    },
+    status: {
+      type: String,
+      enum: ['pending', 'hired', 'rejected'],
+    }
   }],
 
   sellProducts: [{

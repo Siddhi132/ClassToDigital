@@ -21,11 +21,13 @@ const companyProfileSchema = new mongoose.Schema({
         required: true
     },
     phone: {
-        type: String
+        type: String,
+        default: "Not Provided"
     },
 
     state: {
-        type: String
+        type: String,
+        default: "NA"
     },
     date: {
         type: Date,
@@ -44,10 +46,12 @@ const companyProfileSchema = new mongoose.Schema({
 
     }],
     category: {
-        type: String
+        type: String,
+        default: "Others"
     },
     description: {
-        type: String
+        type: String,
+        default: "Not Provided"
     },
     notifications: [{
         notification: {
