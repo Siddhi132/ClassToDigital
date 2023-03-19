@@ -82,5 +82,18 @@ const projectRepositorySchema = new mongoose.Schema({
 
 
 });
+
+
+projectRepositorySchema.pre('save', function(next) {
+    const projectDescription = this.projectDescription.replace(/\r\n|\r|\n/g, '<br>');
+    const objective = this.objective.replace(/\r\n|\r|\n/g, '<br>');
+   
+    this.projectDescription = projectDescription;
+    this.objective = objective;
+ 
+    
+    next();
+  });
+
 module.exports = mongoose.model("ProjectRepository", projectRepositorySchema);
 

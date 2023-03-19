@@ -168,7 +168,13 @@
                         </div>
                         <div id="addmentee-content">
                           <div class="pagetitle mb-4">
-                            <h1>Add Mentee</h1>
+                            <h1 class="mb-2">Add Mentee</h1>
+                            <nav>
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active">Add mentee</li>
+                              </ol>
+                            </nav>
                           </div>
                           <div id="addmenteealert" class=" mt-2 mb-2"></div>
                           <form id="addmenteeForm"  method="post" class="mb-3 mt-2 d-flex flex-wrap">
@@ -199,11 +205,10 @@
                         </div>
                         <div id="default-content" >
                             <div class="pagetitle">
-                                <h1>Profile</h1>
+                                <h1 class="mb-2"> My Profile</h1>
                                 <nav>
                                   <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                    <li class="breadcrumb-item">Users</li>
                                     <li class="breadcrumb-item active">Profile</li>
                                   </ol>
                                 </nav>
@@ -599,20 +604,52 @@
                             <!-- default-content -->
                         </div>
                         <div id="product-content">
-                            Products 
+                          <div class="pagetitle mb-4">
+                            <h1 class="mb-2">My Product</h1>
+                            <nav>
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active">Product</li>
+                              </ol>
+                            </nav>
+                          </div>
                             <div class="allProductList">
 
                             </div>
                         </div>
                         <div id="projectrepo-content">
+                          <div class="pagetitle mb-4">
+                            <h1 class="mb-2">My Project Repositories</h1>
+                            <nav>
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active">Project repository</li>
+                              </ol>
+                            </nav>
+                          </div>
                              <div id="projectrepo-content-inner" class="row">
 
                              </div>
                         </div>
                         <div id="research-content">
-                            Research
+                          <div class="pagetitle mb-4">
+                            <h1 class="mb-2">My Research Papers</h1>
+                            <nav>
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active">Research Papers</li>
+                              </ol>
+                            </nav>
+                          </div>
+                         
+                          <section>
+                            <div class="container py-5" id="research-container-profile">
+                                        
+                            </div>
+                          </section>
                         </div>
                         
+                   
                     </main>
                      
                         
@@ -632,6 +669,6 @@
 
             <script src='https://unpkg.com/@popperjs/core@2'></script>
             <script src="js/Profile/script.js"></script>
-            <script src="js/Profile/mentorProf.js" userId="<%= user._id %>" userRole="<%= user.role  %>"></script>
+            <script src="js/Profile/mentorProf.js" userId="<%= user._id %>" userRole="<%= user.role  %>" userResearch="<%= user.researchPapers %>"></script>
 
 </html>

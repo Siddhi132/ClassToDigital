@@ -90,7 +90,7 @@
                             <p style="font-size: 20px;">Project Objective</p>
                         </strong>
 
-                        <p><%= repository.objective %></p>
+                        <p><%- repository.objective %></p>
 
                         <button class="btn btn-primary ms-1" type="submit">
                             <a class="text-white" href="<%= repository.projectReport.path%>" target="_blank">Project Report</a>
@@ -115,7 +115,7 @@
                 <div class="col-md-9 ">
                     <h4 class="my-4 h4">Project Description</h4>
 
-                    <p><%= repository.projectDescription %></p>
+                    <p><%- repository.projectDescription %></p>
                     <h4 class="my-4 h5">Contact Details</h4>
                     <p><%= repository.email %></p>
                    <div class="row">

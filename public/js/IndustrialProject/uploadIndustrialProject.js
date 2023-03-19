@@ -61,4 +61,18 @@ $(document).on('click', '.alert .btn-close', function(e) {
     $(this).parent().remove();
 });
 
+$("#paidOrUnpaid").change(function () {
+    var paidOrUnpaid = $(this).val();
+
+    if (paidOrUnpaid == "Paid") {
+        // show and hide div with animation 
+        $("#stipenddiv").show();
+
+
+        // $("#stipenddiv").show();
+    } else {
+        $("#stipenddiv").hide();
+    }
+});
+
 
