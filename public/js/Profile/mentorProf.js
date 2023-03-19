@@ -1,5 +1,8 @@
 var userId = document.currentScript.getAttribute("userId");
 var userRole = document.currentScript.getAttribute("userRole");
+var userResearch = document.currentScript.getAttribute('userResearch').split(',');
+
+console.log("userResearch", userResearch);
 console.log("userId", userId);
 console.log("userRole", userRole);
 
@@ -191,14 +194,12 @@ profileProductBtn.addEventListener("click", function () {
                 <span id="conditionRatingVal" style="display:none;">
                   `+ parseInt(JSON.stringify(productData[i].conditionRating)) + `
                 </span>`;
-        console.log(productData[i].conditionRating);
-        //     var abc=productData[i].conditionRating;
-        //    for(var i=1; i<=abc; i++){ 
-        //     productDataHtml+=`<i class="fa fa-star"></i>`;
-        //       } 
-        //         for(var j=0;j<5-parseInt(JSON.stringify(productData[i].conditionRating));j++){ 
-        //             productDataHtml+=`<i class="fa-regular fa-star"></i>`;
-        //            }
+        for (var j = 0; j < parseInt(JSON.stringify(productData[i].conditionRating)); j++) {
+          productDataHtml += `<i class="fa fa-star"></i>`;
+        }
+        for (var j = 0; j < 5 - parseInt(JSON.stringify(productData[i].conditionRating)); j++) {
+          productDataHtml += `<i class="fa-regular fa-star"></i>`;
+        }
 
         productDataHtml += `   </div>
             </div>
@@ -319,6 +320,76 @@ profileResearchBtn.addEventListener("click", function () {
   projectrepoContent.style.display = "none";
   researchContent.style.display = "block";
   defaultContent.style.display = "none";
+  var researchContainer = document.getElementById("research-container-profile");
+  researchContainer.innerHTML =``;
+  for (var i = 0; i < userResearch.length; i++) {
+    var research = userResearch[i];
+ 
+    fetch('/api/getResearchPaperById?id=' + research, {
+      method: 'GET',
+    }
+    )
+      .then(response => response.json())
+      .then(data => {
+        console.log("data rs", data)
+        var research = data.data.researchPaper;
+        console.log('Success data:', research);
+        researchContainer.innerHTML  += `   <div class="row justify-content-center mb-3">
+        <div class="col-md-12 col-xl-10">
+          <div class="card shadow-0 border rounded-3">
+            <div class="card-body">
+              <div class="row">
+                
+                <div class="col-md-9 col-lg-9 col-xl-9">
+                  <h5>${research.title}</h5>
+                  <h6>${research.guide}</h6>
+                  
+                  <div class="d-flex flex-row">
+                    <div class="text-primary mb-1 me-2">
+                      <i class="fa fa-info-circle"></i>
+                    </div>
+                    <span>${research.category}</span>
+          
+                    
+                  </div>
+                  <div class="mt-1 mb-0 text-muted small">
+                  <h6 style="font-weight:bold">Team Members</h6>
+                    ${research.teamMembers.split(",").map((member) => {
+                      return `<span>${member} |</span>`
+                    }).join("")}
+    
+              
+                  </div>
+               
+                  <p class="text-truncate mb-4 mb-md-0">
+                    ${research.description}
+                  </p>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                <div class="d-flex flex-row align-items-center mb-1">
+              </div>
+                  <div class="d-flex flex-column mt-4">
+                    
+                    <a href="/researchPapers?_id=${research._id}"><button class="btn btn-primary" id="detailbtn">View
+                    Details</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  `;
+      } 
+      )
+      .catch((error) => {
+        console.error('Error:', error);
+      }
+      );
+  
+  
+    }
 }
 );
 

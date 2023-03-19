@@ -8,6 +8,53 @@
   <title>Document</title>
 
   <style>
+    .share-popup {
+      z-index: 500;
+      max-width: max-content;
+      width: 85%;
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .share-popup a {
+      display: inline-block;
+      margin-right: 10px;
+      font-size: 24px;
+      color: #000;
+      text-decoration: none;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      color: #000;
+      cursor: pointer;
+      border: none;
+
+
+
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      display: none;
+    }
+
     @media (max-width: 767.98px) {
       .border-sm-start-none {
         border-left: none !important;
@@ -17,7 +64,8 @@
     .hideDetail:hover {
       cursor: pointer;
     }
-    body{
+
+    body {
       background-color: #f6f9ff !important;
     }
   </style>
@@ -25,166 +73,228 @@
 </head>
 
 <body>
-    <!-- Navbar  -->
-    <% if(login){ %>
-      <% if(typeof role!="undefined" && role){ %>
-          <% if(role=="student"){ %>
-              <%- include('../Navbar/StudentNavbar.ejs') %>
-          <% }else if(role=="mentor"){ %>
-              <%- include('../Navbar/MentorNavbar.ejs') %>
-          <% }else if(role=="admin"){ %>
-              <%- include('../Navbar/AdminNavbar.ejs') %>
-          <% }else if(role=="company"){ %>
-              <%- include('../Navbar/CompanyNavbar.ejs') %>
-          <% } %>
-      <% } %>
-      
-      <% }else { %>
-          <%- include('../Navbar/InitNavbar.ejs') %>
-      <% } %>
+  <!-- Navbar  -->
+  <% if(login){ %>
+    <% if(typeof role!="undefined" && role){ %>
+      <% if(role=="student" ){ %>
+        <%- include('../Navbar/StudentNavbar.ejs') %>
+          <% }else if(role=="mentor" ){ %>
+            <%- include('../Navbar/MentorNavbar.ejs') %>
+              <% }else if(role=="admin" ){ %>
+                <%- include('../Navbar/AdminNavbar.ejs') %>
+                  <% }else if(role=="company" ){ %>
+                    <%- include('../Navbar/CompanyNavbar.ejs') %>
+                      <% } %>
+                        <% } %>
 
-  <section>
-    <div class="container py-5">
-      <div class="row justify-content-center mb-3">
-        <div class="col-md-8 col-xl-6 mb-2 mb-md-0 ">
-          <input type="search" class="form-control" id="searchProduct" style="background: transparent;" placeholder="Search by product name"
-            aria-label="Search" />
+                          <% }else { %>
+                            <%- include('../Navbar/InitNavbar.ejs') %>
+                              <% } %>
+                                <div id="overlay"></div>
+                                <section>
+                                  <div class="container py-5">
+                                    <div class="row justify-content-center mb-3">
+                                      <div class="col-md-8 col-xl-6 mb-2 mb-md-0 ">
+                                        <input type="search" class="form-control" id="searchProduct"
+                                          style="background: transparent;" placeholder="Search by product name"
+                                          aria-label="Search" />
 
 
 
-        </div>
-        
-        <div class="col-md-2 col-xl-2 mb-2 mb-md-0 ">
-          <select name="category" id="category" class="form-select" aria-label="Default select example" style="    background-color: #f6f9ff !important;">
-            <option value="" selected>Choose category</option>
+                                      </div>
 
-          </select>
-        </div>
-        <div class="col-md-2 col-xl-2 mb-2 mb-md-0 ">
-          <select name="conditionRating" id="conditionRating" class="form-select" aria-label="Default select example" style="    background-color: #f6f9ff !important;">
-            <option value="" selected>Choose conditionRating</option>
-          </select>
-        </div>
-      </div>
-      <!-- 
+                                      <div class="col-md-2 col-xl-2 mb-2 mb-md-0 ">
+                                        <select name="category" id="category" class="form-select"
+                                          aria-label="Default select example"
+                                          style="    background-color: #f6f9ff !important;">
+                                          <option value="" selected>Choose category</option>
+
+                                        </select>
+                                      </div>
+                                      <div class="col-md-2 col-xl-2 mb-2 mb-md-0 ">
+                                        <select name="conditionRating" id="conditionRating" class="form-select"
+                                          aria-label="Default select example"
+                                          style="    background-color: #f6f9ff !important;">
+                                          <option value="" selected>Choose conditionRating</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <!-- 
 
 <%= JSON.stringify(products.statusCode) %>
 <%= JSON.stringify(products.message) %>
 <%= JSON.stringify(products.data.allProducts) %> -->
 
-      <div class="allProducts">
+                                    <div class="allProducts">
 
-        <!-- foreach loop for products.data.allProducts  -->
-<%  var index=0; %>
-        <% products.data.allProducts.forEach(function(product){ %>
-<% index=index+1; %>
+                                      <!-- foreach loop for products.data.allProducts  -->
+                                      <% var index=0; %>
+                                        <% products.data.allProducts.forEach(function(product){ %>
+                                          <% if(product.verified) { %>
+                                            <% index=index+1; %>
 
-          <div class="row justify-content-center mb-3">
-            <div class="col-md-12 col-xl-10">
-              <div class="card shadow-3-strong border rounded-3">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                      <div id="carouselExampleControls<%= index %>" class="carousel slide" data-mdb-ride="carousel">
-                        <div class="carousel-inner">
-                          
-                          
-                        <% product.photos.forEach(function(photo){  %>                   
-                          <div class="carousel-item active" style="text-align: center;text-align: -webkit-center; text-align: -moz-center; ">
-                            <img style="height: 180px;" src="<%- photo.path %>" class="img-thumbnail d-block"
-                            alt="Product" />                               
-                        </div>
-                        <% }) %>
+                                            <div class="row justify-content-center mb-3" >
+                                              <div class="col-md-12 col-xl-10">
+                                                <div class="card shadow-3-strong border rounded-3" id="<%= product._id %>">
+                                                  <div class="card-body">
+                                                    <div class="row">
+                                                      <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                                        <div id="carouselExampleControls<%= index %>"
+                                                          class="carousel slide" data-mdb-ride="carousel">
+                                                          <div class="carousel-inner">
 
 
-                          
-
-                          
-                        </div>
-                        <button style="color:#1c4980;" class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleControls<%= index %>"
-                          data-mdb-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button style="color:#1c4980;" class="carousel-control-next" type="button" data-mdb-target="#carouselExampleControls<%= index %>"
-                          data-mdb-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 col-xl-6">
-                      <h5 id="productName">
-                        <%= product.productTitle %>
-                      </h5>
-                      <div class="d-flex flex-row">
-                        <div class="text-primary mb-1 me-2">
-                          <span id="conditionRatingVal" style="display:none;">
-                            <%= product.conditionRating %>
-                          </span>
-                          <% for(var i=1; i<=product.conditionRating; i++){ %>
-                            <i class="fa fa-star"></i>
-                            <% } %>
-                              <% for(var j=0;j<5-product.conditionRating;j++){ %>
-                                <i class="fa-regular fa-star"></i>
-                                <% } %>
-
-                        </div>
-                      </div>
-                      <div class="mt-1 mb-0  small">
-                        <span class="text-primary"> • </span>
-                        <span id="categoryName">
-                          <%= product.category %>
-                        </span>
-                        <span class="text-primary"> • </span>
-                        <span>
-                          <%= product.location %>
-                        </span>
-
-                      </div>
-                      <div class="mb-2 text-muted small">
-                        <span class="text-primary"> • </span>
-                        <span>Date Of Purchase : <%= product.dateOfPurchase.slice(0,10) %></span>
-
-                      </div>
-
-                    </div>
-                    <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start d-flex flex-column ">
-                      <!-- <div class="d-flex flex-row align-items-center mb-1"> -->
-                      <span class="text-primary text-end">Message <i class="fa fa-comment"></i></span>
-
-                      <h4 class="mb-1 me-1">
-                        <%= product.price %> Rs.
-                      </h4>
-                      <!-- chat icon  -->
-                      <!-- </div> -->
-                      <!-- <div class="d-flex flex-column mt-4"> -->
-                      <button class="btn btn-primary mt-auto showDetail" type="button">Details</button>
-
-                      <!-- </div> -->
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer" style="display: none;">
-                  <h5 class="text-uppercase text-primary">Notes</h5>
-                  <p>
-                    <%= product.note %><span class="hideDetail" style="float:right;"><i
-                          class=" text-primary fa-sharp fa-solid fa-arrow-up"></i></span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <% }) %>
-      </div>
+                                                            <% product.photos.forEach(function(photo){ %>
+                                                              <div class="carousel-item active"
+                                                                style="text-align: center;text-align: -webkit-center; text-align: -moz-center; ">
+                                                                <img style="height: 180px;" src="<%- photo.path %>"
+                                                                  class="img-thumbnail d-block" alt="Product" />
+                                                              </div>
+                                                              <% }) %>
 
 
-    </div>
-  </section>
 
-          <!-- Fotter -->
-          <%- include('../Footer/Footer.ejs') %>
+
+
+                                                          </div>
+                                                          <button style="color:#1c4980;" class="carousel-control-prev"
+                                                            type="button"
+                                                            data-mdb-target="#carouselExampleControls<%= index %>"
+                                                            data-mdb-slide="prev">
+                                                            <span class="carousel-control-prev-icon"
+                                                              aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Previous</span>
+                                                          </button>
+                                                          <button style="color:#1c4980;" class="carousel-control-next"
+                                                            type="button"
+                                                            data-mdb-target="#carouselExampleControls<%= index %>"
+                                                            data-mdb-slide="next">
+                                                            <span class="carousel-control-next-icon"
+                                                              aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Next</span>
+                                                          </button>
+                                                        </div>
+                                                      </div>
+                                                      <div class="col-md-6 col-lg-6 col-xl-6">
+                                                        <h5 id="productName">
+                                                          <%= product.productTitle %>
+                                                        </h5>
+                                                        <div class="d-flex flex-row">
+                                                          <div class="text-primary mb-1 me-2">
+                                                            <span id="conditionRatingVal" style="display:none;">
+                                                              <%= product.conditionRating %>
+                                                            </span>
+                                                            <% for(var i=1; i<=product.conditionRating; i++){ %>
+                                                              <i class="fa fa-star"></i>
+                                                              <% } %>
+                                                                <% for(var j=0;j<5-product.conditionRating;j++){ %>
+                                                                  <i class="fa-regular fa-star"></i>
+                                                                  <% } %>
+
+                                                          </div>
+                                                        </div>
+                                                        <div class="mt-1 mb-0  small">
+                                                          <span class="text-primary"> • </span>
+                                                          <span id="categoryName">
+                                                            <%= product.category %>
+                                                          </span>
+                                                          <span class="text-primary"> • </span>
+                                                          <span>
+                                                            <%= product.location %>
+                                                          </span>
+
+                                                        </div>
+                                                        <div class="mb-2 text-muted small">
+                                                          <span class="text-primary"> • </span>
+                                                          <span>Date Of Purchase : <%=
+                                                              product.dateOfPurchase.slice(0,10) %></span>
+
+                                                        </div>
+
+                                                      </div>
+                                                      <div
+                                                        class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start d-flex flex-column ">
+                                                        <!-- <div class="d-flex flex-row align-items-center mb-1"> -->
+                                                        <span class="text-primary text-end">Message <i
+                                                            class="fa fa-comment"></i></span>
+                                                        <button class="share-button">Share</button>
+                                                        <!-- <i class="fa fa-share"></i> -->
+                                                        <div class="share-popup">
+                                                          <!-- add a close btn in right corder of popup -->
+
+                                                          <button class="close-button">X</button>
+                                                          <h3>Share Modal
+                                                          </h3>
+                                                          <hr>
+                                                          <p>Share this link via</p>
+
+                                                          <a id="whatsapplink" class="ms-2 me-2"
+                                                            href=""><img
+                                                              src="https://img.icons8.com/color/48/null/whatsapp--v1.png" /></a>
+                                                          <a class="ms-2 me-2"
+                                                            href="https://t.me/share/url?url=https%3A%2F%2Fexample.com%2Fcard&text=Check%20out%20this%20card%21"><img
+                                                              src="https://img.icons8.com/color/48/null/telegram-app--v2.png" /></a>
+
+
+                                                          <a class="ms-2 me-2" href="https://www.instagram.com/"><img
+                                                              src="https://img.icons8.com/color/48/null/instagram-new--v1.png" />
+                                                          </a>
+
+
+
+                                                          <!-- <br> -->
+                                                          <a class="ms-2 me-2" href="https://twitter.com/"><img
+                                                              src="https://img.icons8.com/color/48/null/twitter--v1.png" />
+                                                          </a>
+
+
+                                                          <a class="ms-2 me-2" href="https://www.linkedin.com/"><img
+                                                              src="https://img.icons8.com/color/48/null/linkedin--v1.png" />
+                                                          </a>
+
+                                                          <a class="ms-2 me-2" href="https://www.facebook.com/"><img
+                                                              src="https://img.icons8.com/color/48/null/facebook-circled--v1.png" />
+                                                          </a>
+
+
+                                                          <!-- Add more sharing options as needed -->
+                                                        </div>
+                                                        <h4 class="mb-1 me-1">
+                                                          <%= product.price %> Rs.
+                                                        </h4>
+                                                        <!-- chat icon  -->
+                                                        <!-- </div> -->
+                                                        <!-- <div class="d-flex flex-column mt-4"> -->
+                                                        <button class="btn btn-primary mt-auto showDetail"
+                                                          type="button">Details</button>
+
+                                                        <!-- </div> -->
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                  <div class="card-footer" style="display: none;">
+                                                    <h5 class="text-uppercase text-primary">Notes</h5>
+                                                    <p>
+                                                      <%= product.note %><span class="hideDetail"
+                                                          style="float:right;"><i
+                                                            class=" text-primary fa-sharp fa-solid fa-arrow-up"></i></span>
+                                                    </p>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                         <% }%>
+                                          
+
+                                            <% }) %>
+                                    </div>
+
+
+                                  </div>
+                                </section>
+
+                                <!-- Fotter -->
+                                <%- include('../Footer/Footer.ejs') %>
 </body>
 
 <script>
@@ -235,7 +345,7 @@
     function filterproduct() {
       var category = $("#category").val();
       var conditionRating = $("#conditionRating").val();
-     
+
       if (category != "" && conditionRating != "") {
         $(".allProducts .row").each(function () {
           if ($(this).find('#categoryName').text().toLowerCase().indexOf(category.toLowerCase()) != -1 && parseInt($(this).find('#conditionRatingVal').text().toLowerCase()) >= parseInt((conditionRating.toLowerCase()))) {
@@ -246,7 +356,7 @@
         });
 
       }
-      else if(category != "" && conditionRating == ""){
+      else if (category != "" && conditionRating == "") {
         $(".allProducts .row").each(function () {
           if ($(this).find('#categoryName').text().toLowerCase().indexOf(category.toLowerCase()) != -1) {
             $(this).show();
@@ -255,7 +365,7 @@
           }
         });
       }
-      else if(category == "" && conditionRating != ""){
+      else if (category == "" && conditionRating != "") {
         $(".allProducts .row").each(function () {
           if ($(this).find('#conditionRatingVal').text().toLowerCase().indexOf(conditionRating.toLowerCase()) != -1) {
             $(this).show();
@@ -264,7 +374,7 @@
           }
         });
       }
-      else{
+      else {
         $(".allProducts .row").each(function () {
           $(this).show();
         });
@@ -292,6 +402,55 @@
     $(".hideDetail").click(function () {
       $(this).parent().parent().parent().parent().find(".card-footer").slideUp();
     });
+  });
+
+  const cards = document.querySelectorAll('.card');
+const shareButtons = document.querySelectorAll('.share-button');
+
+shareButtons.forEach((button, index) => {
+  button.addEventListener('click', () => {
+    // const card = cards[index];
+    // console.log("jknjbnj",card);
+    // const productName = card.querySelector('h5#productName').textContent;
+    // const productCategory = card.querySelector('span#categoryName').textContent;
+    // console.log(productName,productCategory);
+    // const cardId=card
+    // // const link = `https://example.com/share?title=${encodeURIComponent(productName)}&text=${encodeURIComponent(productCategory)}`;
+    // // const wplink=`whatsapp://send?text=`;
+    // console.log(card.attributes['id'].value);
+    // const dlink=window.location.href+`#`+card.attributes['id'].value;
+    // console.log("ahbhjb",dlink);
+    // card.querySelector('a#whatsapplink').setAttribute('href',`https://whatsapp://send?url=${encodeURIComponent(dlink)}`);
+    // console.log("ahbhjb",card.querySelector('a#whatsapplink'));
+
+    // $('#whatsapplink').attr('href',wplink);
+    $('#overlay').css('display', 'block');
+    $('.share-popup').fadeIn();
+  });
+});
+
+  // $('.share-button').click(function () {
+
+  //   $('#overlay').css('display', 'block');
+  //   $('.share-popup').fadeIn();
+  // });
+
+  // on click close btn hide popup
+  $('.close-button').click(function () {
+    $('#overlay').css('display', 'none');
+
+    $('.share-popup').fadeOut(100);
+
+  });
+
+  // Hide popup when clicked outside of it
+  $(document).mouseup(function (e) {
+    var container = $('.share-popup');
+    if (!container.is(e.target) && container.has(e.target).length === 0) {
+      $('#overlay').css('display', 'none');
+
+      container.fadeOut(100);
+    }
   });
 </script>
 

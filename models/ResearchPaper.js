@@ -17,6 +17,18 @@ const researchPaperScheme=new mongoose.Schema({
 
 });
 
+
+researchPaperScheme.pre('save', function(next) {
+    const description = this.description.replace(/\r\n|\r|\n/g, '<br>');
+    const noteDetails = this.noteDetails.replace(/\r\n|\r|\n/g, '<br>');
+   
+    this.noteDetails = noteDetails;
+    this.description = description;
+   
+    
+    next();
+  });
+
 module.exports=mongoose.model("ResearchPaper",researchPaperScheme);
 
 
