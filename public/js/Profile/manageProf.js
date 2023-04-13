@@ -4,13 +4,13 @@
 // id="profile-mentors-btn"
 // id="profile-research-btn"
 
-
 var profileInternshipBtn = document.getElementById("profile-internship-btn");
 var profileProductBtn = document.getElementById("profile-product-btn");
 var profileIdpBtn = document.getElementById("profile-idp-btn");
 var profileMentorsBtn = document.getElementById("profile-mentors-btn");
 var profileResearchBtn = document.getElementById("profile-research-btn");
 var profileBtn = document.getElementById("profile-btn");
+var profileProjectRepoBtn = document.getElementById("profile-projectrepo-btn");
 
 // id="internship-content"
 // id="product-content"
@@ -24,7 +24,7 @@ var idpContent = document.getElementById("idp-content");
 var researchContent = document.getElementById("research-content");
 var mentorContent = document.getElementById("mentor-content");
 var defaultContent = document.getElementById("default-content");
-
+var projectrepoContent = document.getElementById("projectrepo-content");
 
 profileBtn.addEventListener("click", function () {
   internshipContent.style.display = "none";
@@ -34,7 +34,6 @@ profileBtn.addEventListener("click", function () {
   mentorContent.style.display = "none";
   defaultContent.style.display = "block";
 });
-
 
 profileInternshipBtn.addEventListener("click", function () {
   internshipContent.style.display = "block";
@@ -187,7 +186,6 @@ fetch("/api/Categories")
     console.log(error);
   })
 
-
 function previewImage() {
   var preview = document.querySelector('.image-preview');
   var file = document.querySelector('input[name=profileImage]').files[0];
@@ -204,8 +202,6 @@ function previewImage() {
   }
 }
 
-
-
 var internshipContainer = document.getElementById("internship-container-profile");
 var idpContainer = document.getElementById("idp-container-profile");
 var researchContainer = document.getElementById("research-container-profile");
@@ -217,14 +213,12 @@ var userResearch = document.currentScript.getAttribute('userResearch').split(','
 var userProducts = document.currentScript.getAttribute('userProducts').split(',');
 var mentors = document.currentScript.getAttribute('mentors').split(',');
 var userId = document.currentScript.getAttribute('userId');
+var role = document.currentScript.getAttribute('role');
 console.log('userInternships', userInternships);
 console.log('userIdp', userIdp);
 console.log('userResearch', userResearch);
 console.log('userProducts', userProducts);
 console.log('mentors', mentors);
-
-
-
 
 console.log('Success: maro data aaray', dataArray);
 
@@ -243,7 +237,8 @@ for (var i = 0; i < userInternships.length; i++) {
       var internship = data.data.internship;
       var internshipStatus = "pending";
       console.log('Success:', data.data.internship);
-      internshipContainer.innerHTML += `   <div class="row justify-content-center mb-3">
+      internshipContainer.innerHTML += `   <div class="row justify-content-center mb-3 internshipprofile " >
+
             <div class="col-md-12 col-xl-10">
               <div class="card shadow-0 border rounded-3">
                 <div class="card-body">
@@ -271,7 +266,7 @@ for (var i = 0; i < userInternships.length; i++) {
                       </p>
                     </div>
                     <div class="col-md-3 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                    <h6 class="mb-1 me-1" id="${internship._id}"> ${internshipStatus}</h6>
+                    <h6 class="mb-1 me-1 statusinall" data-status="${internshipStatus}" id="${internship._id}"> ${internshipStatus}</h6>
                     <div class="d-flex flex-row align-items-center mb-1">
 
                     <h6 class="mb-1 me-1"> ${internship.modeOfInternship}</h5>
@@ -292,12 +287,60 @@ for (var i = 0; i < userInternships.length; i++) {
   `;
     }
     )
+   
     .catch((error) => {
       console.error('Error:', error);
     }
     );
 
 }
+
+// filter in internship 
+
+const filterTabs = document.querySelectorAll('.filter-tab');
+
+filterTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+   
+    filterTabs.forEach(tab => tab.classList.remove('active'));
+    tab.classList.add('active');
+    
+    const filterq = tab.dataset.filter;
+
+   $('.internshipprofile').each(function () {
+    console.log("here5",$(this));
+    // find whose data-id is equal to the filterq
+    if(filterq == "applied"){
+      $(this).show();
+    }
+    else{
+          if ($(this).find('.statusinall').text().toLowerCase().indexOf(filterq.toLowerCase()) != -1 ) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        }
+        });
+
+
+        $('.idpprofile').each(function () {
+          console.log("here5",$(this));
+          // find whose data-id is equal to the filterq
+          if(filterq == "applied"){
+            $(this).show();
+          }
+          else{
+                if ($(this).find('.statusofidp').text().toLowerCase().indexOf(filterq.toLowerCase()) != -1 ) {
+                  $(this).show();
+                } else {
+                  $(this).hide();
+                }
+              }
+              });
+
+    
+  });
+});
 
 for (var i = 0; i < userIdp.length; i++) {
   var idp = userIdp[i];
@@ -312,7 +355,7 @@ for (var i = 0; i < userIdp.length; i++) {
       console.log("data", data)
       var insustrialProject = data.data.IndustrialProject;
       console.log('Success: oyehoye', data.data.IndustrialProject);
-      idpContainer.innerHTML += `   <div class="row justify-content-center mb-3">
+      idpContainer.innerHTML += `   <div class="row justify-content-center mb-3 idpprofile">
         <div class="col-md-12 col-xl-10">
           <div class="card shadow-0 border rounded-3">
             <div class="card-body">
@@ -339,7 +382,7 @@ for (var i = 0; i < userIdp.length; i++) {
                   </p>
                 </div>
                 <div class="col-md-4 col-lg-3 col-xl-3 border-sm-start-none border-start">
-                <h6 class="mb-1 me-1"id='${insustrialProject._id}'">  ${idpStatus}</h6>
+                <h6 class="mb-1 me-1 statusofidp"id='${insustrialProject._id}'">  ${idpStatus}</h6>
                   <div class="d-flex flex-row align-items-center mb-1">
 
                     <h6 class="mb-1 me-1"> ${insustrialProject.modeOfIndustrialProject}</h5>
@@ -365,6 +408,8 @@ for (var i = 0; i < userIdp.length; i++) {
     );
 
 }
+
+
 
 for (var i = 0; i < userResearch.length; i++) {
   var research = userResearch[i];
@@ -408,7 +453,7 @@ for (var i = 0; i < userResearch.length; i++) {
       console.log("data rs", data)
       var research = data.data.researchPaper;
       console.log('Success data:', research);
-      researchContainer.innerHTML += `   <div class="row justify-content-center mb-3">
+      researchContainer.innerHTML += `<div class="row justify-content-center mb-3">
       <div class="col-md-12 col-xl-10">
         <div class="card shadow-0 border rounded-3">
           <div class="card-body">
@@ -465,8 +510,6 @@ for (var i = 0; i < userResearch.length; i++) {
 
 }
 
-
-
 fetch("/api/getProducts?userId=" + userId)
 
   .then(response => response.json())
@@ -480,7 +523,12 @@ fetch("/api/getProducts?userId=" + userId)
     var productDataHtml = "";
     for (var i = 0; i < productDataLength; i++) {
       console.log("productData[i]", productData[i]);
-
+      if (productData[i].verified == true) {
+        var filterValue = "verified";
+      }
+      else {
+        var filterValue = "pending";
+      }
       productDataHtml += `
 <div class="row justify-content-center mb-3">
 <div class="col-md-12 col-xl-10">
@@ -525,10 +573,12 @@ fetch("/api/getProducts?userId=" + userId)
               <span id="conditionRatingVal" style="display:none;">
                 `+ parseInt(JSON.stringify(productData[i].conditionRating)) + `
               </span>`;
-      console.log(productData[i].conditionRating);
-      for (var j = 0; j < parseInt(JSON.stringify(productData[i].conditionRating)); j++) {
-        productDataHtml += `<i class="fa fa-star"></i>`;
-      }
+              for (var j = 0; j < parseInt(JSON.stringify(productData[i].conditionRating)); j++) {
+                productDataHtml += `<i class="fa fa-star"></i>`;
+              }
+              for (var j = parseInt(JSON.stringify(productData[i].conditionRating)); j < 5; j++) {
+                productDataHtml += `<i class="fa-regular fa-star"></i>`;
+              }
 
 
 
@@ -551,7 +601,18 @@ fetch("/api/getProducts?userId=" + userId)
             <span class="text-primary"> • </span>
             <span>Date Of Purchase :  `+ productData[i].dateOfPurchase.slice(0, 10) + `</span>
 
-          </div>
+            </div>
+            <div class="mb-2 text-muted small">
+  
+              <span class="text-primary"> • </span>
+              `; if (productData[i].verified) {
+          productDataHtml += `<span class="badge badge-success">Verified</span>`;
+        } else {
+          productDataHtml += `<span class="badge badge-danger">Pending</span>`
+        }
+        productDataHtml += `
+  
+              </div>
 
         </div>
         <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start d-flex flex-column ">
@@ -565,6 +626,7 @@ fetch("/api/getProducts?userId=" + userId)
           <!-- </div> -->
           <!-- <div class="d-flex flex-column mt-4"> -->
           <button class="btn btn-primary mt-auto showDetail" type="button">Details</button>
+          <button class="btn btn-danger mt-auto" type="button" onclick="deleteItem('`+ productData[i]._id + `','product')">Delete</button>
 
           <!-- </div> -->
         </div>
@@ -584,8 +646,6 @@ fetch("/api/getProducts?userId=" + userId)
     $('#product-container-profile').html(productDataHtml);
   }
   );
-
-
 
 for (var i = 0; i < mentors.length; i++) {
   var mentorId = mentors[i];
@@ -639,7 +699,6 @@ for (var i = 0; i < mentors.length; i++) {
 
 }
 
-
 var dataArray = [];
 fetch('/api/getUserById?userId=' + userId, {
   method: 'GET',
@@ -668,8 +727,7 @@ fetch('/api/getUserById?userId=' + userId, {
         else if (dataArray[j][k].status == 'rejected') {
           dataArray[j][k].status = '<span class="badge rounded-pill bg-danger">Rejected</span>';
         }
-
-        $("#"+dataArray[j][k].id).html(dataArray[j][k].status);
+        $("#" + dataArray[j][k].id).html(dataArray[j][k].status);
       }
     }
 
@@ -678,3 +736,238 @@ fetch('/api/getUserById?userId=' + userId, {
     console.error('Error:', error);
   }
   );
+
+  profileProjectRepoBtn.addEventListener("click", async function () {
+    // showLoader();
+    projectrepoContent.style.display = "block";
+    internshipContent.style.display = "none";
+    productContent.style.display = "none";
+    idpContent.style.display = "none";
+    researchContent.style.display = "none";
+    mentorContent.style.display = "none";
+    defaultContent.style.display = "none";
+  
+  
+    var projectDataHtml = '';
+  
+  
+    await fetch('/api/getUserById?userId=' + userId)
+      .then(response => response.json())
+      .then(async data => {
+        console.log("data.userDetails.projectRepository", data.userDetails.projectRepository);
+        $('#projectrepo-content-inner').html('');
+        // $('#projectrepo-content').append(`<div class="row">`);
+        data.userDetails.projectRepository.forEach(function (project) {
+          console.log("H", project);
+          var request = { "request": { _id: project } };
+          // ajax request on /api/getProjectRepository this api nd pass request as body
+          $.ajax({
+            url: '/api/getProjectRepository',
+            type: 'GET',
+            data: request,
+            contentType: 'application/json',
+            success: function (data) {
+              hideLoader();
+              projectDataHtml = `<div class="courses col-lg-3 col-md-6 col-sm-12" id="` + data.data.ProjectRepository[0]._id + `" >
+              <div class="course-item">
+                <div class="mt-3 mb-4" style="text-align: center;">
+                  <img src="${data.data.ProjectRepository[0].projectImage.path}"
+                    class="rounded-circle img-fluid"
+                    style="width: 100px;" />
+                </div>
+                <div class="course-content">
+                  <h3><a href="course-details.html">`+ data.data.ProjectRepository[0].projectName + `</a></h3>
+                  <p class="repotext">`+ data.data.ProjectRepository[0].projectDescription + `</p>
+                  <div class="d-flex justify-content-between align-items-center mb-3">
+                    <a href="/projectRepository?_id=`+ data.data.ProjectRepository[0]._id + `"><h4>View Details</h4></a>
+                    <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 20px;" onclick="deleteItem('`+ data.data.ProjectRepository[0]._id + `' , 'projectRepository')"></i>`;
+                    if (data.data.ProjectRepository[0].isHidden == true) {
+                      projectDataHtml += `<i class="fa fa-eye-slash" aria-hidden="true" style="color: black; font-size: 20px;" onclick="hideItem('`+ data.data.ProjectRepository[0]._id + `' , 'projectRepository')" id="` + data.data.ProjectRepository[0]._id + 'hide' + `"></i>`;
+                    } else {
+                      projectDataHtml += `<i class="fa fa-eye" aria-hidden="true" style="color: black; font-size: 20px;" onclick="hideItem('`+ data.data.ProjectRepository[0]._id + `' , 'projectRepository')" id="` + data.data.ProjectRepository[0]._id + 'hide' + `"></i>`;
+                    }
+            
+                    projectDataHtml += `
+                  </div>                
+                </div>
+              </div>
+            </div>
+            
+          `;
+              $('#projectrepo-content-inner').append(projectDataHtml);
+            },
+            error: function (error) {
+              hideLoader();
+              console.error(error);
+            }
+          });
+          console.log("kk..", projectDataHtml);
+  
+        })
+  
+  
+      });
+  });
+  
+  
+  
+  
+  const filterTabs = document.querySelectorAll('.filter-tab');
+  
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const productContainers = document.querySelectorAll('.product-container-profile');
+      const noDataMessage = document.querySelector('.no-data-message');
+  
+      // remove active class from all filter tabs
+      filterTabs.forEach(tab => tab.classList.remove('active'));
+      // add active class to clicked tab
+      tab.classList.add('active');
+  
+      // filter product containers based on selected filter
+      const selectedFilter = tab.getAttribute('data-filter');
+      let matchCount = 0;
+      productContainers.forEach(container => {
+        const containerFilter = container.getAttribute('data-filter');
+        if (selectedFilter === 'all' || selectedFilter === containerFilter) {
+          container.style.display = 'flex';
+          matchCount++;
+        } else {
+          container.style.display = 'none';
+        }
+      });
+  
+      // show no data message if no products match the selected filter
+      if (matchCount === 0) {
+        noDataMessage.style.display = 'block';
+      } else {
+        noDataMessage.style.display = 'none';
+      }
+    });
+  });
+  
+  
+  
+  // Delete item button
+  
+  function deleteItem(itemid, itemtype) {
+  
+    swal({
+      title: "Are you sure?",
+      text: "You will not be able to recover this imaginary file!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, delete it!',
+      closeOnConfirm: false,
+      //closeOnCancel: false
+    },
+      function () {
+        $.ajax({
+          url: '/api/deleteItem',
+          type: 'POST',
+          data: {
+            itemId: itemid,
+            item: itemtype,
+            role: role,
+            userId: userId
+          },
+          success: function (data) {
+            console.log("data", data);
+            // delete from dom
+            $('#' + itemid).remove();
+          },
+          error: function (err) {
+            console.log(err);
+          }
+  
+        });
+        swal("Deleted!", "Your imaginary file has been deleted!", "success");
+      });
+  }
+  
+  
+  function hideItem(itemid, itemtype) {
+    if ($('#' + itemid + 'hide').hasClass('fa-eye')) {
+      
+      swal({
+        title: "Are you sure?",
+        text: "Your item will be hidden!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Yes, hide it!',
+        closeOnConfirm: false,
+        //closeOnCancel: false
+      },
+        function () {
+          $.ajax({
+            url: '/api/hideItem',
+            type: 'POST',
+            data: {
+              itemId: itemid,
+              item: itemtype,
+              role: role,
+              userId: userId
+            },
+            success: function (data) {
+              $('#' + itemid + 'hide').removeClass('fa-eye');
+      $('#' + itemid + 'hide').addClass('fa-eye-slash');
+              // delete from dom
+              // $('#' + itemid+ 'hide').remove();
+              // class="fa fa-eye-slash"
+              
+            },
+            error: function (err) {
+              console.log(err);
+            }
+    
+          });
+          swal("Hidden!", "Your item has been hidden!", "success");
+        });
+    }
+    else {
+  
+     
+      swal({
+        title: "Are you sure?",
+        text: "Your item will be visible!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#DD6B55',
+        confirmButtonText: 'Yes, visible it!',
+  
+        closeOnConfirm: false,
+        //closeOnCancel: false
+      },
+  
+        function () {
+          $.ajax({
+            url: '/api/visibleItem',
+            type: 'POST',
+            data: {
+              itemId: itemid,
+              item: itemtype,
+              role: role,
+              userId: userId
+            },
+            success: function (data) {
+              $('#' + itemid + 'hide').removeClass('fa-eye-slash');
+      $('#' + itemid + 'hide').addClass('fa-eye');
+              
+            },
+            error: function (err) {
+              console.log(err);
+            }
+    
+          });
+          swal("Visible!", "Your item has been visible!", "success");
+        }
+      );
+  
+  
+    }
+    
+  }
+  
+  

@@ -41,407 +41,380 @@
                                                     <%- include('../Navbar/InitNavbar.ejs') %>
                                                         <% } %>
 
-                                                            <body>
-                                                                <section class="h-100 bg-light">
-                                                                    <div class="container py-5 h-100">
-                                                                        <div
-                                                                            class="row d-flex justify-content-center align-items-center h-100">
-                                                                            <div class="col">
-                                                                                <div
-                                                                                    class="card card-registration my-4">
-                                                                                    <div class="row g-0">
+<body>
+    <section class="h-100 bg-light">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col">
+                    <div class="card card-registration my-4">
+                        <div class="row g-0">
 
-                                                                                        <div class="col-xl-12">
-                                                                                            <% if(typeof message
-                                                                                                !="undefined" &&
-                                                                                                message){ %>
-                                                                                                <div class="alert alert-success alert-dismissible fade show"
-                                                                                                    role="alert">
-                                                                                                    <%= message.message
-                                                                                                        %>
-                                                                                                        <button
-                                                                                                            type="button"
-                                                                                                            class="btn-close"
-                                                                                                            data-bs-dismiss="alert"
-                                                                                                            aria-label="Close"></button>
-                                                                                                </div>
-                                                                                                <% } %>
-                                                                                                    <div
-                                                                                                        class="card-body p-md-5 text-black">
-                                                                                                        <h3
-                                                                                                            class="mb-5 text-uppercase main-heading">
-                                                                                                            Upload
-                                                                                                            Industrial
-                                                                                                            Project
-                                                                                                            Details</h3>
+                            <div class="col-xl-12">
+                                <% if(typeof message !="undefined" && message){ %>
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <%= message.message %>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <% } %>
+                                        <div class="card-body p-md-5 text-black">
+                                            <h3 class="mb-5 text-uppercase main-heading">
+                                                Upload
+                                                Industrial
+                                                Project
+                                                Details</h3>
 
-                                                                                                        <form
-                                                                                                            method="post"
-                                                                                                            action="/uploadIndustrialProject"
-                                                                                                            id="addIndustrialProjectform">
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <input
-                                                                                                                    type="text"
-                                                                                                                    id="projectTitle"
-                                                                                                                    name="projectTitle"
-                                                                                                                    class="form-control form-control-lg"
-                                                                                                                    required />
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="projectTitle">Project
-                                                                                                                    Title</label>
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <input
-                                                                                                                    type="text"
-                                                                                                                    id="companyName"
-                                                                                                                    name="companyName"
-                                                                                                                    class="form-control form-control-lg"
-                                                                                                                    required />
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="companyName">Company
-                                                                                                                    Name</label>
-                                                                                                            </div>
+                                            <form method="post" action="/uploadIndustrialProject"
+                                                id="addIndustrialProjectform">
+                                                <div class="form-outline mb-4">
+                                                    <input type="text" id="projectTitle" name="projectTitle"
+                                                        class="form-control form-control-lg" required />
+                                                    <label class="form-label" for="projectTitle">Project
+                                                        Title</label>
+                                                </div>
+                                                <div class="form-outline mb-4">
+                                                    <input type="text" id="companyName" name="companyName"
+                                                        class="form-control form-control-lg" required />
+                                                    <label class="form-label" for="companyName">Company
+                                                        Name</label>
+                                                </div>
 
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <input
-                                                                                                                    type="text"
-                                                                                                                    id="position"
-                                                                                                                    name="position"
-                                                                                                                    class="form-control  form-control-lg"
-                                                                                                                    required />
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="position">Position</label>
+                                                <div class="form-outline mb-4">
+                                                    <input type="text" id="position" name="position"
+                                                        class="form-control  form-control-lg" required />
+                                                    <label class="form-label" for="position">Position</label>
 
-                                                                                                            </div>
+                                                </div>
 
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <textarea
-                                                                                                                    type="input"
-                                                                                                                    class="form-control  form-control-lg"
-                                                                                                                    id="briefDescription"
-                                                                                                                    name="briefDescription"
-                                                                                                                    rows="3"
-                                                                                                                    required></textarea>
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="briefDescription">Brief
-                                                                                                                    Description
-                                                                                                                    About
-                                                                                                                    Company</label>
-                                                                                                            </div>
+                                                <div class="form-outline mb-4">
+                                                    <textarea type="input" class="form-control  form-control-lg"
+                                                        id="briefDescription" name="briefDescription" rows="3"
+                                                        required></textarea>
+                                                    <label class="form-label" for="briefDescription">Brief
+                                                        Description
+                                                        About
+                                                        Company</label>
+                                                </div>
+<div class="mb-4">
+    <select class="form-select form-select-lg" id="city"
+                                                            name="city" aria-label="Default select example"
+                                                            required>
+                                                            <option value="" selected>
+                                                                Choose
+                                                                city
+                                                            </option>
 
+                                                        </select>
+</div>
 
-                                                                                                            <div
-                                                                                                                class="row">
-                                                                                                                <div
-                                                                                                                    class="col-md-6 mb-4">
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4">
 
-                                                                                                                    <select
-                                                                                                                        class="form-select form-select-lg"
-                                                                                                                        id="location"
-                                                                                                                        name="location"
-                                                                                                                        aria-label="Default select example"
-                                                                                                                        required>
-                                                                                                                        <option
-                                                                                                                            value=""
-                                                                                                                            selected>
-                                                                                                                            Choose
-                                                                                                                            location
-                                                                                                                        </option>
+                                                        <select class="form-select form-select-lg" id="state"
+                                                            name="state" aria-label="Default select example"
+                                                            required>
+                                                            <option value="" selected>
+                                                                Choose
+                                                                state
+                                                            </option>
 
-                                                                                                                    </select>
+                                                        </select>
 
-                                                                                                                </div>
-                                                                                                                <div
-                                                                                                                    class="col-md-6 mb-4">
-                                                                                                                    <select
-                                                                                                                        class="form-select form-select-lg"
-                                                                                                                        id="paidOrUnpaid"
-                                                                                                                        name="paidOrUnpaid"
-                                                                                                                        aria-label="Default select example"
-                                                                                                                        required>
-                                                                                                                        <option
-                                                                                                                            value=""
-                                                                                                                            selected>
-                                                                                                                            Choose
-                                                                                                                            Paid
-                                                                                                                            or
-                                                                                                                            Unpaid
-                                                                                                                        </option>
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <select class="form-select form-select-lg" id="paidOrUnpaid"
+                                                            name="paidOrUnpaid" aria-label="Default select example"
+                                                            required>
+                                                            <option value="" selected>
+                                                                Choose
+                                                                Paid
+                                                                or
+                                                                Unpaid
+                                                            </option>
 
-                                                                                                                    </select>
+                                                        </select>
 
-                                                                                                                </div>
-                                                                                                            </div>
+                                                    </div>
+                                                </div>
 
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4" id="stipenddiv">
-                                                                                                                <input
-                                                                                                                    type="number"
-                                                                                                                    id="stipend"
-                                                                                                                    name="stipend"
-                                                                                                                    class="form-control form-control-lg"
-                                                                                                                    required />
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="stipend">Stipend</label>
-                                                                                                            </div>
+                                                <div class="form-outline mb-4" id="stipenddiv">
+                                                    <input type="number" id="stipend" name="stipend"
+                                                        class="form-control form-control-lg" required />
+                                                    <label class="form-label" for="stipend">Stipend</label>
+                                                </div>
 
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <input
-                                                                                                                    type="text"
-                                                                                                                    id="duration"
-                                                                                                                    name="duration"
-                                                                                                                    class="form-control form-control-lg"
-                                                                                                                    required />
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="duration">Duration</label>
-                                                                                                            </div>
+                                                <div class="form-outline mb-4">
+                                                    <input type="number" id="duration" name="duration"
+                                                        class="form-control form-control-lg" required />
+                                                    <label class="form-label" for="duration">Duration</label>
+                                                </div>
 
-                                         
-
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <input
-                                                                                                                    type="text"
-                                                                                                                    id="skillsRequired"
-                                                                                                                    name="skillsRequired"
-                                                                                                                    class="form-control form-control-lg"
-                                                                                                                    required />
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="skillsRequired">Skills
-                                                                                                                    Required(Seperate
-                                                                                                                    By
-                                                                                                                    Comma(,)
-                                                                                                                    )</label>
-                                                                                                            </div>
+                                                <div class="mb-4">
+                                                    <select class="form-select form-select-lg" id="morw" name="morw"
+                                                        aria-label="Default select example" required>
+                                                        <option value="" selected>
+                                                            Choose Months or Weeks
+                                                        </option>
+                                                        <option value="Month">Months</option>
+                                                        <option value="Week">Weeks</option>
 
 
-                                                                                                            <div
-                                                                                                                class="row">
-                                                                                                                <div
-                                                                                                                    class="col-md-6 mb-4">
+                                                    </select>
+                                                </div>
 
-                                                                                                                    <div
-                                                                                                                        class="form-outline">
-                                                                                                                        <input
-                                                                                                                            type="number"
-                                                                                                                            id="numberOfOpenings"
-                                                                                                                            name="numberOfOpenings"
-                                                                                                                            class="form-control form-control-lg"
-                                                                                                                            required />
-                                                                                                                        <label
-                                                                                                                            class="form-label"
-                                                                                                                            for="numberOfOpenings">No.
-                                                                                                                            of
-                                                                                                                            Openings</label>
-                                                                                                                    </div>
 
-                                                                                                                </div>
-                                                                                                                <div
-                                                                                                                    class="col-md-6 mb-4">
 
-                                                                                                                    <div
-                                                                                                                        class="form-outline">
-                                                                                                                        <input
-                                                                                                                            type="date"
-                                                                                                                            id="lastDateToApply"
-                                                                                                                            name="lastDateToApply"
-                                                                                                                            class="form-control form-control-lg"
-                                                                                                                            required />
-                                                                                                                        <label
-                                                                                                                            class="form-label"
-                                                                                                                            for="lastDateToApply">Last
-                                                                                                                            date
-                                                                                                                            to
-                                                                                                                            apply</label>
-                                                                                                                    </div>
+                                                <div class="form-outline mb-4">
+                                                    <input type="text" id="skillsRequired" name="skillsRequired"
+                                                        class="form-control form-control-lg" required />
+                                                    <label class="form-label" for="skillsRequired">Skills
+                                                        Required(Seperate
+                                                        By
+                                                        Comma(,)
+                                                        )</label>
+                                                </div>
 
-                                                                                                                </div>
-                                                                                                            </div>
 
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <input
-                                                                                                                    type="number"
-                                                                                                                    id="contactDetails"
-                                                                                                                    name="contactDetails"
-                                                                                                                    class="form-control form-control-lg"
-                                                                                                                    required
-                                                                                                                    pattern="[0-9]{10}" />
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="form3Example9">Mobile
-                                                                                                                    no.</label>
-                                                                                                            </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4">
 
-                                                                                                            <div
-                                                                                                                class="row">
-                                                                                                                <div
-                                                                                                                    class="col-md-6 mb-4">
+                                                        <div class="form-outline">
+                                                            <input type="number" id="numberOfOpenings"
+                                                                name="numberOfOpenings"
+                                                                class="form-control form-control-lg" required />
+                                                            <label class="form-label" for="numberOfOpenings">No.
+                                                                of
+                                                                Openings</label>
+                                                        </div>
 
-                                                                                                                    <select
-                                                                                                                        class="form-select form-select-lg"
-                                                                                                                        id="typeOfIndustrialProject"
-                                                                                                                        name="typeOfIndustrialProject"
-                                                                                                                        aria-label="Default select example"
-                                                                                                                        required>
-                                                                                                                        <option
-                                                                                                                            value=""
-                                                                                                                            selected>
-                                                                                                                            Choose
-                                                                                                                            type
-                                                                                                                            Of
-                                                                                                                            Industrial
-                                                                                                                            Project
-                                                                                                                        </option>
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
 
-                                                                                                                    </select>
+                                                        <div class="form-outline">
+                                                            <input type="date" id="lastDateToApply"
+                                                                name="lastDateToApply"
+                                                                class="form-control form-control-lg" required />
+                                                            <label class="form-label" for="lastDateToApply">Last
+                                                                date
+                                                                to
+                                                                apply</label>
+                                                        </div>
 
-                                                                                                                </div>
-                                                                                                                <div
-                                                                                                                    class="col-md-6 mb-4">
-                                                                                                                    <select
-                                                                                                                        class="form-select form-select-lg"
-                                                                                                                        id="modeOfIndustrialProject"
-                                                                                                                        name="modeOfIndustrialProject"
-                                                                                                                        aria-label="Default select example"
-                                                                                                                        required>
-                                                                                                                        <option
-                                                                                                                            value=""
-                                                                                                                            selected>
-                                                                                                                            Choose
-                                                                                                                            Mode
-                                                                                                                            Of
-                                                                                                                            Industrial
-                                                                                                                            Project
-                                                                                                                        </option>
+                                                    </div>
+                                                </div>
 
-                                                                                                                    </select>
+                                                <div class="form-outline mb-4">
+                                                    <input type="number" id="contactDetails" name="contactDetails"
+                                                        class="form-control form-control-lg" required
+                                                        pattern="[0-9]{10}" />
+                                                    <label class="form-label" for="form3Example9">Mobile
+                                                        no.</label>
+                                                </div>
 
-                                                                                                                </div>
-                                                                                                            </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 mb-4">
 
-                                                                                                            <div
-                                                                                                                class="mb-4">
-                                                                                                                <select
-                                                                                                                    class="form-select form-select-lg"
-                                                                                                                    id="category"
-                                                                                                                    name="category"
-                                                                                                                    aria-label="Default select example"
-                                                                                                                    required>
-                                                                                                                    <option
-                                                                                                                        value=""
-                                                                                                                        selected>
-                                                                                                                        Choose
-                                                                                                                        Category
-                                                                                                                        Of
-                                                                                                                        Industrial
-                                                                                                                        Project
-                                                                                                                    </option>
+                                                        <select class="form-select form-select-lg"
+                                                            id="typeOfIndustrialProject" name="typeOfIndustrialProject"
+                                                            aria-label="Default select example" required>
+                                                            <option value="" selected>
+                                                                Choose
+                                                                type
+                                                                Of
+                                                                Industrial
+                                                                Project
+                                                            </option>
 
-                                                                                                                </select>
-                                                                                                            </div>
+                                                        </select>
 
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <textarea
-                                                                                                                    id="rolesAndResponsibilities"
-                                                                                                                    name="rolesAndResponsibilities"
-                                                                                                                    class="form-control  form-control-lg"
-                                                                                                                    required ></textarea>
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="rolesAndResponsibilities">Roles
-                                                                                                                    And
-                                                                                                                    Responsibilities</label>
+                                                    </div>
+                                                    <div class="col-md-6 mb-4">
+                                                        <select class="form-select form-select-lg"
+                                                            id="modeOfIndustrialProject" name="modeOfIndustrialProject"
+                                                            aria-label="Default select example" required>
+                                                            <option value="" selected>
+                                                                Choose
+                                                                Mode
+                                                                Of
+                                                                Industrial
+                                                                Project
+                                                            </option>
 
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <input
-                                                                                                                    type="text"
-                                                                                                                    id="perks"
-                                                                                                                    name="perks"
-                                                                                                                    class="form-control  form-control-lg"
-                                                                                                                    required />
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="perks">Perks</label>
+                                                        </select>
 
-                                                                                                            </div>
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <textarea
-                                                                                                                    id="whoCanApply"
-                                                                                                                    name="whoCanApply"
-                                                                                                                    class="form-control  form-control-lg"
-                                                                                                                    required ></textarea>
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="whoCanApply">Who
-                                                                                                                    can
-                                                                                                                    apply</label>
+                                                    </div>
+                                                </div>
 
-                                                                                                            </div>
-                                                                                                            
-                                                                                                                <input
-                                                                                                                    type="hidden"
-                                                                                                                    id="totalNumberOfApplicants"
-                                                                                                                    name="totalNumberOfApplicants"
-                                                                                                                    class="form-control  form-control-lg"
-                                                                                                                    value="0"
-                                                                                                                    required />
-                                                                                                               
+                                                <div class="mb-4">
+                                                    <select class="form-select form-select-lg" id="category"
+                                                        name="category" aria-label="Default select example" required>
+                                                        <option value="" selected>
+                                                            Choose
+                                                            Category
+                                                            Of
+                                                            Industrial
+                                                            Project
+                                                        </option>
 
-                                                                                                          
-                                                                                                            <div
-                                                                                                                class="form-outline mb-4">
-                                                                                                                <textarea
-                                                                                                                    id="criteriaForSelection"
-                                                                                                                    name="criteriaForSelection"
-                                                                                                                    class="form-control  form-control-lg"
-                                                                                                                    required ></textarea>
-                                                                                                                <label
-                                                                                                                    class="form-label"
-                                                                                                                    for="criteriaForSelection">Criteria
-                                                                                                                    For
-                                                                                                                    Selection</label>
+                                                    </select>
+                                                </div>
 
-                                                                                                            </div>
+                                                
+                                                <div class="mb-4">
+                                                    <select class="form-select form-select-lg" id="typeOfCompany"
+                                                        name="typeOfCompany" aria-label="Default select example"
+                                                        required>
+                                                        <option value="" selected>
+                                                            Choose
+                                                            typeOfCompany
+                                                        </option>
+                                                        <option value="Sole proprietorship">Sole proprietorship</option>
+                                                        <option value="Partnership">Partnership</option>
+                                                        <option value="LLP">LLP</option>
+                                                        <option value="PVT/LTD">PVT/LTD</option>
+                                                        <option value="Other">Other</option>
 
-                                                                                                            <div
-                                                                                                                class="d-flex justify-content-center pt-3">
-                                                                                                                <input
-                                                                                                                    id="submitIndustrialProjectForm"
-                                                                                                                    type="submit"
-                                                                                                                    class="btn btn-primary ms-2 btn-lg"
-                                                                                                                    value="Submit">
-                                                                                                            </div>
-                                                                                                        </form>
+                                                    </select>
+                                                </div>
 
-                                                                                                    </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </section>
-                                                                <!-- footer  -->
-                                                                <%- include('../Footer/Footer.ejs') %>
-                                                            </body>
-                                                            <script type="text/javascript"
-                                                                src="/js/IndustrialProject/uploadIndustrialProject.js"></script>
+                                                <div class="form-outline mb-4 " id="cindiv" style="display: none;">
+                                                    <!-- input field of CIN number -->
+                                                    <input type="text" id="cin" name="cin"
+                                                        class="form-control  form-control-lg" required />
+                                                    <label class="form-label" for="cin">CIN number</label>
+                                                </div>
+
+                                                <div class="form-outline mb-4">
+                                                    <textarea id="rolesAndResponsibilities"
+                                                        name="rolesAndResponsibilities"
+                                                        class="form-control  form-control-lg" required></textarea>
+                                                    <label class="form-label" for="rolesAndResponsibilities">Roles
+                                                        And
+                                                        Responsibilities</label>
+
+                                                </div>
+                                                <!-- <div class="form-outline mb-4">
+                                                    <input type="text" id="perks" name="perks"
+                                                        class="form-control  form-control-lg" required />
+                                                    <label class="form-label" for="perks">Perks</label>
+
+                                                </div> -->
+                                                <input type="hidden" id="perks" name="perks"
+                                                class="form-control  form-control-lg" required />
+
+                                                <div class=" mb-4">
+                                                    <!-- There are some predefined perks with checkboxes whenevr you click on
+                                                    the checkbox it will be added to the perks field sepreted with comma
+                                                    and if remove checkbox then rempve from perks field -->
+                                                    <label class="form-label" for="perks">Perks</label>
+                                                    <br>
+
+                                                    <input type="checkbox" class="form-check-input" name="certificate" id="certificate" onchange="updateperks(this)" value="certificate">
+                                                    <label class="form-label" class="form-check=label" for="certificate">Certificate</label>
+                                                    <input type="checkbox" class="form-check-input" name="letterOfRecommendation" id="letterOfRecommendation" onchange="updateperks(this)" value="letterOfRecommendation">
+                                                    <label class="form-label" class="form-check=label" for="letterOfRecommendation">Letter Of Recommendation</label>
+                                                    <input type="checkbox" class="form-check-input" name="jobOffer" id="jobOffer" onchange="updateperks(this)" value="jobOffer">
+                                                    <label class="form-label" class="form-check=label" for="jobOffer">Job Offer</label>
+                                                </div>
+
+                                                <div class="form-outline mb-4">
+                                                    <textarea id="whoCanApply" name="whoCanApply"
+                                                        class="form-control  form-control-lg" required></textarea>
+                                                    <label class="form-label" for="whoCanApply">Who
+                                                        can
+                                                        apply</label>
+
+                                                </div>
+
+                                                <input type="hidden" id="totalNumberOfApplicants"
+                                                    name="totalNumberOfApplicants" class="form-control  form-control-lg"
+                                                    value="0" required />
+
+
+
+                                                <div class="form-outline mb-4">
+                                                    <textarea id="criteriaForSelection" name="criteriaForSelection"
+                                                        class="form-control  form-control-lg" required></textarea>
+                                                    <label class="form-label" for="criteriaForSelection">Criteria
+                                                        For
+                                                        Selection</label>
+
+                                                </div>
+
+                                                <div class="d-flex justify-content-center pt-3">
+                                                  
+                                                    <button id="previewForm" type="button"
+                                                        class="btn btn-secondary ms-2 btn-lg" data-mdb-toggle="modal"
+                                                        data-mdb-target="#previewModal">Submit</button>
+
+                                                </div>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="previewModal" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Review
+                                                                    your industrial project details</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-mdb-dismiss="modal"
+                                                                    aria-label="Close"></button>
+                                                            </div>
+                                                            <div id="alertfill"></div>
+
+                                                            <div class="modal-body" id="previewformdetail">
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input id="submitIndustrialProjectForm" type="submit"
+                                                                class="btn btn-primary ms-2 btn-lg" value="Submit">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-mdb-dismiss="modal">Close</button>
+                                                                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- footer  -->
+    <%- include('../Footer/Footer.ejs') %>
+</body>
+<script type="text/javascript" src="/js/IndustrialProject/uploadIndustrialProject.js"></script>
+<script>
+     function updateperks(checkbox) {
+  var resultInput = document.getElementById("perks");
+  var currentValue = resultInput.value;
+  var checkboxValue = checkbox.value;
+
+  if (checkbox.checked) {
+    if (currentValue === "") {
+      resultInput.value = checkboxValue;
+    } else {
+      resultInput.value = currentValue + "," + checkboxValue;
+    }
+  } else {
+    var values = currentValue.split(",");
+    var index = values.indexOf(checkboxValue);
+
+    if (index !== -1) {
+      values.splice(index, 1);
+      resultInput.value = values.join(",");
+    }
+  }
+}
+</script>
+
+
+
 
 </html>
