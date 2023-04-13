@@ -202,7 +202,7 @@
 
                                                                                         <strong>
                                                                                             <p style="font-size: 20px;">
-                                                                                                Internship Description
+                                                                                                Industrial Project Description
                                                                                             </p>
                                                                                         </strong>
 
@@ -217,13 +217,7 @@
                                                                                 <!--Grid column-->
                                                                                 <!--Grid column-->
                                                                                 <div class="col-md-4 mb-4">
-                                                                                    <img src="
-                                                                                    <% if (item.companyImage.name !== item.companyId+'__profileImage.jpg') { %>
-                                                                                      <%= item.companyImage.path %>
-                                                                                    <% } else { %>
-                                                                                      <%= '/uploadedData/profile/profileImages/' + item.companyImage.name %>
-                                                                                    <% } %>
-                                                                                    "
+                                                                                    <img src="<%= item.companyId.profileImage.path %>"
                                                                                       style="margin: auto; height: fit-content;" alt="" class="img-fluid">
                                                                                 </div>
                                                                                 <!--Grid column-->
@@ -575,7 +569,7 @@
                         card += `<div class="card border border-1 me-5  col-md-3">
                                                                                 <div class="bg-image hover-overlay ripple"
                                                                                     data-mdb-ripple-color="light">
-                                                                                    <img src=""
+                                                                                    <img src="${element[i].companyId.profileImage.path}"
                                                                                         class="img-fluid" />
                                                                                     <a href="#!">
                                                                                         <div class="mask"
@@ -588,7 +582,7 @@
                                                                                     <p class="card-text">${element[i].companyName}
                                                                                     </p>
                                                                                     <p class="card-text">${element[i].skillsRequired}</p>
-                                                                                    <a href="#!"
+                                                                                    <a href="/industrialProjects?_id=${element[i]._id}"
                                                                                         class="btn btn-primary">View Detail</a>
                                                                                 </div>
                                                                             </div>`;

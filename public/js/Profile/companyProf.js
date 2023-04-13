@@ -219,6 +219,8 @@ async function displayInternships() {
                       <div class="d-flex  mt-4 gap-2 flex-wrap">
                         <a href="/internships?_id=${internship._id}"><button class="btn btn-primary" id="detailbtn">View Details</button></a>
                         <button class="btn btn-primary" id="view-applicants-btn" onclick="viewApplicants('internship','${appliedStudents}', '${internship._id}')">View Applicants</button>
+                        <button class="btn btn-primary" id="close-application" onclick="closeApplication('internship', '${internship._id}')">Close Application</button>
+                        
                       </div>
                     </div>
                   </div>

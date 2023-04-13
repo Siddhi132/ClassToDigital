@@ -65,6 +65,10 @@
         </div>
         <div id="search-content">
             <% projectRepositories.forEach(function(repository){ %>
+                <!-- check it is hiden or not by isHidden -->
+                <% if(repository.isHidden){ %>
+                    <% return; %> <% } %>
+                    
                 <div class="card bg-light mb-3 repo-card">
                     <div class="card-body">
                         <h3 class="card-title"><%- repository.projectName -%>

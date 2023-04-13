@@ -90,7 +90,8 @@ const studentProfileSchema = new mongoose.Schema({
   }],
 
   sellProducts: [{
-    type: Array,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product'
   }],
 
   mentor: [{
@@ -98,7 +99,8 @@ const studentProfileSchema = new mongoose.Schema({
   }],
 
   projectRepository: [{
-    type: Array,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'ProjectRepository'
   }],
 
   researchPapers: [{
@@ -139,6 +141,18 @@ const studentProfileSchema = new mongoose.Schema({
       type: String
     },
 
+  }],
+  savedProducts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product'
+  }],
+  savedInternships: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Internship'
+  }],
+  savedIndustrialProjects: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'IndustrialProject'
   }],
 
 

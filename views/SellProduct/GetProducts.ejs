@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
 
   <style>
     .share-popup {
@@ -64,6 +65,40 @@
     .hideDetail:hover {
       cursor: pointer;
     }
+
+    /* .goverlay {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .glightbox {
+      padding-left: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: 0 5px;
+      flex-basis: calc(100% / 5 - 10px);
+    }
+
+    .gcounter {
+      padding: .5rem;
+    }
+
+    .gcounter::after {
+      content: attr(data-indicator);
+      position: absolute;
+      top: .5rem;
+      left: .5rem;
+      color: white;
+      padding: 10px;
+      z-index: 10000000;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 50px;
+    }
+
+    .glightbox-closing .gcounter {
+      opacity: 0;
+    }
+
+ */
 
     body {
       background-color: #f6f9ff !important;
@@ -124,6 +159,7 @@
 <%= JSON.stringify(products.statusCode) %>
 <%= JSON.stringify(products.message) %>
 <%= JSON.stringify(products.data.allProducts) %> -->
+                                    <div id="savedAlert"></div>
 
                                     <div class="allProducts">
 
@@ -133,160 +169,195 @@
                                           <% if(product.verified) { %>
                                             <% index=index+1; %>
 
-                                            <div class="row justify-content-center mb-3" >
-                                              <div class="col-md-12 col-xl-10">
-                                                <div class="card shadow-3-strong border rounded-3" id="<%= product._id %>">
-                                                  <div class="card-body">
-                                                    <div class="row">
-                                                      <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                                                        <div id="carouselExampleControls<%= index %>"
-                                                          class="carousel slide" data-mdb-ride="carousel">
-                                                          <div class="carousel-inner">
+                                              <div class="row justify-content-center mb-3" id="<%= product._id %>">
+                                                <div class="col-md-12 col-xl-10">
+                                                  <div class="card shadow-3-strong border rounded-3">
+                                                    <div class="card-body">
+                                                      <div class="row">
+                                                        <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                                                          <div id="carouselExampleControls<%= index %>"
+                                                            class="carousel slide" data-mdb-ride="carousel">
+                                                            <div class="carousel-inner">
 
 
-                                                            <% product.photos.forEach(function(photo){ %>
-                                                              <div class="carousel-item active"
-                                                                style="text-align: center;text-align: -webkit-center; text-align: -moz-center; ">
-                                                                <img style="height: 180px;" src="<%- photo.path %>"
-                                                                  class="img-thumbnail d-block" alt="Product" />
-                                                              </div>
-                                                              <% }) %>
+                                                              <% product.photos.forEach(function(photo){ %>
+                                                                <div class="carousel-item active "
+                                                                  style="text-align: center;text-align: -webkit-center; text-align: -moz-center; ">
+                                                                  <img style="height: 180px;" src="<%- photo.path %>"
+                                                                    class="img-thumbnail d-block glightbox" alt="Product" />
+                                                                </div>
+                                                                <% }) %>
 
 
 
 
 
+                                                            </div>
+                                                            <button style="color:#1c4980;" class="carousel-control-prev"
+                                                              type="button"
+                                                              data-mdb-target="#carouselExampleControls<%= index %>"
+                                                              data-mdb-slide="prev">
+                                                              <span class="carousel-control-prev-icon"
+                                                                aria-hidden="true"></span>
+                                                              <span class="visually-hidden">Previous</span>
+                                                            </button>
+                                                            <button style="color:#1c4980;" class="carousel-control-next"
+                                                              type="button"
+                                                              data-mdb-target="#carouselExampleControls<%= index %>"
+                                                              data-mdb-slide="next">
+                                                              <span class="carousel-control-next-icon"
+                                                                aria-hidden="true"></span>
+                                                              <span class="visually-hidden">Next</span>
+                                                            </button>
                                                           </div>
-                                                          <button style="color:#1c4980;" class="carousel-control-prev"
-                                                            type="button"
-                                                            data-mdb-target="#carouselExampleControls<%= index %>"
-                                                            data-mdb-slide="prev">
-                                                            <span class="carousel-control-prev-icon"
-                                                              aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Previous</span>
-                                                          </button>
-                                                          <button style="color:#1c4980;" class="carousel-control-next"
-                                                            type="button"
-                                                            data-mdb-target="#carouselExampleControls<%= index %>"
-                                                            data-mdb-slide="next">
-                                                            <span class="carousel-control-next-icon"
-                                                              aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Next</span>
-                                                          </button>
                                                         </div>
-                                                      </div>
-                                                      <div class="col-md-6 col-lg-6 col-xl-6">
-                                                        <h5 id="productName">
-                                                          <%= product.productTitle %>
-                                                        </h5>
-                                                        <div class="d-flex flex-row">
-                                                          <div class="text-primary mb-1 me-2">
-                                                            <span id="conditionRatingVal" style="display:none;">
-                                                              <%= product.conditionRating %>
+                                                        <div class="col-md-6 col-lg-6 col-xl-6">
+                                                          <h5 id="productName">
+                                                            <%= product.productTitle %>
+                                                          </h5>
+                                                          <div class="d-flex flex-row">
+                                                            <div class="text-primary mb-1 me-2">
+                                                              <span id="conditionRatingVal" style="display:none;">
+                                                                <%= product.conditionRating %>
+                                                              </span>
+                                                              <% for(var i=1; i<=product.conditionRating; i++){ %>
+                                                                <i class="fa fa-star"></i>
+                                                                <% } %>
+                                                                  <% for(var j=0;j<5-product.conditionRating;j++){ %>
+                                                                    <i class="fa-regular fa-star"></i>
+                                                                    <% } %>
+
+                                                            </div>
+                                                          </div>
+                                                          <div class="mt-1 mb-0  small">
+                                                            <span class="text-primary"> • </span>
+                                                            <span id="categoryName">
+                                                              <%= product.category %>
                                                             </span>
-                                                            <% for(var i=1; i<=product.conditionRating; i++){ %>
-                                                              <i class="fa fa-star"></i>
-                                                              <% } %>
-                                                                <% for(var j=0;j<5-product.conditionRating;j++){ %>
-                                                                  <i class="fa-regular fa-star"></i>
-                                                                  <% } %>
+                                                            <span class="text-primary"> • </span>
+                                                            <span>
+                                                              <%= product.location %>
+                                                            </span>
 
                                                           </div>
+                                                          <!-- badge -->
+                                                          <% product.tag[0].split(",").forEach(function(tag){ %>
+                                                            <span class="badge bg-success text-wrap"
+                                                              style="font-size: 12px; margin: 5px;">
+                                                              <%= tag %>
+                                                            </span>
+                                                            <% }) %>
+
+
+
+
+                                                              <div class="mb-2 text-muted small">
+                                                                <span class="text-primary"> • </span>
+                                                                <span>Date Of Purchase : <%=
+                                                                    product.dateOfPurchase.slice(0,10) %></span>
+
+                                                              </div>
+                                                              <div class="mb-2 text-muted small">
+                                                                <span class="text-primary"> • </span>
+                                                                <!-- <span id="<%= product._id %>" onload="getSellerName('<%= product._id %>')"></span> -->
+                                                                <span class="product-seller">Posted By</span>
+                                                                <span id="<%= product.userId %>"
+                                                                  style="font-weight: bolder;"></span>
+
+
+                                                              </div>
+
                                                         </div>
-                                                        <div class="mt-1 mb-0  small">
-                                                          <span class="text-primary"> • </span>
-                                                          <span id="categoryName">
-                                                            <%= product.category %>
+                                                        <div
+                                                          class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start d-flex flex-column ">
+                                                          <!-- <div class="d-flex flex-row align-items-center mb-1"> -->
+                                                          <span
+                                                            class="text-primary text-end flex-grow-1 gap-2 flex-wrap flex gap-3">
+                                                            <!-- chat message  icon -->
+                                                            <i class="fa fa-comment-alt share-button text-primary"></i>
+                                                            <i class="fa fa-share share-button text-primary"></i>
+                                                            <!-- Save the product icon -->
+                                                            <!-- function saveProduct(userId, productId, role) { -->
+                                                            <!-- <i class="fa-regular fa-bookmark text-primary"></i> -->
+                                                            <i class="fa-regular fa-bookmark text-primary"
+                                                              onclick="saveProduct('<%= userId %>', '<%= product._id %>', '<%= role %>')"
+                                                              id="saveProduct<%= product._id %>"></i>
+
                                                           </span>
-                                                          <span class="text-primary"> • </span>
-                                                          <span>
-                                                            <%= product.location %>
-                                                          </span>
+                                                          <!-- <button class="share-button">Share</button> -->
+                                                          <!-- <i class="fa fa-share"></i> -->
+                                                          <div class="share-popup">
+                                                            <!-- add a close btn in right corder of popup -->
 
+                                                            <button class="close-button">X</button>
+                                                            <h3>Share Product
+                                                            </h3>
+                                                            <hr>
+                                                            <p>Share this link via</p>
+
+                                                            <!-- <a href="https://api.whatsapp.com/send?text=Check out this product: YOUR_PRODUCT_URL_HERE" target="_blank"><i class="fab fa-whatsapp"></i> Share on WhatsApp</a> -->
+                                                            <a id="whatsapplink" class="ms-2 me-2"
+                                                              href="https://api.whatsapp.com/send?text=Check out this product: https://localhost:5000/products%23<%= product._id %>"
+                                                              target="_blank"><img
+                                                                src="https://img.icons8.com/color/48/null/whatsapp--v1.png" /></a>
+                                                            <a id="telegramlink" class="ms-2 me-2"
+                                                              href="https://t.me/share/url?url=https%3A%2F%2Flocalhost%3A5000%2Fproducts%23<%= product._id %>&text=Check%20out%20this%20product%3A"
+                                                              target="_blank">
+                                                              <img
+                                                                src="https://img.icons8.com/color/48/null/telegram-app--v2.png" /></a>
+
+
+                                                            <a class="ms-2 me-2" href="https://www.instagram.com/"><img
+                                                                src="https://img.icons8.com/color/48/null/instagram-new--v1.png" />
+                                                            </a>
+
+
+
+                                                            <!-- <br> -->
+                                                            <a class="ms-2 me-2" href="https://twitter.com/"><img
+                                                                src="https://img.icons8.com/color/48/null/twitter--v1.png" />
+                                                            </a>
+
+
+                                                            <a class="ms-2 me-2" href="https://www.linkedin.com/"><img
+                                                                src="https://img.icons8.com/color/48/null/linkedin--v1.png" />
+                                                            </a>
+
+                                                            <a class="ms-2 me-2" href="https://www.facebook.com/"><img
+                                                                src="https://img.icons8.com/color/48/null/facebook-circled--v1.png" />
+                                                            </a>
+
+
+                                                            <!-- Add more sharing options as needed -->
+                                                          </div>
+                                                          <h4 class="mb-1 me-1">
+                                                            <%= product.price %> Rs.
+                                                          </h4>
+                                                          <!-- chat icon  -->
+                                                          <!-- </div> -->
+                                                          <!-- <div class="d-flex flex-column mt-4"> -->
+                                                          <button class="btn btn-primary mt-auto showDetail"
+                                                            type="button">Details</button>
+
+                                                          <!-- </div> -->
                                                         </div>
-                                                        <div class="mb-2 text-muted small">
-                                                          <span class="text-primary"> • </span>
-                                                          <span>Date Of Purchase : <%=
-                                                              product.dateOfPurchase.slice(0,10) %></span>
-
-                                                        </div>
-
-                                                      </div>
-                                                      <div
-                                                        class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start d-flex flex-column ">
-                                                        <!-- <div class="d-flex flex-row align-items-center mb-1"> -->
-                                                        <span class="text-primary text-end">Message <i
-                                                            class="fa fa-comment"></i></span>
-                                                        <button class="share-button">Share</button>
-                                                        <!-- <i class="fa fa-share"></i> -->
-                                                        <div class="share-popup">
-                                                          <!-- add a close btn in right corder of popup -->
-
-                                                          <button class="close-button">X</button>
-                                                          <h3>Share Modal
-                                                          </h3>
-                                                          <hr>
-                                                          <p>Share this link via</p>
-
-                                                          <a id="whatsapplink" class="ms-2 me-2"
-                                                            href=""><img
-                                                              src="https://img.icons8.com/color/48/null/whatsapp--v1.png" /></a>
-                                                          <a class="ms-2 me-2"
-                                                            href="https://t.me/share/url?url=https%3A%2F%2Fexample.com%2Fcard&text=Check%20out%20this%20card%21"><img
-                                                              src="https://img.icons8.com/color/48/null/telegram-app--v2.png" /></a>
-
-
-                                                          <a class="ms-2 me-2" href="https://www.instagram.com/"><img
-                                                              src="https://img.icons8.com/color/48/null/instagram-new--v1.png" />
-                                                          </a>
-
-
-
-                                                          <!-- <br> -->
-                                                          <a class="ms-2 me-2" href="https://twitter.com/"><img
-                                                              src="https://img.icons8.com/color/48/null/twitter--v1.png" />
-                                                          </a>
-
-
-                                                          <a class="ms-2 me-2" href="https://www.linkedin.com/"><img
-                                                              src="https://img.icons8.com/color/48/null/linkedin--v1.png" />
-                                                          </a>
-
-                                                          <a class="ms-2 me-2" href="https://www.facebook.com/"><img
-                                                              src="https://img.icons8.com/color/48/null/facebook-circled--v1.png" />
-                                                          </a>
-
-
-                                                          <!-- Add more sharing options as needed -->
-                                                        </div>
-                                                        <h4 class="mb-1 me-1">
-                                                          <%= product.price %> Rs.
-                                                        </h4>
-                                                        <!-- chat icon  -->
-                                                        <!-- </div> -->
-                                                        <!-- <div class="d-flex flex-column mt-4"> -->
-                                                        <button class="btn btn-primary mt-auto showDetail"
-                                                          type="button">Details</button>
-
-                                                        <!-- </div> -->
                                                       </div>
                                                     </div>
-                                                  </div>
-                                                  <div class="card-footer" style="display: none;">
-                                                    <h5 class="text-uppercase text-primary">Notes</h5>
-                                                    <p>
-                                                      <%= product.note %><span class="hideDetail"
-                                                          style="float:right;"><i
-                                                            class=" text-primary fa-sharp fa-solid fa-arrow-up"></i></span>
-                                                    </p>
+                                                    <div class="card-footer" style="display: none;">
+                                                      <h5 class="text-uppercase text-primary">Notes</h5>
+                                                      <p>
+                                                        <%= product.note %><span class="hideDetail"
+                                                            style="float:right;"><i
+                                                              class=" text-primary fa-sharp fa-solid fa-arrow-up"></i></span>
+                                                      </p>
+                                                    </div>
                                                   </div>
                                                 </div>
                                               </div>
-                                            </div>
-                                         <% }%>
-                                          
+                                              <% }%>
 
-                                            <% }) %>
+
+                                                <% }) %>
                                     </div>
 
 
@@ -296,11 +367,25 @@
                                 <!-- Fotter -->
                                 <%- include('../Footer/Footer.ejs') %>
 </body>
+<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+<script>
+  // const nav = document.createElement('div');
+  // nav.classList.add('gcounter');
+  // nav.dataset.indicator = '/';
 
+  // const slides = GLightbox({
+  //   onOpen: () => slides.modal.appendChild(nav),
+  //   afterSlideChange: function (prev, next) {
+  //     nav.dataset.indicator = `${next.index + 1} / ${slides.elements.length}`;
+  //     nav.classList.add('gcounter-added');
+  //   }
+  // });
+</script>
 <script>
   $(document).ready(function () {
 
     // dropdown for category and condition rating 
+
 
     fetch('/api/Categories')
       .then(res => res.json())
@@ -405,29 +490,31 @@
   });
 
   const cards = document.querySelectorAll('.card');
-const shareButtons = document.querySelectorAll('.share-button');
+  const shareButtons = document.querySelectorAll('.share-button');
 
-shareButtons.forEach((button, index) => {
-  button.addEventListener('click', () => {
-    // const card = cards[index];
-    // console.log("jknjbnj",card);
-    // const productName = card.querySelector('h5#productName').textContent;
-    // const productCategory = card.querySelector('span#categoryName').textContent;
-    // console.log(productName,productCategory);
-    // const cardId=card
-    // // const link = `https://example.com/share?title=${encodeURIComponent(productName)}&text=${encodeURIComponent(productCategory)}`;
-    // // const wplink=`whatsapp://send?text=`;
-    // console.log(card.attributes['id'].value);
-    // const dlink=window.location.href+`#`+card.attributes['id'].value;
-    // console.log("ahbhjb",dlink);
-    // card.querySelector('a#whatsapplink').setAttribute('href',`https://whatsapp://send?url=${encodeURIComponent(dlink)}`);
-    // console.log("ahbhjb",card.querySelector('a#whatsapplink'));
+  shareButtons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      // const card = cards[index];
+      // console.log("jknjbnj",card);
+      // const productName = card.querySelector('h5#productName').textContent;
+      // const productCategory = card.querySelector('span#categoryName').textContent;
+      // console.log(productName,productCategory);
+      // const cardId=card
 
-    // $('#whatsapplink').attr('href',wplink);
-    $('#overlay').css('display', 'block');
-    $('.share-popup').fadeIn();
+      // // <a href="https://api.whatsapp.com/send?text=Check out this product: YOUR_PRODUCT_URL_HERE" target="_blank"><i class="fab fa-whatsapp"></i> Share on WhatsApp</a>
+      // const link = `https://example.com/share?title=${encodeURIComponent(productName)}&text=${encodeURIComponent(productCategory)}`;
+      // const wplink=`whatsapp://send?text=`;
+      // console.log(card.attributes['id'].value);
+      // const dlink=window.location.href+`#`+card.attributes['id'].value;
+      // console.log("ahbhjb",dlink);
+      // card.querySelector('a#whatsapplink').setAttribute('href',`https://whatsapp://send?url=${encodeURIComponent(dlink)}`);
+      // console.log("ahbhjb",card.querySelector('a#whatsapplink'));
+
+      // $('#whatsapplink').attr('href',wplink);
+      $('#overlay').css('display', 'block');
+      $('.share-popup').fadeIn();
+    });
   });
-});
 
   // $('.share-button').click(function () {
 
@@ -445,6 +532,7 @@ shareButtons.forEach((button, index) => {
 
   // Hide popup when clicked outside of it
   $(document).mouseup(function (e) {
+
     var container = $('.share-popup');
     if (!container.is(e.target) && container.has(e.target).length === 0) {
       $('#overlay').css('display', 'none');
@@ -452,6 +540,112 @@ shareButtons.forEach((button, index) => {
       container.fadeOut(100);
     }
   });
+
+
+  function saveProduct(userId, productId, role) {
+    if (!userId) {
+      //       $("#savedAlert").html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+      // Plase Login to save product.
+      //       <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+      //     </div>`);
+      swal("Opps!", "Plase Login to save product!", "warning");
+      return;
+    }
+    // saveProduct + productId
+    // remove saved class from icon fa-solid, add fa-regular
+    if ($('#saveProduct' + productId).hasClass("fa-solid")) {
+      $("#saveProduct" + productId).removeClass("fa-solid");
+      $("#saveProduct" + productId).addClass("fa-regular");
+      $("#savedAlert").html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Product removed Successfully.
+      <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>`);
+
+
+      $.ajax({
+        url: '/api/removeSavedProduct',
+        type: 'POST',
+        data: {
+          userId: userId,
+          productId: productId,
+          role: role
+        },
+        success: function (data) {
+          console.log("data", data)
+
+        },
+        error: function (err) {
+          console.log("err hey hey", err)
+        }
+
+      });
+
+    } else {
+      $("#saveProduct" + productId).removeClass("fa-regular");
+      $("#saveProduct" + productId).addClass("fa-solid");
+      $("#savedAlert").html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+     Product Saved Successfully.
+      <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>`);
+
+
+
+      $.ajax({
+        url: '/api/saveProduct',
+        type: 'POST',
+        data: {
+          userId: userId,
+          productId: productId,
+          role: role
+        },
+        success: function (data) {
+          console.log("data", data)
+
+        },
+        error: function (err) {
+          console.log("err hey hey", err)
+        }
+
+      });
+
+    }
+
+
+  }
+
+  const userResponse = fetch('/api/getUserById?userId=' + '<%= userId %>', { method: 'GET' });
+  userResponse.then(response => response.json())
+    .then(userData => {
+      console.log('Success:', userData.userDetails.savedProducts);
+      userData.userDetails.savedProducts.forEach((product) => {
+        $("#saveProduct" + product).removeClass("fa-regular");
+        $("#saveProduct" + product).addClass("fa-solid");
+      });
+    });
+
+
+  document.addEventListener("DOMContentLoaded", function (event) {
+    const productSellers = document.querySelectorAll(".product-seller");
+    productSellers.forEach(function (productSeller) {
+      const sellerId = productSeller.nextElementSibling.id;
+      getSellerName(sellerId, productSeller);
+    });
+  });
+
+  function getSellerName(sellerId, productSeller) {
+    const spanElement = productSeller.nextElementSibling;
+    fetch('/api/getUserById?userId=' + sellerId, { method: 'GET' })
+      .then(response => response.json())
+      .then(sellerData => {
+        console.log('Success:', sellerData.userDetails.name);
+        spanElement.textContent = sellerData.userDetails.name;
+      });
+  }
+
+// document.getElementById('b1').onclick = function(){
+// 	swal("Here's a message!");
+// };
+
 </script>
 
 </html>

@@ -43,7 +43,7 @@ const mentorSchema = new mongoose.Schema({
         default: "NA"
 
     },
-   
+
 
     background: {
         type: String,
@@ -94,7 +94,7 @@ const mentorSchema = new mongoose.Schema({
     },
     mentee: [{
         type: Array,
-        
+
 
     }],
     researchPapers: [{
@@ -111,23 +111,35 @@ const mentorSchema = new mongoose.Schema({
     }],
     notifications: [{
         notification: {
-          type: String
+            type: String
         },
         notificationtype: {
-          type: String
+            type: String
         },
-        
-      }],
-      profileImage: {
+
+    }],
+    profileImage: {
         name: {
-          type: String,
-          default: "Default Avatar"
+            type: String,
+            default: "Default Avatar"
         },
         path: {
-          type: String,
-          default: "\\images\\profile\\defaultAvatar.png"
+            type: String,
+            default: "\\images\\profile\\defaultAvatar.png"
         }
-      }
+    },
+    savedProducts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    }],
+    savedInternships: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Internship'
+    }],
+    savedIndustrialProjects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'IndustrialProject'
+      }],
 
 
 

@@ -54,7 +54,8 @@ const verifyUserForLogin = async (req, res) => {
     // console.log('password matches');
 
     // If the email and password match, generate a JSON web token
-    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET);
+    const token = jwt.sign({ _id: user._id, role: user.role, email: user.email
+     }, process.env.JWT_SECRET);
     
     res.send({status:true, statusCode:200,"data": { "user": user,'token': token } , 'message': 'Logged in successfully.'});
   } catch (error) {
