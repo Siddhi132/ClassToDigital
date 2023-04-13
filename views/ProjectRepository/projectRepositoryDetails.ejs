@@ -33,6 +33,17 @@
 
 
     <% projectRepository.forEach(function(repository){ %>
+
+        <% if(repository.isHidden){ %>
+            <div class="container mt-4 mb-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="mb-2 text-center text-black">
+                            Opps! Project Repository is Hidden By owner</p>
+                    </div>
+                </div>
+            </div>
+            <% return; %> <% } %>
          <!--Main layout-->
     <main class="mt-5 pt-4 ">
         <div class="container mt-5 border border-1 shadow-3 bg-white" style="padding: 1em; border-radius: 5px;">

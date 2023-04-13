@@ -161,6 +161,12 @@ var card=``;
                                 product.dateOfPurchase.slice(0,10) }</span>
 
                           </div>
+                          <div class="mb-2 text-muted small">
+                          <span class="text-primary"> • </span>
+                          <span>Seller Contact Email : ${
+                              product.buyerEmail }</span>
+
+                        </div>
 
                         </div>
                         <div

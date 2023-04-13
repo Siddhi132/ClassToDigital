@@ -109,6 +109,15 @@
                                         </a>
                                
                                     </li>
+                                    <li class="menu-item ">
+                                      <a href="#" id="profile-projectrepo-btn">
+                                          <span class="menu-icon">
+                                              <i class="fa-sharp fa-solid fa-diagram-project"></i>
+                                          </span>
+                                          <span class="menu-title">Project Repository</span>
+                                      </a>
+                               
+                                  </li>
                                     <!-- <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li>
                                     <li class="menu-item">
                                         <a href="#">
@@ -161,6 +170,14 @@
                                 <li class="breadcrumb-item active">Internships</li>
                               </ol>
                             </nav>
+                          </div>
+                          <div class="filter-tabs-container">
+                            <ul class="filter-tabs-list">
+                              <li class="filter-tab active"data-filter="applied">Applied</li>                                
+                              <li class="filter-tab"data-filter="pending">Pending</li>
+                              <li class="filter-tab"data-filter="rejected">Rejected</li>
+                              <li class="filter-tab"data-filter="hired">Hired</li>
+                            </ul>
                           </div>
                           <section class="">
                             <div class="container py-5 scrollable-section profile-scroll" id="internship-container-profile">
@@ -545,9 +562,25 @@
                             </nav>
                           </div> 
                           <section>
+                            <div class="filter-tabs-container">
+                              <ul class="filter-tabs-list">
+                                <li class="filter-tab active"data-filter="all">All</li>      
+                                <li class="filter-tab"data-filter="verified">Verified</li>
+                                <li class="filter-tab"data-filter="pending">Pending</li>
+                                <li class="filter-tab"data-filter="saved">Saved</li>
+                              </ul>
+                            </div>
+                            <div class="no-data-message" style="display: none;
+                            width: fit-content;
+                            margin: auto;
+                            margin: 40px auto;
+                            font-family: 'Roboto';">
+                              No data available.
+                            </div>
                             <div class="container py-5 scrollable-section profile-scroll" id="product-container-profile">
                                         
                             </div>
+                            
                           </section>
                         </div>
                         <div id="idp-content">
@@ -560,6 +593,14 @@
                                 <li class="breadcrumb-item active">Industrial Projects</li>
                               </ol>
                             </nav>
+                          </div>
+                          <div class="filter-tabs-container">
+                            <ul class="filter-tabs-list">
+                              <li class="filter-tab active"data-filter="applied">Applied</li>                                
+                              <li class="filter-tab"data-filter="pending">Pending</li>
+                              <li class="filter-tab"data-filter="rejected">Rejected</li>
+                              <li class="filter-tab"data-filter="hired">Hired</li>
+                            </ul>
                           </div>
                           <section>
                             <div class="container py-5 scrollable-section profile-scroll" id="idp-container-profile">
@@ -602,6 +643,20 @@
                             </div>
                           </section>
                         </div>
+                        <div id="projectrepo-content">
+                          <div class="pagetitle mb-4">
+                            <h1 class="mb-2">My Project Repositories</h1>
+                            <nav>
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active">Project repository</li>
+                              </ol>
+                            </nav>
+                          </div>
+                             <div id="projectrepo-content-inner" class="row">
+
+                             </div>
+                        </div>
                     </main>
                      
                         
@@ -628,6 +683,6 @@
 
             <script src='https://unpkg.com/@popperjs/core@2'></script>
             <script src="js/Profile/script.js"></script>
-            <script src="js/Profile/manageProf.js" userInternships="<%= internshipIds %>", userIdp="<%= idpIds %>" userResearch="<%= user.researchPapers %>" userProducts="<%= user.sellProducts %>" userId="<%= user._id %>" mentors="<%= user.mentor %>" ></script>
+            <script src="js/Profile/manageProf.js" userInternships="<%= internshipIds %>", userIdp="<%= idpIds %>" userResearch="<%= user.researchPapers %>" userProducts="<%= user.sellProducts %>" userId="<%= user._id %>" mentors="<%= user.mentor %>" role="<%= user.role %>"></script>
 
 </html>
