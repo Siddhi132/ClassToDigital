@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/css/intlTelInput.css'>
     <title>Project Repository</title>
 
     <style>
@@ -124,9 +126,9 @@
 
 
                                                 <div class="form-outline mb-4">
-                                                    <input type="number" pattern="[0-9]{10}" id="phone" name="phone"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="phone">phone</label>
+                                                    <!-- <input type="number" pattern="[0-9]{10}" id="phone" name="phone"
+                                                        class="form-control form-control-lg" required /> -->
+                                                     <input class="form-control form-control-lg" type="tel" id="phone" name="phone" inputmode="tel" value="" required style="border: 1px solid #bdbdbd;" placeholder="   Enter Phone"/>
                                                 </div>
 
                                                 <div class="form-outline mb-4">
@@ -213,6 +215,8 @@
           <!-- footer  -->
           <%- include('../Footer/Footer.ejs') %>
 </body>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.8/jquery.inputmask.bundle.min.js'></script>
 <script type="text/javascript" src="/js/ProjectRepository/uploadProjectRepository.js"></script>
 
 </html>

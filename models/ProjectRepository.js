@@ -3,6 +3,10 @@
 const mongoose = require('mongoose');
 
 const projectRepositorySchema = new mongoose.Schema({
+    isHidden: {
+        type: Boolean,
+        default: false
+    },
     projectName: {
         type: String,
         required: true

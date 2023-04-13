@@ -5,15 +5,16 @@ const {verifyUserForLogin}=require('../controller/Login/login');
 const {showProfile, updateProfile, modifyStatus}=require('../controller/Profile/profile');
 const {getMentors}=require('../controller/Mentor/mentor');
 const {Categories}=require('../controller/Categories/category');
-const {uploadInternship,getAllInternship,applyForInternship, getInternshipById, modifyApplicationStatus}=require('../controller/Internship/internship');
-const {getIndustrialProjectById,uploadIndustrialProject,getAllIndustrialProjects,applyForIndustrialProject, modifyApplicationStatusIdp}=require('../controller/IndustrialProject/industrialProject');
+const {uploadInternship,getAllInternship,applyForInternship, getInternshipById, modifyApplicationStatus,saveInternship, removeSavedInternship}=require('../controller/Internship/internship');
+const {getIndustrialProjectById,uploadIndustrialProject,getAllIndustrialProjects,applyForIndustrialProject, modifyApplicationStatusIdp, saveIndustrialProject, removeSavedIndustrialProject}=require('../controller/IndustrialProject/industrialProject');
 const {getResearchPaperById,uploadResearchPaper, getAllResearchPapers, addCommentinResearchPaper, getAllComments}=require('../controller/ResearchPaper/researchPaper');
 const {getUserById}=require('../controller/Profile/userDetailById');
-const {uploadProduct,getProducts}=require('../controller/Products/product');
+const {uploadProduct,getProducts,saveProduct,removeSavedProduct}=require('../controller/Products/product');
 const { uploadProjectRepository, getProjectRepository} = require('../controller/ProjectRepository/projectRepository');
 const {addNotification, getNotification, deleteNotification} = require('../controller/Notification/notification');
 const {addMentee,getMentee} = require('../controller/Profile/mentorProfile');
 const {verifyproduct} = require('../controller/Profile/adminProfile');
+const {deleteItem, hideItem, visibleItem} = require('../controller/Common/common');
 
 
 router.route("/signup").post(verifyUserForSignup);
@@ -49,6 +50,15 @@ router.post('/modifyStatus',modifyStatus);
 router.post('/modifyApplicationStatus',modifyApplicationStatus);
 router.post('/modifyApplicationStatusIdp',modifyApplicationStatusIdp);
 router.post('/verifyproduct',verifyproduct);
+router.post('/saveProduct',saveProduct);
+router.post('/removeSavedProduct', removeSavedProduct);
+router.post('/saveInternship',saveInternship);
+router.post('/removeSavedInternship', removeSavedInternship);
+router.post('/saveIndustrialProject',saveIndustrialProject);
+router.post('/removeSavedIndustrialProject', removeSavedIndustrialProject);
+router.post('/deleteItem', deleteItem);
+router.post('/hideItem', hideItem);
+router.post('/visibleItem', visibleItem);
 
 
 

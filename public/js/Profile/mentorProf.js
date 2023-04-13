@@ -263,16 +263,15 @@ profileProjectRepoBtn.addEventListener("click", async function () {
   defaultContent.style.display = "none";
   var projectDataHtml = '';
 
-
   await fetch('/api/getUserById?userId=' + userId)
     .then(response => response.json())
     .then(async data => {
-      console.log(data.userDetails.projectRepository);
+      console.log("data.userDetails.projectRepository", data.userDetails.projectRepository);
       $('#projectrepo-content-inner').html('');
       // $('#projectrepo-content').append(`<div class="row">`);
       data.userDetails.projectRepository.forEach(function (project) {
-        console.log("H", project[0]);
-        var request = { "request": { _id: project[0] } };
+        console.log("H", project);
+        var request = { "request": { _id: project } };
         // ajax request on /api/getProjectRepository this api nd pass request as body
         $.ajax({
           url: '/api/getProjectRepository',
@@ -280,23 +279,37 @@ profileProjectRepoBtn.addEventListener("click", async function () {
           data: request,
           contentType: 'application/json',
           success: function (data) {
-            console.log("K", data);
-            projectDataHtml = ` <div class="courses col-lg-4 col-md-6 col-sm-12 ">
-              <div class="course-item">
-                  <img src="/images/Dummy/portfolio-6.jpg" class="img-fluid" alt="...">
-                  <div class="course-content">
-                    <h3><a href="course-details.html">`+ data.data.ProjectRepository[0].projectName + `</a></h3>
-                    <p class="repotext">`+ data.data.ProjectRepository[0].projectDescription + `</p>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                    <a href="/projectRepository?_id=`+ data.data.ProjectRepository[0]._id + `"><h4>View Details</h4></a>
-                  </div>                
-                  <!-- </div> -->
-                </div>
+            hideLoader();
+            projectDataHtml = `<div class="courses col-lg-3 col-md-6 col-sm-12" id="` + data.data.ProjectRepository[0]._id + `" >
+            <div class="course-item">
+              <div class="mt-3 mb-4" style="text-align: center;">
+                <img src="${data.data.ProjectRepository[0].projectImage.path}"
+                  class="rounded-circle img-fluid"
+                  style="width: 100px;" />
               </div>
-            </div>`;
+              <div class="course-content">
+                <h3><a href="course-details.html">`+ data.data.ProjectRepository[0].projectName + `</a></h3>
+                <p class="repotext">`+ data.data.ProjectRepository[0].projectDescription + `</p>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <a href="/projectRepository?_id=`+ data.data.ProjectRepository[0]._id + `"><h4>View Details</h4></a>
+                  <i class="fa fa-trash" aria-hidden="true" style="color: red; font-size: 20px;" onclick="deleteItem('`+ data.data.ProjectRepository[0]._id + `' , 'projectRepository')"></i>`;
+                  if (data.data.ProjectRepository[0].isHidden == true) {
+                    projectDataHtml += `<i class="fa fa-eye-slash" aria-hidden="true" style="color: black; font-size: 20px;" onclick="hideItem('`+ data.data.ProjectRepository[0]._id + `' , 'projectRepository')" id="` + data.data.ProjectRepository[0]._id + 'hide' + `"></i>`;
+                  } else {
+                    projectDataHtml += `<i class="fa fa-eye" aria-hidden="true" style="color: black; font-size: 20px;" onclick="hideItem('`+ data.data.ProjectRepository[0]._id + `' , 'projectRepository')" id="` + data.data.ProjectRepository[0]._id + 'hide' + `"></i>`;
+                  }
+          
+                  projectDataHtml += `
+                </div>                
+              </div>
+            </div>
+          </div>
+          
+        `;
             $('#projectrepo-content-inner').append(projectDataHtml);
           },
           error: function (error) {
+            hideLoader();
             console.error(error);
           }
         });
@@ -510,3 +523,125 @@ function previewImage() {
 
 
 
+// Delete item button
+
+function deleteItem(itemid, itemtype) {
+
+  swal({
+    title: "Are you sure?",
+    text: "You will not be able to recover this imaginary file!",
+    type: "warning",
+    showCancelButton: true,
+    confirmButtonColor: '#DD6B55',
+    confirmButtonText: 'Yes, delete it!',
+    closeOnConfirm: false,
+    //closeOnCancel: false
+  },
+    function () {
+      $.ajax({
+        url: '/api/deleteItem',
+        type: 'POST',
+        data: {
+          itemId: itemid,
+          item: itemtype,
+          role: role,
+          userId: userId
+        },
+        success: function (data) {
+          console.log("data", data);
+          // delete from dom
+          $('#' + itemid).remove();
+        },
+        error: function (err) {
+          console.log(err);
+        }
+
+      });
+      swal("Deleted!", "Your imaginary file has been deleted!", "success");
+    });
+}
+
+
+function hideItem(itemid, itemtype) {
+  if ($('#' + itemid + 'hide').hasClass('fa-eye')) {
+    
+    swal({
+      title: "Are you sure?",
+      text: "Your item will be hidden!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, hide it!',
+      closeOnConfirm: false,
+      //closeOnCancel: false
+    },
+      function () {
+        $.ajax({
+          url: '/api/hideItem',
+          type: 'POST',
+          data: {
+            itemId: itemid,
+            item: itemtype,
+            role: userRole,
+            userId: userId
+          },
+          success: function (data) {
+            $('#' + itemid + 'hide').removeClass('fa-eye');
+            $('#' + itemid + 'hide').addClass('fa-eye-slash');
+            console.log("data", data);
+            // delete from dom
+            // $('#' + itemid+ 'hide').remove();
+            // class="fa fa-eye-slash"
+            
+          },
+          error: function (err) {
+            console.log(err);
+          }
+  
+        });
+        swal("Hidden!", "Your item has been hidden!", "success");
+      });
+  }
+  else {
+
+    
+    swal({
+      title: "Are you sure?",
+      text: "Your item will be visible!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: '#DD6B55',
+      confirmButtonText: 'Yes, visible it!',
+
+      closeOnConfirm: false,
+      //closeOnCancel: false
+    },
+
+      function () {
+        $.ajax({
+          url: '/api/visibleItem',
+          type: 'POST',
+          data: {
+            itemId: itemid,
+            item: itemtype,
+            role: userRole,
+            userId: userId
+          },
+          success: function (data) {
+            $('#' + itemid + 'hide').removeClass('fa-eye-slash');
+          $('#' + itemid + 'hide').addClass('fa-eye');
+
+          },
+          error: function (err) {
+            console.log(err);
+          }
+  
+        });
+        swal("Visible!", "Your item has been visible!", "success");
+      }
+    );
+
+
+  }
+  
+}

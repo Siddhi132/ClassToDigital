@@ -1,6 +1,7 @@
 const Internship = require("../../models/Internship");
 const CompanyProfile = require("../../models/CompanyProfile");
 const StudentProfile = require("../../models/StudentProfile");
+const MentorProfile = require("../../models/MentorProfile");
 const uploadInternship = async (req, res) => {
 
   try {
@@ -16,7 +17,7 @@ const uploadInternship = async (req, res) => {
         const val = await newInternship.save();
         console.log('value -----------', val);
         console.log('value -----------', val._id);
-        
+
         CompanyProfile.findOneAndUpdate({ _id: req.body.companyId }, { $push: { internships: val._id } }, (err, existingUser) => {
           if (!err) {
             res.send({ status: true, statusCode: 200, message: "Internship addedd successfully" });
@@ -25,13 +26,13 @@ const uploadInternship = async (req, res) => {
             console.log("err", err);
             res.send({ status: false, statusCode: 400, message: "Internship not added" });
           }
-    
+
         })
-      }   
+      }
     })
 
-    
-    
+
+
 
   }
   catch (err) {
@@ -55,12 +56,12 @@ const getAllInternship = async (req, res) => {
       let enableApplyButton = true;
 
       if (req.query.request) {
-        if(typeof (req.query.request)==="object"){
-          filter= req.query.request;
-          }
-     else{
-          filter= JSON.parse(decodeURIComponent(req.query.request));
-     }
+        if (typeof (req.query.request) === "object") {
+          filter = req.query.request;
+        }
+        else {
+          filter = JSON.parse(decodeURIComponent(req.query.request));
+        }
         console.log("filter", filter);
         const existingUser = await StudentProfile.findById(req.query.id);
         console.log("existingUser", existingUser);
@@ -69,10 +70,10 @@ const getAllInternship = async (req, res) => {
             enableApplyButton = false;
           }
         }
-        val = await Internship.find(filter);
+        val = await Internship.find(filter).populate('companyId');
       }
       else {
-        val = await Internship.find(req.query).where('stipend').gte(parseInt(req.query.stipend));
+        val = await Internship.find(req.query).where('stipend').gte(parseInt(req.query.stipend)).populate('companyId');
       }
       if (val.length == 0) {
         res.send({ status: false, statusCode: 400, 'message': "0 internship found" });
@@ -83,7 +84,7 @@ const getAllInternship = async (req, res) => {
     }
     else {
       console.log('req.query');
-      const val = await Internship.find();
+      const val = await Internship.find().populate('companyId');
       res.send({ status: true, statusCode: 200, 'message': 'Internship found successfully', data: { 'allinternship': val } });
     }
   }
@@ -100,7 +101,7 @@ const applyForInternship = async (req, res) => {
     if (!existingUser) {
       return res.send({ status: false, statusCode: 400, message: "No user available" });
     }
-    
+
     // increment one in total no of application in internship collection 
 
     Internship.findByIdAndUpdate(
@@ -128,28 +129,28 @@ const applyForInternship = async (req, res) => {
     //   }
     // }]
 
-   
-      Internship.findByIdAndUpdate(
-        req.body.internshipId,
-        { $push: { appliedStudents: { studentId: id, status: 'pending' } } },
-        { new: true },
-        (err, result) => {
-          if (err) {
-            console.log("err", err);
-            res.send({ status: false, statusCode: 400, message: "Internship not applied" });
-          }
-          else {
-            console.log("result", result);
-          }
+
+    Internship.findByIdAndUpdate(
+      req.body.internshipId,
+      { $push: { appliedStudents: { studentId: id, status: 'pending' } } },
+      { new: true },
+      (err, result) => {
+        if (err) {
+          console.log("err", err);
+          res.send({ status: false, statusCode: 400, message: "Internship not applied" });
         }
-      );
-
-        
-
-      const InternshipData = {
-        internshipId: req.body.internshipId,
-        status: 'pending',
+        else {
+          console.log("result", result);
+        }
       }
+    );
+
+
+
+    const InternshipData = {
+      internshipId: req.body.internshipId,
+      status: 'pending',
+    }
     StudentProfile.findByIdAndUpdate(
       id,
       { $push: { internships: InternshipData } },
@@ -180,7 +181,7 @@ const applyForInternship = async (req, res) => {
 
 const getInternshipById = async (req, res) => {
   try {
-    const val = await Internship.findById(req.query.id);
+    const val = await Internship.findById(req.query.id).populate('companyId');
     if (!val) {
       res.send({ status: false, statusCode: 400, 'message': "No internship found" });
     }
@@ -197,7 +198,7 @@ const getInternshipById = async (req, res) => {
 const modifyApplicationStatus = async (req, res) => {
 
   try {
-    const {studentId, status, internshipId } = req.body;
+    const { studentId, status, internshipId } = req.body;
     console.log("in studentId", studentId);
     console.log("in    status", status);
     console.log("in internshipId", internshipId);
@@ -225,7 +226,87 @@ const modifyApplicationStatus = async (req, res) => {
   }
 }
 
+const saveInternship = async (req, res) => {
+  var internshipId = req.body.internshipId;
+  var userId = req.body.userId;
+  var role = req.body.role;
+  // savedInternships: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Internship'
+  // }],
+  if (role == 'student') {
+    StudentProfile.findOneAndUpdate({ _id: userId }, { $push: { savedInternships: internshipId } }, { new: true }, (err, result) => {
+      if (err) {
+        console.log("err", err);
+        res.send({ status: false, statusCode: 400, message: "Internship not saved" });
+      }
+      else {
+        console.log("result", result);
+        res.send({ status: true, statusCode: 200, message: "Internship saved successfully" });
+      }
+    });
+  }
+  else if (role == 'mentor') {
+    MentorProfile.findOneAndUpdate({ _id: userId }, { $push: { savedInternships: internshipId } }, { new: true }, (err, result) => {
+      if (err) {
+        console.log("err", err);
+        res.send({ status: false, statusCode: 400, message: "Internship not saved" });
+      }
+      else {
+        console.log("result", result);
+        res.send({ status: true, statusCode: 200, message: "Internship saved successfully" });
+      }
+    }
+    );
+
+
+  }
+}
+
+const removeSavedInternship = async (req, res) => {
+  var internshipId = req.body.internshipId;
+  var userId = req.body.userId;
+  var role = req.body.role;
+  // savedInternships: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Internship'
+  // }],
+  try {
+    if (role == 'student') {
+      StudentProfile.findOneAndUpdate({ _id: userId }, { $pull: { savedInternships: internshipId } }, { new: true }, (err, result) => {
+        if (err) {
+          console.log("err", err);
+          res.send({ status: false, statusCode: 400, message: "Internship not removed" });
+        }
+        else {
+          console.log("result", result);
+          res.send({ status: true, statusCode: 200, message: "Internship removed successfully" });
+        }
+      });
+    }
+    else if (role == 'mentor') {
+      MentorProfile.findOneAndUpdate({ _id: userId }, { $pull: { savedInternships: internshipId } }, { new: true }, (err, result) => {
+        if (err) {
+          console.log("err", err);
+          res.send({ status: false, statusCode: 400, message: "Internship not removed" });
+        }
+        else {
+          console.log("result", result);
+          res.send({ status: true, statusCode: 200, message: "Internship removed successfully" });
+        }
+      }
+      );
+    }
+  }
+  catch (err) {
+    console.log("err", err);
+    res.send({ status: false, statusCode: 500, message: "Error During removing internships" });
+
+  }
+}
 
 
 
-module.exports = { uploadInternship, getAllInternship, applyForInternship, getInternshipById ,modifyApplicationStatus};
+
+
+module.exports = { uploadInternship, getAllInternship, applyForInternship, getInternshipById, modifyApplicationStatus, saveInternship, removeSavedInternship };

@@ -142,6 +142,7 @@ router.post('/login', (req, res, next) => {
       req.session.isAuthenticated = true;
       req.session.userId = decodedId._id;
       req.session.userRole = decodedId.role;
+      req.session.userEmail = decodedId.email;
       console.log("ll", req.session);
       console.log('response.data', response.data);
       res.redirect('/');
@@ -505,6 +506,7 @@ router.post("/uploadProduct", isLoginRequired, uploadFile.array("productPhotos",
   console.log("here..", req.body)
   console.log("here..", req.session.userId)
   req.body.userId = req.session.userId;
+  req.body.buyerEmail = req.session.userEmail;
   var role = req.session.userRole;
 
   console.log("req.body files index ma", req);
@@ -536,9 +538,10 @@ router.get("/products", (req, res, next) => {
       else {
         login = 1;
         var role = req.session.userRole;
+        var userId = req.session.userId;
       }
       console.log("response here", response.data);
-      res.render('SellProduct/GetProducts', { "products": response.data, login, role });
+      res.render('SellProduct/GetProducts', { "products": response.data, login, role, userId });
     })
     .catch((error) => {
       console.log(error);
@@ -695,6 +698,12 @@ router.post('/resumeUploadIDP', uploadFile.single('resumeFileIDP'), (req, res) =
 });
 
 
+router.get("/chat", isLoginRequired, (req, res) => {
+  login = 1;
+  var role = req.session.userRole;
+  var userId = req.session.userId;
+  res.render('Chat/chat', { login, role , userId});
+});
 
 
 
