@@ -76,10 +76,16 @@
 
 
                                         <select class="form-select mb-3" aria-label="Default select example"
-                                          id="location" name="location">
-                                          <option selected value="">Choose Location</option>
+                                          id="statefilter" name="state">
+                                          <option selected value="">Choose State</option>
 
                                         </select>
+
+                                        <select class="form-select mb-3" aria-label="Default select example"
+                                        id="cityfilter" name="city">
+                                        <option selected value="">Choose City</option>
+
+                                      </select>
 
                                         <select class="form-select mb-3" aria-label="Default select example"
                                           id="modeOfInternship" name="modeOfInternship">
@@ -105,6 +111,15 @@
 
                                     <p>Stipend</p>
                                     <div class="sliders">
+                                      <!-- put a label of ranges below the slider and then use the slider to change the values
+                                      of the label -->
+                                      <div id="stipend-slider" class="slider"></div>
+                                      <div class="display-values">
+                                        <span class="start"></span>
+                                        <span class="end"></span>
+                                      </div>
+                                    
+
                                       <div id="price-slider" class="slider"></div>
                                       <div class="display-values">
                                         <span class="start"></span>
@@ -157,13 +172,14 @@
                                     <div id="differentRoleNotApply"></div>
                                     <div id="alreadyAppliedAlert"></div>
                                     <div id="successAlert"></div>
+                                    <div id="savedAlert"></div>
                                     <div id="noOfInternshipFound" class="ms-3 noOfInternshipFound"></div>
                                     <div class="listings">
 
                                       <% internships.data.allinternship.forEach(item=> {
                                         %>
 
-                                        <% if(item.status){ %>
+                                        <% if(item.status && item.adminverified){ %>
                                           <div class="card" style="height:fit-content; width:100%">
 
                                             <div class="activeDeactive">
@@ -179,18 +195,17 @@
                                                   <%= item.companyName %>
                                                 </p>
                                                 <p><i class="fa-solid fa-location-dot"></i>
-                                                  <%= item.location %>
+                                                  <%= item.state %>
 
                                                 </p>
-                                                <%= item.companyImage.name %>
+                                                <p><i class="fa-solid fa-location-dot"></i>
+                                                  <%= item.city %>
+
+                                                </p>
                                               </div>
                                               <div class="col-md-4 col-sm-4">
                                                 <img src="
-                                              <% if (item.companyImage.name !== item.companyId+'__profileImage.jpg') { %>
-                                                <%= item.companyImage.path %>
-                                              <% } else { %>
-                                                <%= '/uploadedData/profile/profileImages/' + item.companyImage.name %>
-                                              <% } %>
+                                                <%= item.companyId.profileImage.path %>
                                               " style="max-height: 7rem; height: 100%;" alt="">
                                               </div>
                                             </div>
@@ -207,8 +222,9 @@
                                               <div class="col-md-3">
                                                 <p><i class="fa-regular fa-calendar"></i>Duration</p>
                                                 <p>
-                                                  <%= item.duration %>
+                                                  <%= item.duration %> <%= item.morw %>
                                                 </p>
+                                                
                                               </div>
                                               <div class="col-md-3">
                                                 <p><i class="fa-solid fa-money-check"></i>Stipend</p>
@@ -242,10 +258,25 @@
                                                 <%= item.totalNumberOfApplicants %>
                                                   Applicants
                                               </p>
+                                              <% const hiredStudents=item.appliedStudents.filter(student=>
+                                                student.status === "hired");%>
+
+                                                <% if(hiredStudents.length>0){ %>
+                                                  <!-- HIRED verified-->
+                                                  <i class="fa-solid fa-check-circle text-success"></i>
+                                                  <span class="text-success">
+                                                    <%= hiredStudents.length %>
+                                                    Hired
+                                                    <% } %>
+                                                  </span>
                                             </div>
                                             <hr>
                                             <div class="d-flex flex-row-reverse">
                                               <div class="ms-2 me-2">
+                                                <i class="fa-regular fa-bookmark text-primary fa-2xl"
+                                                onclick="saveInternship('<%= userId %>', '<%= item._id %>', '<%= role %>')"
+                                                id="saveInternship<%= item._id %>" style="margin-bottom: 18px;
+                                                margin-right: 0.4em;"></i>
                                                 <a href="/internships?_id=<%= item._id %>"><button
                                                     class="btn btn-primary" id="detailbtn">View
                                                     Details</button></a>

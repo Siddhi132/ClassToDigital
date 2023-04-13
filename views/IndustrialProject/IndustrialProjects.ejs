@@ -55,10 +55,16 @@
 
 
                                         <select class="form-select mb-3" aria-label="Default select example"
-                                          id="location" name="location">
-                                          <option selected value="">Choose Location</option>
+                                          id="statefilter" name="state">
+                                          <option selected value="">Choose state</option>
 
                                         </select>
+
+                                        <select class="form-select mb-3" aria-label="Default select example"
+                                        id="cityfilter" name="state">
+                                        <option selected value="">Choose city</option>
+
+                                      </select>
 
                                         <select class="form-select mb-3" aria-label="Default select example"
                                           id="modeOfIndustrialProject" name="modeOfIndustrialProject">
@@ -136,13 +142,14 @@
                                     <div id="differentRoleNotApply"></div>
                                     <div id="alreadyAppliedAlert"></div>
                                     <div id="successAlert"></div>
+                                    <div id="savedAlert"></div>
                                     <div id="noOfIndustrialProjectFound" class="ms-3 noOfIndustrialProjectFound"></div>
                                     <div class="listings">
 
                                       <% industrialProject.data.allIndustrialProject.forEach(item=> {
                                         %>
 
-                                        <% if(item.status){ %>
+                                        <% if(item.status && item.adminverified){ %>
                                           <div class="card" style="height:fit-content; width:100%">
 
                                             <div class="activeDeactive">
@@ -164,11 +171,7 @@
                                               </div>
                                               <div class="col-md-4">
                                                 <img src="
-                                                <% if (item.companyImage.name !== item.companyId+'__profileImage.jpg') { %>
-                                                  <%= item.companyImage.path %>
-                                                <% } else { %>
-                                                  <%= '/uploadedData/profile/profileImages/' + item.companyImage.name %>
-                                                <% } %>
+                                                <%= item.companyId.profileImage.path %>
                                                 "
                                                   style="max-height: 7rem; height: 100%;" alt="">
                                               </div>
@@ -176,7 +179,7 @@
 
                                             <div class="row">
                                               <p><i class="fa-solid fa-location-dot"></i>
-                                                <%= item.location %>
+                                                <%= item.state %>
 
                                               </p>
                                               <div class="col-md-3">
@@ -230,6 +233,10 @@
                                             <hr>
                                             <div class="d-flex flex-row-reverse">
                                               <div class="ms-2 me-2">
+                                                <i class="fa-regular fa-bookmark text-primary fa-2xl"
+                                                              onclick="saveIndustrialProject('<%= userId %>', '<%= item._id %>', '<%= role %>')"
+                                                              id="saveIndustrialProject<%= item._id %>" style="margin-bottom: 18px;
+                                                              margin-right: 0.4em;"></i>
                                                 <a href="/industrialProjects?_id=<%= item._id %>"><button
                                                     class="btn btn-primary" id="detailbtn">View
                                                     Details</button></a>

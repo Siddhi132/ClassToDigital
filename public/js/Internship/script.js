@@ -10,11 +10,6 @@ let data = {
 }
 var alreadyAppliedInternships;
 
-
-
-
-
-
 // slider value change 
 if ($priceSlider.slider) {
   $priceSlider.slider({
@@ -37,7 +32,8 @@ if ($priceSlider.slider) {
 function filterinternships() {
   var data = {};
   var category = $("#category").val();
-  var location = $("#location").val();
+  var state = $("#statefilter").val();
+  var city=$("#cityfilter").val();
   let modeOfInternship = $('#modeOfInternship').val();
   let stipend = ($('#price-slider').slider('values'))[1];
 
@@ -49,8 +45,11 @@ function filterinternships() {
     console.log('checked');
     data['paidOrUnpaid'] = "Paid";
   }
-  if (location) {
-    data['location'] = location;
+  if (state) {
+    data['state'] = state;
+  }
+  if(city){
+    data['city']=city;
   }
   if (category) {
     data['category'] = category;
@@ -74,7 +73,7 @@ function filterinternships() {
         $('.listings').html('');
         var totalinternship = 0;
         data.data.allinternship.forEach(item => {
-          if (item.status) {
+          if (item.status && item.adminverified) {
             totalinternship++;
             activeDeactive = 'Actively Hiring';
             card += ` <div class="card" style="width:100%; height:fit-content;">
@@ -94,14 +93,18 @@ function filterinternships() {
                       ${item.companyName}
                     </p>
                     <p><i class="fa-solid fa-location-dot"></i>
-                      ${item.location}
+                      ${item.state}
+            
+                  </p>
+                  <p><i class="fa-solid fa-location-dot"></i>
+                      ${item.city}
             
                   </p>
             
                 </div>
                 <div class="col-md-4">
-                    <img src="images/Internship/IBM_logo_in.jpg" style="max-height: 7rem; height: 100%;" alt="">
-                </div>
+                <img src="${item.companyId.profileImage.path}" alt=""  id="companyImageProfile" style="width: inherit";>             
+                   </div>
             </div>
             
             <div class="row">
@@ -116,7 +119,7 @@ function filterinternships() {
                 <div class="col-md-3">
                     <p><i class="fa-regular fa-calendar"></i>Duration</p>
                     <p>
-                        ${item.duration}
+                        ${item.duration}, ${item.morw}
                     </p>
                 </div>
                 <div class="col-md-3">
@@ -171,8 +174,7 @@ function filterinternships() {
                  Apply now
                </button></a>`;
             }
-
-
+            
             card += ` </div>
             
             
@@ -220,16 +222,20 @@ fetch('/api/Categories')
     let internships = data.data.categories[0].internship;
     let studentProfile = data.data.categories[0].studentProfile;
     let categories = internships.category;
-    let locations = internships.location;
+    let states = internships.state;
+    let cities = internships.city;
     let modeOfInternships = internships.modeOfInternship;
-    console.log(internships, studentProfile, categories, locations, modeOfInternships);
+    console.log(internships, studentProfile, categories, states, modeOfInternships);
     categories.forEach(category => {
       $('#category').append(`<option value="${category}">${category}</option>`);
     });
-    locations.forEach(location => {
-      $('#location').append(`<option value="${location}">${location}</option>`);
-    }
-    );
+    states.forEach(state => {
+      $('#statefilter').append(`<option value="${state}">${state}</option>`);
+    });
+    cities.forEach(city => {
+      $('#cityfilter').append(`<option value="${city}">${city}</option>`);
+    });
+    
     modeOfInternships.forEach(modeOfInternship => {
       $('#modeOfInternship').append(`<option value="${modeOfInternship}">${modeOfInternship}</option>`);
     }
@@ -608,3 +614,87 @@ $(document).on('click', "#submitInternshipApp", function (e) {
 
 
 });
+
+
+function saveInternship(userId, internshipId, role){
+  // saveProduct + productId
+  // remove saved class from icon fa-solid, add fa-regular
+  if($('#saveInternship'+internshipId).hasClass("fa-solid")){
+    $("#saveInternship"+internshipId).removeClass("fa-solid");
+    $("#saveInternship"+internshipId).addClass("fa-regular");
+    $("#savedAlert").html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Internship removed Successfully.
+      <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>`);
+
+    $.ajax({
+      url: '/api/removeSavedInternship',
+      type: 'POST',
+      data: {
+        userId: userId,
+        internshipId: internshipId,
+        role: role
+      },
+      success: function(data){
+        console.log("data", data)
+        if(data.status == "success"){
+          alert("Removed Successfully");
+
+        }
+      },
+      error: function(err){
+        console.log("err hey hey", err)
+      }
+
+    });
+
+  }else{
+    $("#saveInternship"+internshipId).removeClass("fa-regular");
+    $("#saveInternship"+internshipId).addClass("fa-solid");
+    $("#savedAlert").html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+     Internship Saved Successfully.
+      <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>`);
+
+    $.ajax({
+      url: '/api/saveInternship',
+      type: 'POST',
+      data: {
+        userId: userId,
+        internshipId: internshipId,
+        role: role
+      },
+      success: function(data){
+        console.log("data", data)
+        if(data.status == "success"){
+          alert("Accepted Successfully");
+
+        }
+      },
+      error: function(err){
+        console.log("err hey hey", err)
+      }
+
+    });
+
+  }
+}
+
+const userResponse = fetch('/api/getUserById?userId=' + userId, { method: 'GET' });
+userResponse.then(response => response.json())
+  .then(userData => {
+    console.log('Success:', userData.userDetails);
+    userData.userDetails.savedInternships.forEach(savedInternship => {
+      $('#saveInternship' + savedInternship).removeClass("fa-regular");
+      $('#saveInternship' + savedInternship).addClass("fa-solid");
+    }
+    );
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+   
+
+
+
+  

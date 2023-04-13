@@ -31,7 +31,8 @@ if ($priceSlider.slider) {
 function filterIndustrialProject() {
   var data = {};
   var category = $("#category").val();
-  var location = $("#location").val();
+  var state = $("#statefilter").val();
+  var city = $("#cityfilter").val();
   let modeOfIndustrialProject = $('#modeOfIndustrialProject').val();
   let stipend = ($('#price-slider').slider('values'))[1];
 
@@ -43,8 +44,11 @@ function filterIndustrialProject() {
     console.log('checked');
     data['paidOrUnpaid'] = "Paid";
   }
-  if (location) {
-    data['location'] = location;
+  if (state) {
+    data['state'] = state;
+  }
+  if (city) {
+    data['city'] = city;
   }
   if (category) {
     data['category'] = category;
@@ -68,7 +72,7 @@ function filterIndustrialProject() {
         var lengthOfArray = data.data.allIndustrialProject.length;
         $('#noOfIndustrialProjectFound').text(lengthOfArray + " Industrial Projects Found");
         data.data.allIndustrialProject.forEach(item => {
-          if (item.status) {
+          if (item.status && item.adminverified) {
             activeDeactive = 'Actively Hiring';
             card += ` <div class="card" style="height:fit-content; width:100%">
 
@@ -94,13 +98,12 @@ function filterIndustrialProject() {
             
                 </div>
                 <div class="col-md-4">
-                    <img src="images/Internship/IBM_logo_in.jpg" style="max-height: 7rem; height: 100%;"alt="">
-                </div>
+                <img src="${item.companyId.profileImage.path}" alt=""  id="companyImageProfile" style="width: inherit";>                </div>
             </div>
             
             <div class="row">
             <p><i class="fa-solid fa-location-dot"></i>
-                      ${item.location}
+                      ${item.state}
             
                   </p>
                 <div class="col-md-3">
@@ -218,13 +221,18 @@ fetch('/api/Categories')
     let industrialProjects = data.data.categories[0].industrialProject;
     let studentProfile = data.data.categories[0].studentProfile;
     let categories = industrialProjects.category;
-    let locations = industrialProjects.location;
+    let states = industrialProjects.state;
+    let cities = industrialProjects.city;
     let modeOfIndustrialProjects = industrialProjects.modeOfIndustrialProject;
     categories.forEach(category => {
       $('#category').append(`<option value="${category}">${category}</option>`);
     });
-    locations.forEach(location => {
-      $('#location').append(`<option value="${location}">${location}</option>`);
+    states.forEach(state => {
+      $('#statefilter').append(`<option value="${state}">${state}</option>`);
+    }
+    );
+    cities.forEach(city => {
+      $('#cityfilter').append(`<option value="${city}">${city}</option>`);
     }
     );
     modeOfIndustrialProjects.forEach(modeOfIndustrialProject => {
@@ -519,3 +527,79 @@ $(document).on('click', "#submitIDPApp", function (e) {
 
 });
 
+function saveIndustrialProject(userId, industrialProjectId, role){
+  if (userId == undefined) {
+    alert("Please login to save the project");
+    return;
+  }
+  // saveProduct + productId
+  // remove saved class from icon fa-solid, add fa-regular
+  if($('#saveIndustrialProject'+industrialProjectId).hasClass("fa-solid")){
+    $("#saveIndustrialProject"+industrialProjectId).removeClass("fa-solid");
+    $("#saveIndustrialProject"+industrialProjectId).addClass("fa-regular");
+    $("#savedAlert").html(`<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Industrial Project removed Successfully.
+    <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+  </div>`);
+    $.ajax({
+      url: '/api/removeSavedIndustrialProject',
+      type: 'POST',
+      data: {
+        userId: userId,
+        industrialProjectId: industrialProjectId,
+        role: role
+      },
+      success: function(data){
+        console.log("data", data)
+        if(data.status == "success"){
+          alert("Removed Successfully");
+
+        }
+      }
+    });
+
+    }
+    else{
+      $("#saveIndustrialProject"+industrialProjectId).removeClass("fa-regular");
+      $("#saveIndustrialProject"+industrialProjectId).addClass("fa-solid");
+      $("#savedAlert").html(`<div class="alert alert-success alert-dismissible fade show" role="alert">
+      Industrial Project Saved Successfully.
+      <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>`);
+      $.ajax({
+        url: '/api/saveIndustrialProject',
+        type: 'POST',
+        data: {
+          userId: userId,
+          industrialProjectId: industrialProjectId,
+          role: role
+        },
+        success: function(data){
+          console.log("data", data)
+          if(data.status == "success"){
+            alert("Accepted Successfully");
+
+          }
+        }
+      });
+
+    }
+    
+
+}
+
+const userResponse = fetch('/api/getUserById?userId=' + userId, { method: 'GET' });
+userResponse.then(response => response.json())
+  .then(userData => {
+    console.log('Success:', userData.userDetails);
+    userData.userDetails.savedIndustrialProjects.forEach(savedIndustrialProject => {
+      $("#saveIndustrialProject" + savedIndustrialProject).removeClass("fa-regular");
+      $("#saveIndustrialProject" + savedIndustrialProject).addClass("fa-solid");
+    }
+    )
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  }
+  );
+    
