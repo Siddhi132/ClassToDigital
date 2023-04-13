@@ -45,9 +45,6 @@
                                                                 <% internship.forEach(function(item){ %>
                                                                     <!--Main layout-->
                                                                     <main class="pt-4 mb-2">
-                                                                        <div id="loader">
-                                                                            <img src="loader.gif" alt="Loading...">
-                                                                        </div>
                                                                         <div id="alreadyAppliedAlert"></div>
                                                                         <div id="errorAlert"></div>
                                                                         <div id="successAlert"></div>
@@ -113,7 +110,7 @@
                                                                                         <p><i
                                                                                                 class="fa-solid fa-location-dot mt-4 text-black"></i>
                                                                                             <span class="text-black">
-                                                                                                <%= item.location %>
+                                                                                                <%= item.state %>
                                                                                             </span>
                                                                                         <div class="mb-3">
                                                                                             <div
@@ -140,6 +137,7 @@
                                                                                                         <span
                                                                                                             class="text-black">
                                                                                                             <%= item.duration
+                                                                                                                %>  <%= item.morw
                                                                                                                 %>
                                                                                                         </span>
 
@@ -225,11 +223,7 @@
                                                                                 <!--Grid column-->
                                                                                 <div class="col-md-4 mb-4">
                                                                                     <img src="
-                                                                                    <% if (item.companyImage.name !== item.companyId+'__profileImage.jpg') { %>
-                                                                                      <%= item.companyImage.path %>
-                                                                                    <% } else { %>
-                                                                                      <%= '/uploadedData/profile/profileImages/' + item.companyImage.name %>
-                                                                                    <% } %>
+                                                                                    <%= item.companyId.profileImage.path %>
                                                                                     "
                                                                                       style="margin: auto; height: fit-content;" alt="" class="img-fluid">
                                                                                 </div>
@@ -596,8 +590,7 @@
                         card += `<div class="card border border-1 me-5  col-md-3">
                                                                     <div class="bg-image hover-overlay ripple"
                                                                         data-mdb-ripple-color="light">
-                                                                        <img src="${element[i].companyImage.path}"
-                                                                            class="img-fluid" />
+<img src="${element[i].companyId.profileImage.path}" class="img-fluid" />
                                                                         <a href="#!">
                                                                             <div class="mask"
                                                                                 style="background-color: rgba(251, 251, 251, 0.15);">
@@ -609,8 +602,7 @@
                                                                         <p class="card-text">${element[i].companyName}
                                                                         </p>
                                                                         <p class="card-text">${element[i].skillsRequired}</p>
-                                                                        <a href="#!"
-                                                                            class="btn btn-primary">View Detail</a>
+                                                                        <a href="/internships?_id=${element[i]._id}" class="btn btn-primary">View Detail</a>
                                                                     </div>
                                                                 </div>`;
 

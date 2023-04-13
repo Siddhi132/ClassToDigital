@@ -5,11 +5,20 @@ const mongoose = require('mongoose');
 const industrialProjectSchema = new mongoose.Schema({
     projectTitle:{type:String,required:true},
     companyName:{type:String,required:true},
-    companyId:{type:String,required:true},
+    companyId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'companyProfile',
+      required: true
+  },
     position:{type:String,required:true},
     briefDescription:{type:String,required:true},
-    location:{type:String,required:true},
+    state:{type:String,required:true},
+    city:{type:String,required:true},
+    typeOfCompany: { type: String, required: true },
+    cin: { type: String, required: true },
     duration:{type:String,required:true},
+    adminverified: { type: Boolean, required: true, default: false },
+    morw:{type:String,required:true},
     stipend:{type:Number,required:true},
     skillsRequired:{type:String,required:true},
     numberOfOpenings:{type:Number,required:true},
@@ -39,7 +48,7 @@ const industrialProjectSchema = new mongoose.Schema({
       studentId: {
         type: String,
       },
-      status: {
+    status: {
         type: String,
         enum: ['pending', 'hired', 'rejected'],
       }
