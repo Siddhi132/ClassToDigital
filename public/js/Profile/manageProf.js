@@ -530,7 +530,7 @@ fetch("/api/getProducts?userId=" + userId)
         var filterValue = "pending";
       }
       productDataHtml += `
-<div class="row justify-content-center mb-3">
+      <div class="row justify-content-center mb-3 product-container-profile" data-filter="${filterValue}" id="${productData[i]._id}">
 <div class="col-md-12 col-xl-10">
   <div class="card shadow-3-strong border rounded-3">
     <div class="card-body">
@@ -812,15 +812,15 @@ fetch('/api/getUserById?userId=' + userId, {
   
   
   
-  const filterTabs = document.querySelectorAll('.filter-tab');
+  const filterTabsProd = document.querySelectorAll('.filter-tab-product');
   
-  filterTabs.forEach(tab => {
+  filterTabsProd.forEach(tab => {
     tab.addEventListener('click', () => {
       const productContainers = document.querySelectorAll('.product-container-profile');
       const noDataMessage = document.querySelector('.no-data-message');
   
       // remove active class from all filter tabs
-      filterTabs.forEach(tab => tab.classList.remove('active'));
+      filterTabsProd.forEach(tab => tab.classList.remove('active'));
       // add active class to clicked tab
       tab.classList.add('active');
   
