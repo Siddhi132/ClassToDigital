@@ -22,8 +22,9 @@ const studentProfileSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    default: "Na"
-  },
+    required: true,
+    unique: true
+},
   education: {
     type: String,
     default: "Na"

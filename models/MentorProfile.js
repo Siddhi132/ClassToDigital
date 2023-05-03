@@ -16,7 +16,9 @@ const mentorSchema = new mongoose.Schema({
         unique: true
     },
     phone: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
     },
     password: {
         type: String,
