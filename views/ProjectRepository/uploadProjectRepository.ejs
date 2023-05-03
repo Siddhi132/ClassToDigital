@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/css/intlTelInput.css'>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
     <title>Project Repository</title>
 
+    
     <style>
         .card {
             box-shadow: 0 0 15px -2px #444444;
@@ -21,6 +24,10 @@
         }
         body{
       background-color: #f6f9ff !important;
+    }
+    .btn{
+        margin: 1em;
+        margin-top: 0;
     }
     </style>
 </head>
@@ -74,11 +81,13 @@
                                                 </div>
 
                                                 <div class="form-outline mb-4">
-                                                    <input type="text" id="teamMembers" name="teamMembers"
-                                                        class="form-control  form-control-lg" required />
-                                                    <label class="form-label" for="teamMembers">teamMembers</label>
+                                                    <input type ="hidden"  name="teamMembers" id="teamMember-tags-input" value="" required>
+                                                    <input type="text" id="teamMembers" 
+                                                        class="form-control  form-control-lg" onkeyup="sendData(this)" />
+                                                    <label class="form-label" for="teamMembers">Team Members</label>
 
                                                 </div>
+                                                <div id="teamMember-container"></div>
 
                                                 <div class="form-outline mb-4">
                                                     <input type="text" id="guideName" name="guideName"
@@ -138,19 +147,24 @@
                                                 </div>
 
                                                 <div class="form-outline mb-4">
-                                                    <input type="text" id="skillsToBeLearned" name="skillsToBeLearned"
-                                                        class="form-control form-control-lg" required />
+                                                    <input type ="hidden"  name="skillsToBeLearned" id="skillsToBeLearned-tags-input" value="" required>
+                                                    <input type="text" id="skillsToBeLearned" class="form-control  form-control-lg" />
+                                                    
                                                     <label class="form-label" for="skillsToBeLearned">Skills
-                                                        Required(Seperate By
-                                                        Comma(,) )</label>
+                                                        Required (Press Enter to add a Skill)</label>
                                                 </div>
+
+                                                <div id="skillsToBeLearned-container"></div>
+
                                                 <div class="form-outline mb-4">
-                                                    <input type="text" id="technologiesUsed" name="technologiesUsed"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label"
-                                                        for="technologiesUsed">technologiesUsed(Seperate By
-                                                        Comma(,) )</label>
+                                                    <input type ="hidden"  name="technologiesUsed" id="technologiesUsed-tags-input" value="" required>
+                                                    <input type="text" id="technologiesUsed" class="form-control  form-control-lg" />
+                                                    
+                                                    <label class="form-label" for="technologiesUsed">Technologies used (Press Enter to add a Technology)</label> 
                                                 </div>
+
+                                                <div id="technologiesUsed-container"></div>
+
 
                                                 <div class="row">
                                                     <div class="col-md-6 mb-4">
@@ -214,7 +228,8 @@
     </section>
           <!-- footer  -->
           <%- include('../Footer/Footer.ejs') %>
-</body>
+        </body>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.8/jquery.inputmask.bundle.min.js'></script>
 <script type="text/javascript" src="/js/ProjectRepository/uploadProjectRepository.js"></script>

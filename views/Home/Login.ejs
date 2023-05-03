@@ -33,7 +33,16 @@ height: 100%;
     border-color: #3b71ca;
     box-shadow: inset 0 0 0 1px #3b71ca;
 }
-</style>
+
+    .hidden,
+    #phonelogin {
+      display: none;
+    }
+
+    .otpContainer {
+      display: none;
+    }
+  </style>
 </head>
 <body>
     <section class="vh-100">
@@ -52,23 +61,51 @@ height: 100%;
 
 
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-              <form method="post" action="/login">
+              <form id="loginForm" method="post" action="/login">
                 <h2 class="mb-5 text-center text-primary">ClassToDigital</h2>
-      
-                <!-- Email input -->
-                <div class="form-outline mb-4">
-                  <input type="email" id="email" name="email" class="form-control form-control-lg"
-                    placeholder="Enter a valid email address" />
-                  <label class="form-label" for="email">Email address</label>
+
+                <div id="emaillogin">
+
+                  <!-- Email input -->
+                  <div class="form-outline mb-4">
+                    <input type="email" id="email" name="email" class="form-control form-control-lg"
+                      placeholder="Enter a valid email address" />
+                    <label class="form-label" for="email">Email address</label>
+                  </div>
+
+                  <!-- Password input -->
+                  <div class="form-outline mb-3">
+                    <input type="password" id="password" name="password" class="form-control form-control-lg"
+                      placeholder="Enter password" />
+                    <label class="form-label" for="password">Password</label>
+                  </div>
                 </div>
-      
-                <!-- Password input -->
-                <div class="form-outline mb-3">
-                  <input type="password" id="password" name="password" class="form-control form-control-lg"
-                    placeholder="Enter password" />
-                  <label class="form-label" for="password">Password</label>
+                <div id="phonelogin">
+
+                  <!-- mobile input -->
+                  <div class="form-outline mb-4">
+                    <input type="phone" id="phone" name="phone" class="form-control form-control-lg"
+                      placeholder="Enter a valid phone no : (Ex : +910123456789)" />
+                    <label class="form-label" for="phone">Mobile no</label>
+                  </div>
+                  <button type="button" id="getOTPValueBtn" class="btn btn-secondary btn-rounded mb-2">Get OTP
+                  </button>
+                  <p id="otpStatus" style="visibility:hidden"></p>
+
+                  <!-- otp -->
+                  <div class="otpContainer" id="otpContainer">
+                    <div class="form-outline mb-3 ">
+                      <input type="otp" id="otp" name="otp" class="form-control form-control-lg"
+                        placeholder="Enter otp" />
+                      <label class="form-label" for="password">One time Password</label>
+                    </div>
+                    <button type="button" id="verifyOTPBtn" class="btn btn-secondary btn-rounded mb-2">Verify
+                      OTP</button>
+                    <p id="otpVerificationStatus" style="visibility:hidden"></p>
+                  </div>
                 </div>
-      
+
+
                 <div class="d-flex justify-content-between align-items-center">
                   <!-- Checkbox -->
                   <div class="form-check mb-0">
@@ -77,11 +114,14 @@ height: 100%;
                       Remember me
                     </label>
                   </div>
-                  <a href="#!" class="text-primary">Login with OTP</a>
+                  <span class="text-primary" id="loginWithOTPBtn" style="cursor:pointer">Login with OTP</span>
+                  <span class="text-primary hidden" id="loginWithEmailBtn" style="cursor:pointer">Login with
+                    Email</span>
                 </div>
-      
+
+
                 <div class="text-center text-lg-start mt-4 pt-2">
-                  <input type="Submit" class="btn btn-primary btn-lg"
+                  <input type="submit" class="btn btn-primary btn-lg"
                     style="padding-left: 2.5rem; padding-right: 2.5rem;" value="Login">
                   <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/signup"
                       class="link-danger">Register</a></p>
@@ -89,11 +129,12 @@ height: 100%;
       
               </form>
             </div>
-          </div>
-        </div>
-       
-      </section>
+      </div>
+    </div>
+ </section>
 </body>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/js/Authentication/login.js"></script>
 
 </html>

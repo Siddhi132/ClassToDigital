@@ -14,7 +14,51 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" />
   <!-- jquery cdn  -->
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+  <!-- for fontawesome  -->
+
   <style>
+    .formimg {
+      cursor: pointer;
+      margin: 15px;
+      height: 160px;
+      border-radius: 20px;
+      /* border: 5px solid blue; */
+      padding: 15px;
+      text-align: center;
+
+    }
+
+    .formimg>div {
+      /* display: block;
+      border: 2px solid red; */
+      margin-top: 10px;
+    }
+
+
+
+    .formimg:focus {
+      /* outline: none; */
+      border: 5px solid #000000;
+    }
+
+    .formimg:hover {
+      border: 5px solid #000000;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+
+
+    .border {
+      border: 5px solid black;
+    }
+
+    /* .selectedImage { */
+    /* border: 5px solid blue; */
+    /* } */
+
     .divider:after,
     .divider:before {
       content: "";
@@ -33,6 +77,48 @@
       }
     }
 
+    .otpContainer {
+      display: none;
+    }
+
+    /* #imagePickerForm {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    h1 {
+      text-align: center;
+      width: 100%;
+    }
+
+    p {
+      text-align: center;
+      width: 100%;
+    }
+
+    .formimg {
+      flex: 1;
+      max-width: 150px;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    div {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #333;
+    } */
   </style>
 </head>
 
@@ -46,51 +132,358 @@
         </div>
 
 
+
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-          <form method="post" action="/signup">
-            <h2 class="mb-5 text-center text-primary">ClassToDigital</h2>
-            <div class="form-outline mb-4">
-              <input type="name" id="name" name="name" class="form-control form-control-lg"
-                placeholder="Enter a valid Names" required/>
-              <label class="form-label" for="name">Name</label>
-            </div>
-            <!-- Email input -->
-            <div class="form-outline mb-4">
-              <input type="email" id="email" name="email" class="form-control form-control-lg"
-                placeholder="Enter a valid email address" required />
-              <label class="form-label" for="email">Email address</label>
-            </div>
-
-            <!-- Password input -->
-            <div class="form-outline mb-4">
-              <input type="password" id="password" name="password" class="form-control form-control-lg"
-                placeholder="Enter password" required />
-              <label class="form-label" for="password">Password</label>
-            </div>
+          <div id="imagePickerForm">
+            <h1>Sign Up Form </h1>
+            <p>Please Select Your Role : </p>
 
 
-            <select name="role" id="role" class="form-select form-select-lg" aria-label="Default select example" required>
-              <option value="student">Student</option>
-              <option value="admin">Admin</option>
-              <option value="mentor">Mentor</option>
-              <option value="company">Company</option>
-            </select>
+            <label id="studentImage2" class="formimg" onclick="selectImage('studentImage2')">
+              <input type="radio" name="imagePicker" value="student" id="studentImage" class="hidden">
+              <img src="/images/signupcard/student.png" alt="Student Image" height="100">
+              <div>Student</div>
 
 
-            <div class="text-center text-lg-start mt-4">
-              <input type="Submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
-                value="Sign up">
-              <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/login"
-                  class="link-danger">Login</a></p>
-            </div>
 
-          </form>
+            </label>
+
+            <label id="mentorImage2" class="formimg" onclick="selectImage('mentorImage2')">
+              <input type="radio" name="imagePicker" value="mentor" id="mentorImage" class="hidden">
+              <img src="/images/signupcard/mentor.png" alt="Mentor Image" height="100">
+              <div>Mentor</div>
+            </label>
+
+            <br>
+
+            <label id="adminImage2" class="formimg" onclick="selectImage('adminImage2')">
+              <input type="radio" name="imagePicker" value="admin" id="adminImage" class="hidden">
+              <img src="/images/signupcard/admin.png" alt="admin Image" height="100">
+              <div>Admin</div>
+            </label>
+
+
+
+
+            <label id="companyImage2" class="formimg" onclick="selectImage('companyImage2')">
+              <input type="radio" name="imagePicker" value="company" id="companyImage" class="hidden">
+              <img src="/images/signupcard/company.png" alt="Company Image" height="100">
+              <div>Company</div>
+            </label>
+          </div>
+
+          <div id="errorMessage" class="hidden">Please select one Image</div>
+
+          <button onclick="submitForm()" id="submitbtn" type="button"
+            class="btn btn-primary btn-rounded center ">Next</button>
+
+          <div id="studentForm" class="hidden">
+
+
+            <form id="studentsignupForm" method="post" action="/signup">
+
+
+
+              <h2 class="mb-5 text-center text-primary">ClassToDigital</h2>
+              <p>Student Form</p>
+
+              <input type="hidden" name="role" class="role" value="student" />
+
+              <div class="form-outline mb-4 mr-1">
+                <input type="name" id="student-name" name="name" class="form-control form-control-lg"
+                  placeholder="Enter a valid Names" required />
+                <label class="form-label" for="name">Name</label>
+              </div>
+              <div class="form-outline mb-2">
+                <input type="phone" id="student-phone" name="phone" class="form-control form-control-lg"
+                  placeholder="Enter a valid phone no : (Ex : +910123456789)" required />
+                <label class="form-label" for="phone">Phone No : </label>
+              </div>
+
+              <button type="button" id="student-getOTPBtn" class="getOTPBtn btn btn-secondary btn-rounded mb-2">Get
+                OTP</button>
+              <p id="student-otpStatus" style="visibility:hidden"></p>
+
+
+
+              <div id="student-otpContainer" class="otpContainer">
+                <div class="form-outline mb-4">
+                  <input type="text" id="student-otp" maxlength="6" class="form-control form-control-lg"
+                    placeholder="Enter OTP to verify mobile no." />
+                  <label class="form-label" for="otp">OTP</label>
+                </div>
+                <button type="button" id="student-verifyOtpBtn" class="btn btn-secondary btn-rounded mb-2">Verify
+                  OTP</button>
+                <p id="student-otpVerificationStatus" style="visibility:hidden"></p>
+              </div>
+
+
+              <div class="form-outline mb-4">
+                <input type="email" id="student-email" name="email" class="form-control form-control-lg"
+                  placeholder="Enter a valid email address" required />
+                <label class="form-label" for="email">Email address</label>
+              </div>
+
+
+              <div class="form-outline mb-4">
+                <input name="password" id="student-password" type="password"
+                  onkeyup='studentCheck(); studentCheckPassword();' class="form-control form-control-lg"
+                  placeholder="Enter password" required />
+                <label class="form-label" for="password">Password</label>
+              </div>
+              <p id="student-password-validation-msg"></p>
+
+
+
+              <div class="form-outline mb-4">
+                <input type="password" id="student-confirm_password" onkeyup='studentCheck(); studentCheckPassword();'
+                  class="form-control form-control-lg" placeholder="Enter password Again" required />
+                <label class="form-label" for="confirmpassword">Confirm Password</label>
+              </div>
+              <span id='student-message'></span>
+
+
+              <div class="text-center text-lg-start mt-4">
+                <input type="Submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                  value="Sign up">
+                <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/login"
+                    class="link-danger">Login</a></p>
+              </div>
+
+            </form>
+
+          </div>
+          <div id="mentorForm" class="hidden">
+
+
+            <form id="mentorsignupForm" method="post" action="/signup">
+
+
+
+              <h2 class="mb-5 text-center text-primary">ClassToDigital</h2>
+              <p>Mentor Form</p>
+
+              <input type="hidden" name="role" class="role" value="mentor" />
+
+              <div class="form-outline mb-4 mr-1">
+                <input type="name" id="mentor-name" name="name" class="form-control form-control-lg"
+                  placeholder="Enter a valid Names" required />
+                <label class="form-label" for="name">Name</label>
+              </div>
+              <div class="form-outline mb-2">
+                <input type="phone" id="mentor-phone" name="phone" class="form-control form-control-lg"
+                  placeholder="Enter a valid phone no : (Ex : +910123456789)" required />
+                <label class="form-label" for="phone">Phone No : </label>
+              </div>
+
+              <button type="button" id="mentor-getOTPBtn" class="getOTPBtn btn btn-secondary btn-rounded mb-2">Get
+                OTP</button>
+              <p id="mentor-otpStatus" style="visibility:hidden"></p>
+
+
+
+              <div id="mentor-otpContainer" class="otpContainer">
+                <div class="form-outline mb-4">
+                  <input type="text" id="mentor-otp" maxlength="6" class="form-control form-control-lg"
+                    placeholder="Enter OTP to verify mobile no." />
+                  <label class="form-label" for="otp">OTP</label>
+                </div>
+                <button type="button" id="mentor-verifyOtpBtn" class="btn btn-secondary btn-rounded mb-2">Verify
+                  OTP</button>
+                <p id="mentor-otpVerificationStatus" style="visibility:hidden"></p>
+              </div>
+
+
+              <div class="form-outline mb-4">
+                <input type="email" id="mentor-email" name="email" class="form-control form-control-lg"
+                  placeholder="Enter a valid email address" required />
+                <label class="form-label" for="email">Email address</label>
+              </div>
+
+
+              <div class="form-outline mb-4">
+                <input name="password" id="mentor-password" type="password"
+                  onkeyup='mentorCheck(); mentorCheckPassword();' class="form-control form-control-lg"
+                  placeholder="Enter password" required />
+                <label class="form-label" for="password">Password</label>
+              </div>
+              <p id="mentor-password-validation-msg"></p>
+
+
+
+              <div class="form-outline mb-4">
+                <input type="password" id="mentor-confirm_password" onkeyup='mentorCheck(); mentorCheckPassword();'
+                  class="form-control form-control-lg" placeholder="Enter password Again" required />
+                <label class="form-label" for="confirmpassword">Confirm Password</label>
+              </div>
+              <span id='mentor-message'></span>
+
+
+              <div class="text-center text-lg-start mt-4">
+                <input type="Submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                  value="Sign up">
+                <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/login"
+                    class="link-danger">Login</a></p>
+              </div>
+
+            </form>
+
+          </div>
+          <div id="adminForm" class="hidden">
+
+
+            <form id="adminsignupForm" method="post" action="/signup">
+
+
+
+              <h2 class="mb-5 text-center text-primary">ClassToDigital</h2>
+              <p>Admin Form</p>
+
+              <input type="hidden" name="role" class="role" value="admin" />
+
+              <div class="form-outline mb-4 mr-1">
+                <input type="name" id="admin-name" name="name" class="form-control form-control-lg"
+                  placeholder="Enter a valid Names" required />
+                <label class="form-label" for="name">Name</label>
+              </div>
+              <div class="form-outline mb-2">
+                <input type="phone" id="admin-phone" name="phone" class="form-control form-control-lg"
+                  placeholder="Enter a valid phone no : (Ex : +910123456789)" required />
+                <label class="form-label" for="phone">Phone No : </label>
+              </div>
+
+              <button type="button" id="admin-getOTPBtn" class="getOTPBtn btn btn-secondary btn-rounded mb-2">Get
+                OTP</button>
+              <p id="admin-otpStatus" style="visibility:hidden"></p>
+
+
+
+              <div id="admin-otpContainer" class="otpContainer">
+                <div class="form-outline mb-4">
+                  <input type="text" id="admin-otp" maxlength="6" class="form-control form-control-lg"
+                    placeholder="Enter OTP to verify mobile no." />
+                  <label class="form-label" for="otp">OTP</label>
+                </div>
+                <button type="button" id="admin-verifyOtpBtn" class="btn btn-secondary btn-rounded mb-2">Verify
+                  OTP</button>
+                <p id="admin-otpVerificationStatus" style="visibility:hidden"></p>
+              </div>
+
+
+              <div class="form-outline mb-4">
+                <input type="email" id="admin-email" name="email" class="form-control form-control-lg"
+                  placeholder="Enter a valid email address" required />
+                <label class="form-label" for="email">Email address</label>
+              </div>
+
+
+              <div class="form-outline mb-4">
+                <input name="password" id="admin-password" type="password" onkeyup='adminCheck(); adminCheckPassword();'
+                  class="form-control form-control-lg" placeholder="Enter password" required />
+                <label class="form-label" for="password">Password</label>
+              </div>
+              <p id="admin-password-validation-msg"></p>
+
+
+
+              <div class="form-outline mb-4">
+                <input type="password" id="admin-confirm_password" onkeyup='adminCheck(); adminCheckPassword();'
+                  class="form-control form-control-lg" placeholder="Enter password Again" required />
+                <label class="form-label" for="confirmpassword">Confirm Password</label>
+              </div>
+              <span id='admin-message'></span>
+
+
+              <div class="text-center text-lg-start mt-4">
+                <input type="Submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                  value="Sign up">
+                <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/login"
+                    class="link-danger">Login</a></p>
+              </div>
+
+            </form>
+
+          </div>
+
+          <div id="companyForm" class="hidden">
+
+
+            <form id="companysignupForm" method="post" action="/signup">
+
+
+
+              <h2 class="mb-5 text-center text-primary">ClassToDigital</h2>
+              <p>Company Form</p>
+
+              <input type="hidden" name="role" class="role" value="company" />
+
+              <div class="form-outline mb-4 mr-1">
+                <input type="name" id="company-name" name="name" class="form-control form-control-lg"
+                  placeholder="Enter a valid Names" required />
+                <label class="form-label" for="name">Name</label>
+              </div>
+
+
+
+              <div class="form-outline mb-4">
+                <input type="email" id="company-email" name="email" class="form-control form-control-lg"
+                  placeholder="Enter a valid email address" required />
+                <label class="form-label" for="email">Email address</label>
+              </div>
+
+
+              <div class="form-outline mb-4">
+                <input name="password" id="company-password" type="password"
+                  onkeyup='companyCheck(); companyCheckPassword();' class="form-control form-control-lg"
+                  placeholder="Enter password" required />
+                <label class="form-label" for="password">Password</label>
+              </div>
+              <p id="company-password-validation-msg"></p>
+
+
+
+              <div class="form-outline mb-4">
+                <input type="password" id="company-confirm_password" onkeyup='companyCheck(); companyCheckPassword();'
+                  class="form-control form-control-lg" placeholder="Enter password Again" required />
+                <label class="form-label" for="confirmpassword">Confirm Password</label>
+              </div>
+              <span id='company-message'></span>
+
+
+              <div class="text-center text-lg-start mt-4">
+                <input type="Submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;"
+                  value="Sign up">
+                <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/login"
+                    class="link-danger">Login</a></p>
+              </div>
+
+            </form>
+
+          </div>
+          <div>
+          </div>
         </div>
-      </div>
-    </div>
+
+
+
+
+
 
   </section>
 </body>
+
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+<script src="/js/Authentication/signup.js"></script>
+<script src="/js/Authentication/signupwithoutjquery.js"></script>
+
+
+
+
+
 
 </html>
