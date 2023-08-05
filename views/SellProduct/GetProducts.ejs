@@ -6,9 +6,50 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- my css -->
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'>
   <style>
+    /* my css */
+    .carousel-item {
+      text-align: center;
+      background-color: #fff;
+    }
+
+    .carousel-item img {
+      max-width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+
+    .modal-dialog {
+      max-width: 800px;
+    }
+
+    .modal-dialog img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .modal-header .close {
+      position: absolute;
+      top: 6px;
+    right: 14px;
+      padding: 10px;
+      color: #000;
+      text-shadow: none;
+      font-size: 30px;
+    }
+
+  
+    @media only screen and (max-width: 992px) {
+      .s-works {
+        padding-top: 15rem;
+        padding-bottom: 15rem;
+      }
+    }
+
+    /* ================================================================= */
     .share-popup {
       z-index: 500;
       max-width: max-content;
@@ -66,39 +107,6 @@
       cursor: pointer;
     }
 
-    /* .goverlay {
-      background-color: rgba(0, 0, 0, 0.3);
-    }
-
-    .glightbox {
-      padding-left: 0;
-      margin-top: 0;
-      margin-bottom: 0;
-      padding: 0 5px;
-      flex-basis: calc(100% / 5 - 10px);
-    }
-
-    .gcounter {
-      padding: .5rem;
-    }
-
-    .gcounter::after {
-      content: attr(data-indicator);
-      position: absolute;
-      top: .5rem;
-      left: .5rem;
-      color: white;
-      padding: 10px;
-      z-index: 10000000;
-      background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 50px;
-    }
-
-    .glightbox-closing .gcounter {
-      opacity: 0;
-    }
-
- */
 
     body {
       background-color: #f6f9ff !important;
@@ -175,41 +183,63 @@
                                                     <div class="card-body">
                                                       <div class="row">
                                                         <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
-                                                          <div id="carouselExampleControls<%= index %>"
-                                                            class="carousel slide" data-mdb-ride="carousel">
-                                                            <div class="carousel-inner">
+                                                          
+                                                            <div id="productCarousel<%= index %>"
+                                                              class="carousel slide" data-mdb-ride="carousel">
+                                                              <div class="carousel-inner" id="cardimg<%= index %>">
+                                                                    <% product.photos.forEach(function(photo){ %>
+                                                                      <div class="carousel-item"
+                                                                        style="text-align: center;text-align: -webkit-center; text-align: -moz-center; ">
+                                                                        <img style="height: 180px;"
+                                                                          src="<%- photo.path %>"
+                                                                          class="img-thumbnail d-block glightbox"
+                                                                          alt="Product" data-toggle="modal" data-target="#carouselModal<%= index %>" />
+                                                                      </div>
+                                                                      <% }) %>
+                                                                
+                                                              </div>
 
-
-                                                              <% product.photos.forEach(function(photo){ %>
-                                                                <div class="carousel-item active "
-                                                                  style="text-align: center;text-align: -webkit-center; text-align: -moz-center; ">
-                                                                  <img style="height: 180px;" src="<%- photo.path %>"
-                                                                    class="img-thumbnail d-block glightbox" alt="Product" />
-                                                                </div>
-                                                                <% }) %>
-
-
-
-
-
+                                                                <a class="carousel-control-prev" href="#productCarousel<%= index %>" data-slide="prev">
+                                                                  <span class="carousel-control-prev-icon"></span>
+                                                                 
+                                                                </a>
+                                                                <a class="carousel-control-next" href="#productCarousel<%= index %>" data-slide="next">
+                                                                  <span class="carousel-control-next-icon"></span>
+                                                                 
+                                                                </a>
+                         
                                                             </div>
-                                                            <button style="color:#1c4980;" class="carousel-control-prev"
-                                                              type="button"
-                                                              data-mdb-target="#carouselExampleControls<%= index %>"
-                                                              data-mdb-slide="prev">
-                                                              <span class="carousel-control-prev-icon"
-                                                                aria-hidden="true"></span>
-                                                              <span class="visually-hidden">Previous</span>
-                                                            </button>
-                                                            <button style="color:#1c4980;" class="carousel-control-next"
-                                                              type="button"
-                                                              data-mdb-target="#carouselExampleControls<%= index %>"
-                                                              data-mdb-slide="next">
-                                                              <span class="carousel-control-next-icon"
-                                                                aria-hidden="true"></span>
-                                                              <span class="visually-hidden">Next</span>
-                                                            </button>
+                                                            <!--  -->
+                                                          <!-- Carousel Modals click and zoom effect -->
+                                                          <div class="modal fade" id="carouselModal<%= index %>" tabindex="-1" role="dialog" aria-labelledby="carouselModalLabel<%= index %>" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                              <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                  </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                  <div id="carouselZoom<%= index %>" class="carousel slide" data-ride="carousel">
+                                                                    <div class="carousel-inner" id="selectAct<%= index %>"> 
+                                                                      <% product.photos.forEach(function(photo){ %>
+                                                                      <div class="carousel-item">
+                                                                        <img src="<%- photo.path %>" alt="Product 1">
+                                                                      </div>
+                                                                      <% }) %>
+                                                                    </div>
+                                                                    <a class="carousel-control-prev" href="#carouselZoom<%= index %>" data-slide="prev">
+                                                                      <span class="carousel-control-prev-icon"></span>
+                                                                    </a>
+                                                                    <a class="carousel-control-next" href="#carouselZoom<%= index %>" data-slide="next">
+                                                                      <span class="carousel-control-next-icon"></span>
+                                                                    </a>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                            </div>
                                                           </div>
+                                                          <!-- -======== -->
                                                         </div>
                                                         <div class="col-md-6 col-lg-6 col-xl-6">
                                                           <h5 id="productName">
@@ -336,9 +366,10 @@
                                                           <!-- chat icon  -->
                                                           <!-- </div> -->
                                                           <!-- <div class="d-flex flex-column mt-4"> -->
+                                                            <a href="/products?_id=<%=product._id%>"class="detailsLinkRepo" style="text-decoration: none;">
                                                           <button class="btn btn-primary mt-auto showDetail"
-                                                            type="button">Details</button>
-
+                                                            type="button" style="width: 100%;">Details</button>
+                                                          </a>
                                                           <!-- </div> -->
                                                         </div>
                                                       </div>
@@ -369,17 +400,6 @@
 </body>
 <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
 <script>
-  // const nav = document.createElement('div');
-  // nav.classList.add('gcounter');
-  // nav.dataset.indicator = '/';
-
-  // const slides = GLightbox({
-  //   onOpen: () => slides.modal.appendChild(nav),
-  //   afterSlideChange: function (prev, next) {
-  //     nav.dataset.indicator = `${next.index + 1} / ${slides.elements.length}`;
-  //     nav.classList.add('gcounter-added');
-  //   }
-  // });
 </script>
 <script>
   $(document).ready(function () {
@@ -471,22 +491,6 @@
     $(document).on('change', "#conditionRating", filterproduct);
 
 
-
-
-
-
-
-
-    // show and hide details of product
-    $(".showDetail").click(function () {
-      $(this).parent().parent().parent().parent().find(".card-footer").slideDown();
-
-
-
-    });
-    $(".hideDetail").click(function () {
-      $(this).parent().parent().parent().parent().find(".card-footer").slideUp();
-    });
   });
 
   const cards = document.querySelectorAll('.card');
@@ -515,12 +519,6 @@
       $('.share-popup').fadeIn();
     });
   });
-
-  // $('.share-button').click(function () {
-
-  //   $('#overlay').css('display', 'block');
-  //   $('.share-popup').fadeIn();
-  // });
 
   // on click close btn hide popup
   $('.close-button').click(function () {
@@ -616,7 +614,7 @@
   const userResponse = fetch('/api/getUserById?userId=' + '<%= userId %>', { method: 'GET' });
   userResponse.then(response => response.json())
     .then(userData => {
-      console.log('Success:', userData.userDetails.savedProducts);
+      // console.log('Success:', userData.userDetails.savedProducts);
       userData.userDetails.savedProducts.forEach((product) => {
         $("#saveProduct" + product).removeClass("fa-regular");
         $("#saveProduct" + product).addClass("fa-solid");
@@ -637,15 +635,44 @@
     fetch('/api/getUserById?userId=' + sellerId, { method: 'GET' })
       .then(response => response.json())
       .then(sellerData => {
-        console.log('Success:', sellerData.userDetails.name);
+        // console.log('Success:', sellerData.userDetails.name);
         spanElement.textContent = sellerData.userDetails.name;
       });
   }
 
-// document.getElementById('b1').onclick = function(){
-// 	swal("Here's a message!");
-// };
+  // add active class in carousel
+
+  const arrfor = [...document.querySelectorAll(".card-body")]
+  console.log(arrfor.length)
+
+  for(let i=1;i<=arrfor.length;i++){
+    console.log(document.getElementById(`selectAct${i}`).firstElementChild)
+    document.getElementById(`selectAct${i}`).firstElementChild.classList.add("active")
+    document.getElementById(`cardimg${i}`).firstElementChild.classList.add("active")
+  }
+  
 
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#carouselModal1, #carouselModal2, #carouselModal3').on('shown.bs.modal', function() {
+      $('.carousel-zoom').carousel({
+        interval: false
+      });
+    });
+
+    $('#carouselModal1, #carouselModal2, #carouselModal3').on('hidden.bs.modal', function() {
+      $('.carousel-zoom').carousel('dispose');
+    });
+  });
+  </script>
+<!-- my js -->
+
+<script src='https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js'></script>
+<script src='https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js'></script>
+<script src='https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js'></script>
 
 </html>

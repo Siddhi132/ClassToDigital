@@ -2,11 +2,11 @@ function selectImage(imageId) {
     // Reset border for all images
     const images = document.querySelectorAll('.formimg');
     images.forEach(image => {
-        image.style.border = 'none';
+        image.style.border = '5px solid transparent';
     });
     // Add border to selected image
     const selectedImage = document.getElementById(imageId);
-    selectedImage.style.border = '5px solid #000000'; // Add 2px border to selected image
+    selectedImage.style.border = '5px solid #000000';
 }
 
 function submitForm() {
@@ -39,7 +39,9 @@ function studentCheckPassword() {
     var passwordValidationMsg = document.getElementById('student-password-validation-msg');
     console.log("Check Password");
     // Define the regular expression pattern for password validation
-    var pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/;
+    var pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8}$/
+    
+;
 
     if (pattern.test(password)) {
         // If password matches the pattern, show success message
@@ -47,7 +49,7 @@ function studentCheckPassword() {
         passwordValidationMsg.style.color = 'green';
     } else {
         // If password doesn't match the pattern, show error message
-        passwordValidationMsg.innerText = 'Password must have at least 8 characters,at least 1 numeric character,at least 1 lowercase letter,at least 1 uppercase letter and at least 1 special character ';
+        passwordValidationMsg.innerText = 'Password have least 8 characters,at least 1 numeric character,at least 1 lowercase letter,at least 1 uppercase letter and at least 1 special character ';
         passwordValidationMsg.style.color = 'red';
     }
 }
@@ -77,7 +79,8 @@ function mentorCheckPassword() {
     var passwordValidationMsg = document.getElementById('mentor-password-validation-msg');
     console.log("Check Password");
     // Define the regular expression pattern for password validation
-    var pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/;
+    var pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8}$/
+;
 
     if (pattern.test(password)) {
         // If password matches the pattern, show success message
@@ -85,7 +88,7 @@ function mentorCheckPassword() {
         passwordValidationMsg.style.color = 'green';
     } else {
         // If password doesn't match the pattern, show error message
-        passwordValidationMsg.innerText = 'Password must have at least 8 characters,at least 1 numeric character,at least 1 lowercase letter,at least 1 uppercase letter and at least 1 special character ';
+        passwordValidationMsg.innerText = 'Password have 8 characters,at least 1 numeric character,at least 1 lowercase letter,at least 1 uppercase letter and at least 1 special character ';
         passwordValidationMsg.style.color = 'red';
     }
 }
@@ -115,7 +118,8 @@ function adminCheckPassword() {
     console.log("Check Password");
 
     // Define the regular expression pattern for password validation
-    var pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/;
+    var pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8}$/
+;
 
     if (pattern.test(password)) {
         // If password matches the pattern, show success message
@@ -123,7 +127,7 @@ function adminCheckPassword() {
         passwordValidationMsg.style.color = 'green';
     } else {
         // If password doesn't match the pattern, show error message
-        passwordValidationMsg.innerText = 'Password must have at least 8 characters,at least 1 numeric character,at least 1 lowercase letter,at least 1 uppercase letter and at least 1 special character ';
+        passwordValidationMsg.innerText = 'Password have 8 characters,at least 1 numeric character,at least 1 lowercase letter,at least 1 uppercase letter and at least 1 special character ';
         passwordValidationMsg.style.color = 'red';
     }
 }
@@ -152,7 +156,8 @@ function companyCheckPassword() {
     var passwordValidationMsg = document.getElementById('company-password-validation-msg');
     console.log("Check Password");
     // Define the regular expression pattern for password validation
-    var pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/;
+    var pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]{8}$/
+;
 
     if (pattern.test(password)) {
         // If password matches the pattern, show success message
@@ -160,7 +165,7 @@ function companyCheckPassword() {
         passwordValidationMsg.style.color = 'green';
     } else {
         // If password doesn't match the pattern, show error message
-        passwordValidationMsg.innerText = 'Password must have at least 8 characters,at least 1 numeric character,at least 1 lowercase letter,at least 1 uppercase letter and at least 1 special character ';
+        passwordValidationMsg.innerText = 'Password have 8 characters,at least 1 numeric character,at least 1 lowercase letter,at least 1 uppercase letter and at least 1 special character ';
         passwordValidationMsg.style.color = 'red';
     }
 }

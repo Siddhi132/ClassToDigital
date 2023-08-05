@@ -8,9 +8,10 @@
 
 
     <style>
-        body{
-      background-color: #f6f9ff !important;
-    }
+        body {
+            background-color: #f6f9ff !important;
+        }
+
         .mentor-section-header {
             margin: auto;
             text-align: center;
@@ -53,7 +54,7 @@
             margin: 1em;
             padding: 1em;
             border-radius: 5px;
-            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+            /* box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2); */
 
 
         }
@@ -80,6 +81,7 @@
         }
 
         .batch-mentor {
+
             background-color: #efefef;
             width: fit-content;
             padding: 0.2rem 0.5rem;
@@ -100,16 +102,54 @@
             border-radius: 50%;
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
             border-radius: 0.1px solid #000;
+            margin-top: -10px;
 
         }
+
+
+
 
         .detail-sec {
-            width: 10em
+            width: 10em;
         }
 
-        .mentor-detail-image{
+        .mentor-detail-image {
             margin: auto !important;
             text-align: center !important;
+        }
+
+        .text-start {
+            text-align: start;
+        }
+
+        .small-text {
+            font-size: 14px;
+        }
+
+        .profile-name {
+            margin-top: -20px;
+        }
+
+        .flex-cols {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: start;
+            align-items: start;
+        }
+
+        @media (max-width: 1079px) {
+            .mentor-image {
+                margin-top: 0;
+            }
+
+            .profile-name {
+                margin-top: 10px;
+            }
+
+            .small-text {
+                font-size: 12px;
+            }
         }
     </style>
 </head>
@@ -120,132 +160,252 @@
 
     <% if(login){ %>
         <% if(typeof role!="undefined" && role){ %>
-            <% if(role=="student"){ %>
+            <% if(role=="student" ){ %>
                 <%- include('../Navbar/StudentNavbar.ejs') %>
-            <% }else if(role=="mentor"){ %>
-                <%- include('../Navbar/MentorNavbar.ejs') %>
-            <% }else if(role=="admin"){ %>
-                <%- include('../Navbar/AdminNavbar.ejs') %>
-            <% }else if(role=="company"){ %>
-                <%- include('../Navbar/CompanyNavbar.ejs') %>
-            <% } %>
-        <% } %>
-        
-        <% }else { %>
-            <%- include('../Navbar/InitNavbar.ejs') %>
-        <% } %>
+                    <% }else if(role=="mentor" ){ %>
+                        <%- include('../Navbar/MentorNavbar.ejs') %>
+                            <% }else if(role=="admin" ){ %>
+                                <%- include('../Navbar/AdminNavbar.ejs') %>
+                                    <% }else if(role=="company" ){ %>
+                                        <%- include('../Navbar/CompanyNavbar.ejs') %>
+                                            <% } %>
+                                                <% } %>
 
-    <% if(typeof mentor!="undefined" && mentor){ %>
-        <% mentor.forEach(function(item){ %>
-            <div class="container mentor-details-section bg-white">
-                <div class="row upper-profile-section">
+                                                    <% }else { %>
+                                                        <%- include('../Navbar/InitNavbar.ejs') %>
+                                                            <% } %>
 
-                    <div class="details-left-section col-md-5 mentor-detail-image">
-                        <img src="<%- item.profileImage.path -%>"
-                            class="rounded-circle z-depth-2 mentor-image" alt="100x100" style="width: 200px; height: 200px;">
+                                                                <% if(typeof mentor!="undefined" && mentor){ %>
+                                                                    <% mentor.forEach(function(item){ %>
+                                                                        <div
+                                                                            class="container mentor-details-section bg-white rounded-5">
+                                                                            <div class="row upper-profile-section">
 
-                    </div>
+                                                                                <div
+                                                                                    class="details-left-section col-md-4 mentor-detail-image">
+                                                                                    <img src="<%- item.profileImage.path -%>"
+                                                                                        class="z-depth-2 mentor-image rounded-circle border border-4 border-white shadow"
+                                                                                        alt="100x100"
+                                                                                        style="width: 150px; height: 150px;" />
+                                                                                    <hr>
+                                                                                    <div>
+                                                                                        <div class="my-3">
+                                                                                            <span><i
+                                                                                                    class="fas fa-map-marker-alt"></i>
+                                                                                            </span>
+                                                                                            <%- item.location -%>
+                                                                                        </div>
+                                                                                        <div class="my-3">
+                                                                                            <span><i
+                                                                                                    class="fas fa-envelope"></i>
+                                                                                            </span>
+                                                                                            <%- item.email -%>
+                                                                                        </div>
+                                                                                        <div class="my-3">
+                                                                                            <span><i
+                                                                                                    class="fas fa-phone"></i>
+                                                                                            </span>
+                                                                                            <%- item.phone -%>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <span>
+                                                                                        <i
+                                                                                            class="fas fa-star fa-lg"></i>
+                                                                                        <i
+                                                                                            class="fas fa-star fa-lg"></i>
+                                                                                        <i
+                                                                                            class="fas fa-star fa-lg"></i>
+                                                                                        <i
+                                                                                            class="fas fa-star fa-lg"></i>
+                                                                                        <i
+                                                                                            class="fas fa-star fa-lg"></i>
+                                                                                    </span>
 
-                    <div class="image-right-section col-md-7">
-                        <h3><%- item.name -%></h3>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <p><span>Area Of Intrest</span> : <%- item.AreaOfIntrest -%></p></p>
-
-
-                        <div class="d-flex ">
-                            <div class="me-4 detail-sec">
-                                <div class="batch-mentor">
-                                    <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;Location
-                                </div>
-                                <p>&nbsp;<%- item.location -%></p>
-                            </div>
-
-                            <div class="ms-4 detail-sec">
-                                <div class="batch-mentor">
-                                    <i class="fas fa-envelope"></i>&nbsp;&nbsp;Email
-                                    Id
-                                </div>
-                                <p>&nbsp;<%- item.email -%>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="d-flex me-4">
-                            <div class="me-4 detail-sec">
-                                <div class="batch-mentor">
-                                    <i class="fas fa-phone"></i>&nbsp;&nbsp;Phone
-                                    Number
-                                </div>
-                                <p>&nbsp;<%- item.phone -%>
-                                </p>
-                            </div>
-
-                            <div class="ms-4 detail-sec">
-                                <div class="batch-mentor">
-                                    <i class="fas fa-book"></i>&nbsp;&nbsp;Education
-                                </div>
-                                <p>&nbsp;<%- item.education -%></p>
-                            </div>
-                        </div>
-                        <div class="d-flex me-4">
-                            <div class="me-4 detail-sec">
-                                <div class="batch-mentor">
-                                    <i class="fas fa-briefcase"></i>&nbsp;&nbsp;Specialization
-        
-                                </div>
-                                <p>&nbsp;<%- item.Specialization -%>
-                                </p>
-                            </div>
-
-                            <div class="ms-4 detail-sec">
-                                <div class="batch-mentor">
-                                    <i class="fas fa-user"></i>&nbsp;&nbsp; Mentees
-                                </div>
-                                <p>&nbsp;<%- item.mentee.length -%>
-                            </div>
-                        </div>
-
-
-                        
-
-
-                    </div>
+                                                                                    <div
+                                                                                        class="brief-details-mentor-section">
 
 
 
-                </div>
+                                                                                        <br>
+                                                                                        <div class="mb-4 pb-2">
+                                                                                            <button type="button"
+                                                                                                class="btn btn-outline-dark btn-floating">
+                                                                                                <i
+                                                                                                    class="fab fa-facebook-f fa-lg"></i>
+                                                                                            </button>
+                                                                                            <button type="button"
+                                                                                                class="btn btn-outline-dark btn-floating">
+                                                                                                <i
+                                                                                                    class="fab fa-twitter fa-lg"></i>
+                                                                                            </button>
+                                                                                            <button type="button"
+                                                                                                class="btn btn-outline-dark btn-floating">
+                                                                                                <i
+                                                                                                    class="fab fa-skype fa-lg"></i>
+                                                                                            </button>
+                                                                                        </div>
 
-                <hr>
-                <div class="brief-details-mentor-section">
-                    <h3 class="card-title">About Me</h3>
-                    <p><%- item.description -%></p>
-
-
-                    <br>
-                    <div class="mb-4 pb-2">
-                        <button type="button" class="btn btn-outline-dark btn-floating">
-                            <i class="fab fa-facebook-f fa-lg"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark btn-floating">
-                            <i class="fab fa-twitter fa-lg"></i>
-                        </button>
-                        <button type="button" class="btn btn-outline-dark btn-floating">
-                            <i class="fab fa-skype fa-lg"></i>
-                        </button>
-                    </div>
-
-                    <button class="btn btn-dark">Message</button>
-                </div>
-            </div>
+                                                                                        <button
+                                                                                            class="btn btn-dark">Message</button>
+                                                                                    </div>
 
 
-            <% }) %>
-                <% } %>
-                    <!-- Fotter -->
-                    <%- include('../Footer/Footer.ejs') %>
+
+                                                                                </div>
+
+                                                                                <div
+                                                                                    class="image-right-section col-md-8">
+
+                                                                                    <div>
+                                                                                        <h3 class="profile-name"><%-
+                                                                                                item.name -%></h3>
+
+                                                                                    </div>
+                                                                                    <p class="small-text"><%-
+                                                                                            item.description -%></p>
+
+                                                                                    <hr>
+                                                                                    <div class="d-flex gap-5">
+
+                                                                                        <span>Area Of Intrest</span>:
+                                                                                        <%- item.AreaOfIntrest -%>
+
+                                                                                    </div>
+
+
+
+                                                                                    <!-- <div class="d-flex ">
+                                                                                        <div class="me-4 detail-sec">
+                                                                                            <div class="batch-mentor">
+                                                                                                <i
+                                                                                                    class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;Location
+                                                                                            </div>
+                                                                                            <p>&nbsp;<%# item.location
+                                                                                                    -%></p>
+                                                                                        </div>
+
+                                                                                        <div class="ms-4 detail-sec">
+                                                                                            <div class="batch-mentor">
+                                                                                                <i
+                                                                                                    class="fas fa-envelope"></i>&nbsp;&nbsp;Email
+                                                                                                Id
+                                                                                            </div>
+                                                                                            <p>&nbsp;<%# item.email -%>
+                                                                                            </p>
+                                                                                        </div>
+                                                                                    </div> -->
+                                                                                    <!-- <div class="d-flex me-4"> -->
+                                                                                    <!-- <div class="me-4 detail-sec">
+                                                                                            <div class="batch-mentor">
+                                                                                                <i
+                                                                                                    class="fas fa-phone"></i>&nbsp;&nbsp;Phone
+                                                                                                Number
+                                                                                            </div>
+                                                                                            <p>&nbsp;<%# item.phone -%>
+                                                                                            </p>
+                                                                                        </div> -->
+                                                                                    <!-- 
+                                                                                        <div class="ms-4 detail-sec">
+                                                                                            <div class="batch-mentor">
+                                                                                                <i
+                                                                                                    class="fas fa-book"></i>&nbsp;&nbsp;Education
+                                                                                            </div>
+                                                                                            <p>&nbsp;<%# item.education
+                                                                                                    -%></p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="d-flex me-4">
+                                                                                        <div class="me-4 detail-sec">
+                                                                                            <div class="batch-mentor">
+                                                                                                <i
+                                                                                                    class="fas fa-briefcase"></i>&nbsp;&nbsp;Specialization
+
+                                                                                            </div>
+                                                                                            <p>&nbsp;<%#
+                                                                                                    item.Specialization
+                                                                                                    -%>
+                                                                                            </p>
+                                                                                        </div>
+
+                                                                                        <div class="ms-4 detail-sec">
+                                                                                            <div class="batch-mentor">
+                                                                                                <i
+                                                                                                    class="fas fa-user"></i>&nbsp;&nbsp;
+                                                                                                Mentees
+                                                                                            </div>
+                                                                                            <p>&nbsp;<%# item.education
+                                                                                                    -%></p>
+                                                                                        </div>
+                                                                                    </div> -->
+                                                                                    <div>
+                                                                                        <div class="my-3">
+                                                                                            <span> <i
+                                                                                                    class="fas fa-book"></i>&nbsp;&nbsp;Education
+                                                                                                :
+                                                                                            </span>
+                                                                                            <%- item.education -%>
+                                                                                        </div>
+                                                                                        <div class="my-3">
+                                                                                            <span><i
+                                                                                                    class="fas fa-briefcase"></i>&nbsp;&nbsp;Specialization
+                                                                                                :
+                                                                                            </span>
+                                                                                            <%- item.Specialization -%>
+                                                                                        </div>
+                                                                                        <div class="my-3">
+                                                                                            <span> <i
+                                                                                                    class="fas fa-user"></i>&nbsp;&nbsp;
+                                                                                                Mentees :
+                                                                                            </span>
+                                                                                            <%- item.mentee.length -%>
+                                                                                        </div>
+                                                                                    </div>
+
+
+
+
+
+                                                                                </div>
+
+
+
+                                                                            </div>
+
+
+                                                                            <!-- <div class="brief-details-mentor-section">
+                                                                                <h3 class="card-title">About Me</h3>
+                                                                                <p><%# item.description -%></p>
+
+
+                                                                                <br>
+                                                                                <div class="mb-4 pb-2">
+                                                                                    <button type="button"
+                                                                                        class="btn btn-outline-dark btn-floating">
+                                                                                        <i
+                                                                                            class="fab fa-facebook-f fa-lg"></i>
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-outline-dark btn-floating">
+                                                                                        <i
+                                                                                            class="fab fa-twitter fa-lg"></i>
+                                                                                    </button>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-outline-dark btn-floating">
+                                                                                        <i
+                                                                                            class="fab fa-skype fa-lg"></i>
+                                                                                    </button>
+                                                                                </div>
+
+                                                                                <button
+                                                                                    class="btn btn-dark">Message</button>
+                                                                            </div> -->
+                                                                        </div>
+
+
+                                                                        <% }) %>
+                                                                            <% } %>
+                                                                                <!-- Fotter -->
+                                                                                <%- include('../Footer/Footer.ejs') %>
 
 </body>
 

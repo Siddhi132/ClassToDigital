@@ -1,4 +1,4 @@
-uri = "mongodb://localhost/c2dTesting";
+uri = "mongodb://localhost/ClassToDigital";
 const mongoose = require('mongoose');
 
 const connectDB = () => {

@@ -23,7 +23,6 @@ const internshipScheme = new mongoose.Schema({
     numberOfOpenings: { type: Number, required: true },
     dateOfPosting: { type: Date, required: true, default: Date.now() },
     lastDateToApply: { type: Date, required: true },
-    contactDetails: { type: String, required: true },
     paidOrUnpaid: { type: String, required: true },
     typeOfInternship: { type: String, required: true },
     modeOfInternship: { type: String, required: true },

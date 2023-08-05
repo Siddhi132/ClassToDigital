@@ -5,13 +5,19 @@ console.log("userId", userId);
 console.log("userRole", userRole);
 
 var profileVerifyProductBtn = document.getElementById("profile-verifyproduct-btn");
+var profileVerifyInternshipBtn = document.getElementById("profile-verifyinternship-btn");
+var profileVerifyProjectBtn = document.getElementById("profile-verifyproject-btn");
 var profileBtn = document.getElementById("profile-btn");
 
 
 var verifyProductContent = document.getElementById("verifyproduct-content");
+var verifyInternshipContent = document.getElementById("verifyinternship-content");
+var verifyProjectContent = document.getElementById("verifyproject-content");
 var defaultContent = document.getElementById("default-content");
 
 verifyProductContent.style.display = "none";
+verifyInternshipContent.style.display = "none";
+verifyProjectContent.style.display = "none";
 defaultContent.style.display = "block";
 
 
@@ -28,7 +34,7 @@ defaultContent.style.display = "block";
 
     // verify product
 
-    $(document).on('click','.verifybtn',function(){
+    $(document).on('click','.verifybtn-product',function(){
         // get data-id of product
         var id=$(this).attr("data-id");
         console.log("id",id);
@@ -50,7 +56,49 @@ defaultContent.style.display = "block";
                 });
     });
 
+    $(document).on('click','.verifybtn-internship',function(){
+      // get data-id of product
+      var id=$(this).attr("data-id");
+      console.log("id",id);
+      // fetch api call to verify product
+      fetch("/api/verifyinternship", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+              },
+              body: JSON.stringify({id:id})
+              })
+              .then((res) => res.json())
+              .then((data) => {
+                  console.log("data", data);
+                  if(data.status){
+                      // remove card from verifyInternshipContent
+                      $(`#${id}`).remove();
+                  }
+              });
+  });
 
+  $(document).on('click','.verifybtn-industrialProject',function(){
+    // get data-id of product
+    var id=$(this).attr("data-id");
+    console.log("id",id);
+    // fetch api call to verify product
+    fetch("/api/verifyIndustrialProject", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({id:id})
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("data", data);
+                if(data.status){
+                    // remove card from verifyIndustrialProjectContent
+                    $(`#${id}`).remove();
+                }
+            });
+});
 
 
 
@@ -61,12 +109,16 @@ defaultContent.style.display = "block";
 
 profileBtn.addEventListener("click", function () {
   verifyProductContent.style.display = "none";
+  verifyInternshipContent.style.display = "none";
+  verifyProjectContent.style.display = "none";
   defaultContent.style.display = "block";
 });
 
 
 profileVerifyProductBtn.addEventListener("click", function () {
   verifyProductContent.style.display = "block";
+  verifyInternshipContent.style.display = "none";
+  verifyProjectContent.style.display = "none";
   defaultContent.style.display = "none";
 var card=``;
     // fetch api call to get all products which are not verified
@@ -179,7 +231,7 @@ var card=``;
                           <h4 class="mb-1 me-1">
                             ${ product.price } Rs.
                           </h4>
-                          <button id="verifybtn" class="btn btn-secondary verifybtn" data-id="${product._id}">Verifed</button>
+                          <button id="verifybtn-product" class="btn btn-secondary verifybtn-product" data-id="${product._id}">Verified</button>
                           <!-- chat icon  -->
                           <!-- </div> -->
                           <!-- <div class="d-flex flex-column mt-4"> -->
@@ -216,7 +268,200 @@ var card=``;
 
 });
 
+profileVerifyInternshipBtn.addEventListener("click", function () {
+  verifyInternshipContent.style.display = "block";
+  verifyProductContent.style.display = "none";
+  verifyProjectContent.style.display = "none";
+  defaultContent.style.display = "none";
+  var card=``;
+    // fetch api call to get all products which are not verified
+    // and display them in verifyProductContent
+// ?adminverified=false
+    fetch("/api/allInternship", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log("data", data);
+            var index=0;
+            if(data.statusCode==200){
+            console.log("data", data.data.allinternship);
+            data.data.allinternship.forEach((internship) => {
+              console.log("internships", internship)
+              // adminverified
+              if(internship.adminverified == false){
+                index++;
+                card+=` <div class="card shadow-3-strong border rounded-3 mb-2 grid-div"  id="${ internship._id }">
+                <div class="card-body">
+                  <div class="row">
+                    
+                    </div>
+                    <div class="">
+                      <h5 id="productName">
+                        Company Name : ${ internship.companyName }
+                      </h5>
+                      
+      
+                      <div class="mb-2 text-muted small">
+                      <span class="text-primary"> • </span>
+                      <span> Type Of Intenship : ${ internship.typeOfInternship }</span>
 
+                    </div>
+                      <div class="mb-2 text-muted small">
+                      <span class="text-primary"> • </span>
+                      <span> Category : ${ internship.category }</span>
+
+                    </div>
+                      <div class="mb-2 text-muted small">
+                        <span class="text-primary"> • </span>
+                        <span>Date Of Purchase : ${
+                            internship.duration } ${internship.morw}s</span>
+
+                      </div>
+                      <div class="mb-2 text-muted small">
+                      <span class="text-primary"> • </span>
+                      <span>Location : ${
+                          internship.city} , ${internship.state}</span>
+
+                    </div>
+
+                    </div>
+                    <div
+                      class=" ">
+                      <!-- <div class="d-flex flex-row align-items-center mb-1"> -->
+                      
+                      <!-- <i class="fa fa-share"></i> -->
+                    
+                      <h6 class="mb-2 me-1">
+                      Stipend Amount: ${ internship.stipend } Rs.
+                      </h6>
+                      <button id="verifybtn-internship" class="btn btn-secondary verifybtn-internship" data-id="${internship._id}">Verified</button>
+                      
+
+                      <!-- </div> -->
+                    </div>
+                  </div>
+                </div>
+          
+              </div>`;
+                }
+              //   else{
+              //     card=`<div class="card shadow-3-strong border rounded-3" id="nointernship">
+              //     <div class="card-body">
+      
+              //     <h5 class="text-uppercase text-primary">No Internship Found</h5>
+              //     </div>
+              //     </div>`;
+              //     $('#verifyinternship-content-inner').html(card);
+              // }
+            });
+        }
+            $('#verifyinternship-content-inner').html(card);
+        })
+});
+
+profileVerifyProjectBtn.addEventListener("click", function () {
+  verifyProjectContent.style.display = "block";
+  verifyInternshipContent.style.display = "none";
+  verifyProductContent.style.display = "none";
+  defaultContent.style.display = "none";
+  var card=``;
+    // fetch api call to get all products which are not verified
+    // and display them in verifyProductContent
+// ?adminverified=false
+    fetch("/api/allIndustrialProjects", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log("data", data);
+            var index=0;
+            if(data.statusCode==200){
+            console.log("data", data.data.allinternship);
+            data.data.allIndustrialProject.forEach((industrialProject) => {
+              console.log("industrialProjects", industrialProject)
+              // adminverified
+              if(industrialProject.adminverified == false){
+                index++;
+                card+=` <div class="card shadow-3-strong border mb-2 rounded-3 grid-div" id="${ industrialProject._id }">
+                <div class="card-body">
+                  <div class="row">
+                    
+                    </div>
+                    <div class="">
+                      <h5 id="productName">
+                        Project Title : ${ industrialProject.projectTitle }
+                      </h5>
+                      
+                      <div class="mb-2 text-muted small">
+                      <span class="text-primary"> • </span>
+                      <span> Commpany Name : ${ industrialProject.companyName }</span>
+
+                    </div>
+                      <div class="mb-2 text-muted small">
+                      <span class="text-primary"> • </span>
+                      <span> Type Of Project : ${ industrialProject.typeOfIndustrialProject }</span>
+
+                    </div>
+                      <div class="mb-2 text-muted small">
+                      <span class="text-primary"> • </span>
+                      <span> Category : ${ industrialProject.category }</span>
+
+                    </div>
+                      <div class="mb-2 text-muted small">
+                        <span class="text-primary"> • </span>
+                        <span>Date Of Purchase : ${
+                          industrialProject.duration } ${industrialProject.morw}s</span>
+
+                      </div>
+                      <div class="mb-2 text-muted small">
+                      <span class="text-primary"> • </span>
+                      <span>Location : ${
+                        industrialProject.city} , ${industrialProject.state}</span>
+
+                    </div>
+
+                    </div>
+                    <div
+                      class="">
+                      <!-- <div class="d-flex flex-row align-items-center mb-1"> -->
+                     
+                      <!-- <i class="fa fa-share"></i> -->
+                    
+                      <h6 class="mb-2 me-1">
+                      Stipend Amount: ${ industrialProject.stipend } Rs.
+                      </h6>
+                      <button id="verifybtn-industrialProject" class="btn btn-secondary verifybtn-industrialProject" data-id="${industrialProject._id}">Verified</button>
+                      
+                      
+                    </div>
+                  </div>
+                </div>
+                
+              </div>`;
+                }
+              //   else{
+              //     card=`<div class="card shadow-3-strong border rounded-3" id="noindustrialProject">
+              //     <div class="card-body">
+      
+              //     <h5 class="text-uppercase text-primary">No Product Found</h5>
+              //     </div>
+              //     </div>`;
+              //     $('#verifyproject-content-inner').html(card);
+              // }
+            });
+        }
+        
+
+            $('#verifyproject-content-inner').html(card);
+        })
+});
 
 
 
@@ -247,7 +492,14 @@ function previewImage() {
   }
 }
 
+{/* <div class="mt-1 mb-0  small">
+<span class="text-primary"> • </span>
+<span id="categoryName">
+Category : ${ internship.category }
+</span>
+<span class="text-primary"> • </span>
+<span>
+  Type : ${ internship.typeOfInternship }
+</span>
 
-
-
-
+</div> */}
