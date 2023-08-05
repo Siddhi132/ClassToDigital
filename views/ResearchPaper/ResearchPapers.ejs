@@ -77,77 +77,22 @@
         <i class="fas fa-search"></i>
       </button>
     </div>
-    <div id="search-content">
-      <% researchPapers.data.allResearchPaper.forEach(function(item){ %>
-        <div class="card bg-light mb-3 repo-card">
-          <div class="card-body">
-            <h3 class="card-title"><%- item.title -%></h5>
-                <p class="card-text researchpapertext"><%- item.description -%></p>
-                <div class="mb-3">
-                  <div style="display: flex; gap:2em">
-                    <a href="" class="researchPaperDetails">
-                      <span class="badge badge-primary me-1 p-md-2">Guide</span>
-                      <p class="text-black mt-3"><strong>
-                          <%= item.guide %>
-                        </strong></p>
-                    </a>
-                    <a href="" class="researchPaperDetails">
-                      <span class="badge badge-primary me-1 p-md-2 f">Team Members </span>
-                      <div class="mt-3 text-black" style="display: flex; gap: 0.5em; flex-wrap: wrap; ">
-
-                        <% var members=item.teamMembers.split(','); %>
-                          <% members.forEach(function(member){ %>
-                            <div>
-                              <p><strong>
-                                  <%= member %> |
-                                </strong></p>
-
-                            </div>
-                            <% }) %>
-
-                      </div>
-                    </a>
-                  </div>
-
-                  <div class="col-md-6 ">
-                    <h5 class="my-4">Skills you will get</h5>
-                    <a href="" class="mt-0">
-                      <div class="">
-                        <% var skills=item.skillsRequired.split(','); %>
-                          <% skills.forEach(function(skill){ %>
-
-                            <span class="badge badge-primary me-1 p-md-2 skillsBadgeText">
-                              <%= skill %>
-                            </span>
-                            <% }) %>
-                      </div>
-                    </a>
-                  </div>
-                  <hr>
-                  <div class="d-flex flex-row-reverse">
-                    <div class="ms-2 me-2">
-                      <a href="<%- '/researchPapers?_id=' + item._id -%>"><button class="btn btn-primary"
-                          id="detailbtn">View Details</button></a>
-                    </div>
-
-
-                  </div>
-                </div>
-          </div>
-        </div>
-
-
-
-        <% }) %>
+    
+    <div class="dropdown my-4">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2"
+        data-mdb-toggle="dropdown" aria-expanded="false">
+        Research Papers
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <li><button class="dropdown-item" id="ResearchPaperButton" type="button">Research Papers</button></li>
+        <li><button class="dropdown-item" id="ResearchPaperMentorButton" type="button">Looking For
+            Mentor Guide</button></li>
+        <li><button class="dropdown-item" id="ResearchPaperCoAuthorButton" type="button">Looking For
+            Co Author</button></li>
+      </ul>
     </div>
-  </div>
 
-
-
-
-
-
-
+    <div id="cardContent"></div>
 
         <!-- Fotter -->
         <%- include('../Footer/Footer.ejs') %>

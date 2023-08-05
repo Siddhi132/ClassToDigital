@@ -4,6 +4,7 @@ const Product = require('../../models/Products');
 const StudentProfile = require("../../models/StudentProfile");
 const MentorProfile = require("../../models/MentorProfile");
 const ProjectRepository = require("../../models/ProjectRepository");
+const studentProfile = require("../../models/StudentProfile");
 
 const deleteItem = async (req, res) => {
     var id = req.body.itemId;
@@ -178,6 +179,22 @@ const visibleItem = async (req, res) => {
 }
 
 
+const getNameAutocomplete = async (req, res)=>{
+    console.log("abc:" + req.body)
+    let payload = req.body.payload.trim()
+    console.log(payload)
+    let studentSearch = await studentProfile.find({name: {$regex: new RegExp('^'+payload+'.*','i')}}, {name: 1, _id:0}).exec();
+    let mentorSearch = await MentorProfile.find({name: {$regex: new RegExp('^'+payload+'.*','i')}}, {name: 1, _id:0}).exec();
 
+    const mergedSearch = studentSearch.concat(mentorSearch);
+    const nameArray = mergedSearch.map(item => item.name);
 
-module.exports = { deleteItem, hideItem, visibleItem }
+    console.log("studentSearch:", studentSearch);
+    console.log("mentorSearch", mentorSearch);
+    console.log("nameArray:", nameArray)
+
+    console.log("mergedSearch:", mergedSearch)
+    res.send({payload: nameArray})
+}
+
+module.exports = { deleteItem, hideItem, visibleItem, getNameAutocomplete }

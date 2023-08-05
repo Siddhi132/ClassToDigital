@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css'>
+    <style>
+        .card-wrapper{
+    max-width: 1100px;
+    margin: 0 auto;
+}
+img{
+    width: 100%;
+    display: block;
+}
+.img-display{
+    overflow: hidden;
+}
+.img-showcase{
+    display: flex;
+    width: 100%;
+    transition: all 0.5s ease;
+}
+.img-showcase img{
+    min-width: 100%;
+}
+.img-select{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
+.img-item{
+    margin: 0.2rem;
+}
+
+.img-item:hover{
+    opacity: 0.8;
+}
+.product-content{
+    padding: 2rem 1rem;
+}
+.product-title{
+    font-size: 3rem;
+    text-transform: capitalize;
+    font-weight: 700;
+    position: relative;
+    color: #12263a;
+    margin: 1rem 0;
+}
+
+.product-link{
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 0.9rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    background: #256eff;
+    color: #fff;
+    padding: 0 0.3rem;
+    transition: all 0.5s ease;
+}
+.product-link:hover{
+    opacity: 0.9;
+}
+.product-rating{
+    color: #ffc107;
+}
+.product-rating span{
+    font-weight: 600;
+    color: #252525;
+}
+.product-price{
+    margin: 1rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.product-price span{
+    font-weight: 400;
+}
+.last-price span{
+    color: #f64749;
+    text-decoration: line-through;
+}
+.new-price span{
+    color: #256eff;
+}
+.product-detail h2{
+    text-transform: capitalize;
+    color: #12263a;
+    padding-bottom: 0.6rem;
+}
+.product-detail p{
+    font-size: 0.9rem;
+    padding: 0.3rem;
+    opacity: 0.8;
+}
+.product-detail ul{
+    margin: 1rem 0;
+    font-size: 0.9rem;
+}
+.product-detail ul li{
+    margin: 0;
+    list-style: none;
+    background: url(https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/checked.png) left center no-repeat;
+    background-size: 18px;
+    padding-left: 1.7rem;
+    margin: 0.4rem 0;
+    font-weight: 600;
+    opacity: 0.9;
+}
+.product-detail ul li span{
+    font-weight: 400;
+}
+.purchase-info{
+    margin: 1.5rem 0;
+}
+.purchase-info input,
+.purchase-info .btn{
+    border: 1.5px solid #ddd;
+    border-radius: 25px;
+    text-align: center;
+    padding: 0.45rem 0.8rem;
+    outline: 0;
+    margin-right: 0.2rem;
+    margin-bottom: 1rem;
+}
+.purchase-info input{
+    width: 60px;
+}
+.purchase-info .btn{
+    cursor: pointer;
+    color: #fff;
+}
+.purchase-info .btn:first-of-type{
+    background: #256eff;
+}
+.purchase-info .btn:last-of-type{
+    background: #f64749;
+}
+.purchase-info .btn:hover{
+    opacity: 0.9;
+}
+.social-links{
+    display: flex;
+    align-items: center;
+}
+.social-links a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    color: #000;
+    border: 1px solid #000;
+    margin: 0 0.2rem;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: all 0.5s ease;
+}
+.social-links a:hover{
+    background: #000;
+    border-color: transparent;
+    color: #fff;
+}
+
+@media screen and (min-width: 992px){
+    .card{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 1.5rem;
+    }
+    .card-wrapper{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .product-imgs{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .product-content{
+        padding-top: 0;
+    }
+}
+
+.show{
+    z-index: 999;
+    display: none;
+}
+.show .overlay{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.66);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.show .img-show{
+    width: 600px;
+    height: 400px;
+    background: #FFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow: hidden
+}
+.img-show span{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 99;
+    cursor: pointer;
+}
+.img-show img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+    </style>
+</head>
+
+<body>
+    <!-- Navbar  -->
+    <% if(login){ %>
+      <% if(typeof role!="undefined" && role){ %>
+        <% if(role=="student" ){ %>
+          <%- include('../Navbar/StudentNavbar.ejs') %>
+            <% }else if(role=="mentor" ){ %>
+              <%- include('../Navbar/MentorNavbar.ejs') %>
+                <% }else if(role=="admin" ){ %>
+                  <%- include('../Navbar/AdminNavbar.ejs') %>
+                    <% }else if(role=="company" ){ %>
+                      <%- include('../Navbar/CompanyNavbar.ejs') %>
+                        <% } %>
+                          <% } %>
+  
+                            <% }else { %>
+                              <%- include('../Navbar/InitNavbar.ejs') %>
+                                <% } %>
+                                
+                                  <section>
+                                    <div class="container py-5">
+                                      <div id="savedAlert"></div>
+  
+                                      <div class="allProducts">
+  
+                                        <!-- foreach loop for products.data.allProducts  -->
+                                        <!-- <% var index=0; %> -->
+                                          <% products.data.product.forEach(function(product){ %>
+                                            <% if(product.verified) { %>
+                                              <% index=index+1; %>
+  
+                                                <div class="row justify-content-center mb-3" id="<%= product._id %>">
+                                                  <div class="col-md-12 col-xl-10">
+                                                    <div class="card shadow-3-strong border rounded-3">
+                                                      <div class="card-body">
+                                                        <div class="row">
+                                                          <div class="col-md-12 col-lg-6 col-xl-6 mb-4 mb-lg-0">
+                                                            <div class="masonry_block">
+  
+                                                              <!-- start -->
+                                                              <div class = "product-imgs" style="width:100%"  id="divid<%= index-1 %>">
+                                                                <div class = "img-display">
+                                                                  
+                                                                  <div class = "img-showcase popup">
+                                                                    <% product.photos.forEach(function(photo){ %>
+                                                                    <img src = "<%- photo.path %>" class="zoomE" alt = "shoe image">
+                                                                    <% }) %>
+                                                                  </div>
+                                                                  
+                                                                </div>
+                                                                <div class = "img-select" id="hide">
+                                                                  <% product.photos.forEach(function(photo){ %>
+                                                                  <div class = "img-item">
+                                                                    <a href = "#">
+                                                                      <img src = "<%- photo.path %>" alt = "shoe image">
+                                                                    </a>
+                                                                  </div>
+                                                                  <% }) %>
+
+                                                                  <!-- --=====-- -->
+                                                                  <div class="show">
+                                                                    <div class="overlay"></div>
+                                                                    <div class="img-show">
+                                                                      <span>X</span>
+                                                                      <img src="">
+                                                                    </div>
+                                                                  </div>
+                                                                </div>
+                                                              </div>
+                                                              <!-- --------- -->
+                                                            </div>
+                                                          </div>
+                                                       <!-- ==== start-===== -->
+                                                      
+  
+                                                          <!-- ------------------------ -->
+                                                          <div class="col-md-12 col-lg-6 col-xl-6">
+  
+                                                                <div class = "product-content">
+  
+                                                                  <h2 class = "product-title" id="productName"><%= product.productTitle %></h2>
+  
+                                                                  <div class="d-flex flex-row">
+                                                                    <div class="product-rating mb-1 me-2">
+                                                                      <span id="conditionRatingVal" style="display:none;">
+                                                                        <%= product.conditionRating %>
+                                                                      </span>
+                                                                      <% for(var i=1; i<=product.conditionRating; i++){ %>
+                                                                        <i class="fa fa-star"></i>
+                                                                        <% } %>
+                                                                          <% for(var j=0;j<5-product.conditionRating;j++){ %>
+                                                                            <i class="fa-regular fa-star"></i>
+                                                                            <% } %>
+        
+                                                                    </div>
+                                                                  </div>
+                                                            
+                                                                  <div class = "product-price">
+                                                                    <h5 class = "new-price">New Price: <span> <%= product.price %> Rs.</span></h5>
+                                                                    <p class = "last-price">Old Price: <span><%= product.price+500 %></span></p>
+                                                                  </div>
+  
+                                                                  <div class="mt-1 mb-0  small">
+                                                                    <h6><span class="text-primary"> • Category Name : </span>
+                                                                    <span id="categoryName">
+                                                                      <%= product.category %>
+                                                                    </span></h6>
+                                                                    <h6><span class="text-primary"> • Product Location : </span>
+                                                                    <span>
+                                                                      <%= product.location %>
+                                                                    </span></h6>
+        
+                                                                    <div class="mb-2 text-muted small">
+                                                                      <h6><span class="text-primary"> • Date Of Purchase : </span>
+                                                                      <span><%=
+                                                                          product.dateOfPurchase.slice(0,10) %></span></h6>
+                                                                          <% product.tag[0].split(",").forEach(function(tag){ %>
+                                                                            <span class="badge bg-success text-wrap"
+                                                                              style="font-size: 12px; margin: 5px;">
+                                                                              <%= tag %>
+                                                                            </span>
+                                                                            <% }) %>
+                                                                    </div>
+                                                                  </div>
+                                                                  <div class = "product-detail">
+                                                                    <h2>about this item: </h2>
+                                                                    <p><%= product.note %></p>
+                                                                    <ul>
+                                                                      <li>Color: <span>Black</span></li>
+                                                                      <li>Available: <span>in stock</span></li>
+                                                                      <li>Category: <span>Shoes</span></li>
+                                                                      <li>Shipping Area: <span>All over the world</span></li>
+                                                                      <li>Shipping Fee: <span>Free</span></li>
+                                                                    </ul>
+                                                                  </div>
+                                                            
+                                                                  <div class = "purchase-info">
+                                                                    <input type = "number" min = "0" value = "1">
+                                                                    <button type = "button" class = "btn">
+                                                                      Add to Cart <i class = "fas fa-shopping-cart"></i>
+                                                                    </button>
+                                                                    <button type = "button" class = "btn">Compare</button>
+                                                                  </div>
+                                                            
+                                                                  <div class = "social-links">
+                                                                    <p>Share At: </p>
+                                                                    <a href = "#">
+                                                                      <i class = "fab fa-facebook-f"></i>
+                                                                    </a>
+                                                                    <a href = "#">
+                                                                      <i class = "fab fa-twitter"></i>
+                                                                    </a>
+                                                                    <a href = "#">
+                                                                      <i class = "fab fa-instagram"></i>
+                                                                    </a>
+                                                                    <a href = "#">
+                                                                      <i class = "fab fa-whatsapp"></i>
+                                                                    </a>
+                                                                    <a href = "#">
+                                                                      <i class = "fab fa-pinterest"></i>
+                                                                    </a>
+                                                                  </div>
+                                                                </div>
+  
+                                                          </div>
+                                                        
+                                                          <!-- end deleted div -->
+                                                        </div>
+                                                      </div>
+                                                      <div class="card-footer" style="display: none;">
+                                                        <h5 class="text-uppercase text-primary">Notes</h5>
+                                                        <p>
+                                                          <%= product.note %><span class="hideDetail"
+                                                              style="float:right;"><i
+                                                                class=" text-primary fa-sharp fa-solid fa-arrow-up"></i></span>
+                                                        </p>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <% }%>
+  
+  
+                                                  <% }) %>
+                                      </div>
+  
+  
+                                    </div>
+                                  </section>
+  
+                                  <!-- Fotter -->
+                                  <%- include('../Footer/Footer.ejs') %>
+  </body>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script>
+
+// ==================================================================================
+// zoom full screen image
+
+   window.onload = () => {
+  // (A) GET ALL IMAGES
+  let all = document.getElementsByClassName("zoomE");
+ 
+  // (B) CLICK TO GO FULLSCREEN
+  if (all.length>0) { for (let i of all) {
+    i.onclick = () => {
+      // (B1) EXIT FULLSCREEN
+      if (document.fullscreenElement != null || document.webkitFullscreenElement != null) {
+        if (document.exitFullscreen) { document.exitFullscreen(); }
+        else { document.webkitCancelFullScreen(); }
+      }
+ 
+      // (B2) ENTER FULLSCREEN
+      else {
+        if (i.requestFullscreen) { i.requestFullscreen(); }
+        else { i.webkitRequestFullScreen(); }
+      }
+    };
+  }}
+};
+
+// =====================================================================================
+
+  const selectArr = [...document.querySelectorAll(".img-select .img-item a")]
+  // console.log(selectArr[0].length)
+
+  let itr;
+  for (itr = 0; itr < selectArr.length; itr++) {
+    selectArr[itr].setAttribute("data-id", `${itr}`)
+  }
+
+  const imgs = document.querySelectorAll('.img-select a');
+const imgBtns = [...imgs];
+console.log(imgBtns.length)
+if(imgBtns.length===1){
+
+  document.getElementById("hide").style.display="none"
+}
+
+if(imgBtns.length>=5 && imgBtns.length<=10){
+  document.getElementById("hide").style.gridTemplateColumns=`repeat(${imgBtns.length},1fr)`
+}
+
+let imgId = 1;
+
+imgBtns.forEach((imgItem) => {
+    imgItem.addEventListener('click', (event) => {
+        event.preventDefault();
+        imgId = imgItem.dataset.id;
+        slideImage();
+    });
+});
+
+function slideImage(){
+    const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
+
+    document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 0) * displayWidth}px)`;
+}
+
+window.addEventListener('resize', slideImage);
+  </script>
+</html>

@@ -251,3 +251,34 @@ INNER_SUB_MENUS_BTN.forEach(element => {
     slideToggle(element.nextElementSibling);
   });
 });
+//for profile 
+document.addEventListener("DOMContentLoaded", function () {
+  var btnCollapse = document.getElementById("btn-collapse");
+  var profileImage = document.querySelector(".card-profile img");
+  var nameTitle = document.querySelector(".card-profile h3");
+  var branchTitle = document.querySelector(".card-profile h4");
+  var profileCard = document.querySelector(".profile-card");
+  var isCollapsed = false;
+
+
+  btnCollapse.addEventListener("click", function () {
+    if (isCollapsed) {
+      // Reset styles
+      profileImage.style.height = "100px";
+      profileImage.style.width = "100px";
+      profileCard.style.height = "250px"
+      nameTitle.style.display = "block";
+      branchTitle.style.display = "block";
+      isCollapsed = false;
+    } else {
+      // Apply collapsed styles
+      profileImage.style.height = "50px";
+      profileImage.style.width = "50px";
+      profileCard.style.height = "100px"
+      nameTitle.style.display = "none";
+      branchTitle.style.display = "none";
+      isCollapsed = true;
+    }
+
+  });
+});

@@ -12,7 +12,40 @@
     <link rel="stylesheet" href="styles/Profile/style.css">
     <style>
 
+#verifyinternship-content-inner {
+    display: flex ;
+    flex-wrap: wrap ;
+    column-gap: 2rem ;
+    row-gap: 2rem ;
+    justify-content: center;
+}
+#verifyproject-content-inner{
+    display: flex ;
+    flex-wrap: wrap ;
+    column-gap: 2rem ;
+    row-gap: 2rem ;
+    justify-content: center;
+}
+.grid-div{
+        min-width: 22rem !important;
+    }
 
+
+@media screen and (max-width:700px) {
+    .grid-div{
+        min-width: 16rem !important;
+    }
+}
+@media screen and (max-width:576px) {
+    .grid-div{
+        min-width: 22rem !important;
+    }
+}
+@media screen and (max-width:374px) {
+    .grid-div{
+        min-width: 16rem !important;
+    }
+}
     </style>
 </head>
 
@@ -60,6 +93,27 @@
                                                                                                 %> </h5>
                                                                                     </div>
                                                                                 </div>
+                                                                                <div class="card-profile">
+                                                                                    <div
+                                                                                      class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                                                          
+                                                                                      <img src="<%= user.profileImage.path%>" alt="Profile Image Not Uploaded"
+                                                                                        class="rounded-circle border border-4 border-white shadow" height="100px"
+                                                                                        width="100px">
+                                                                                      <h3 class="mt-3">
+                                                                                        <%= user.name%>
+                                                                                      </h3>
+                                                                                      <h4 class="mt-1">
+                                                                                        <%= user.email %>
+                                                                                      </h4>
+                                                                                      <div class="social-links mt-2">
+                                                                                        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                                                                                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                                                                                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                                                                                        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                  </div>
                                                                                 <div class="sidebar-content">
                                                                                     <nav
                                                                                         class="menu open-current-submenu">
@@ -98,34 +152,61 @@
                                                                                                 </a>
 
                                                                                             </li>
+                                                                                            <li class="menu-item ">
+                                                                                                <a href="#"
+                                                                                                    id="profile-verifyinternship-btn">
+                                                                                                    <span
+                                                                                                        class="menu-icon">
+                                                                                                        <i
+                                                                                                            class="fa-solid fa-magnifying-glass"></i>
+                                                                                                    </span>
+                                                                                                    <span
+                                                                                                        class="menu-title">Verify
+                                                                                                        Internship</span>
+                                                                                                </a>
 
+                                                                                            </li>
+                                                                                            <li class="menu-item ">
+                                                                                                <a href="#"
+                                                                                                    id="profile-verifyproject-btn">
+                                                                                                    <span
+                                                                                                        class="menu-icon">
+                                                                                                        <i
+                                                                                                            class="fa-solid fa-magnifying-glass"></i>
+                                                                                                    </span>
+                                                                                                    <span
+                                                                                                        class="menu-title">Verify
+                                                                                                        Project</span>
+                                                                                                </a>
+
+                                                                                            </li>
                                                                                             <!-- <li class="menu-header" style="padding-top: 20px"><span> EXTRA </span></li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-icon">
-                                                <i class="ri-book-2-fill"></i>
-                                            </span>
-                                            <span class="menu-title">Documentation</span>
-                                            <span class="menu-suffix">
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-icon">
-                                                <i class="ri-calendar-fill"></i>
-                                            </span>
-                                            <span class="menu-title">Calendar</span>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item">
-                                        <a href="#">
-                                            <span class="menu-icon">
-                                                <i class="ri-service-fill"></i>
-                                            </span>
-                                            <span class="menu-title">Examples</span>
-                                        </a>
-                                    </li> -->
+                                                                                            <li class="menu-item">
+                                                                                                <a href="#">
+                                                                                                    <span class="menu-icon">
+                                                                                                        <i class="ri-book-2-fill"></i>
+                                                                                                    </span>
+                                                                                                    <span class="menu-title">Documentation</span>
+                                                                                                    <span class="menu-suffix">
+                                                                                                    </span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="menu-item">
+                                                                                                <a href="#">
+                                                                                                    <span class="menu-icon">
+                                                                                                        <i class="ri-calendar-fill"></i>
+                                                                                                    </span>
+                                                                                                    <span class="menu-title">Calendar</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="menu-item">
+                                                                                                <a href="#">
+                                                                                                    <span class="menu-icon">
+                                                                                                        <i class="ri-service-fill"></i>
+                                                                                                    </span>
+                                                                                                    <span class="menu-title">Examples</span>
+                                                                                                </a>
+                                                                                            </li> -->
                                                                                         </ul>
                                                                                     </nav>
                                                                                 </div>
@@ -143,29 +224,73 @@
                                                                                             class="ri-menu-line ri-xl"></i>
                                                                                     </a>
                                                                                 </div>
-                                                                                <div id="verifyproduct-content">
+                                                                                <div>
+
+                                                                                    <div id="verifyproduct-content">
+                                                                                        <div class="pagetitle mb-4">
+                                                                                            <h1 class="mb-2">Verify product
+                                                                                            </h1>
+                                                                                            <nav>
+                                                                                                <ol class="breadcrumb">
+                                                                                                    <li
+                                                                                                    class="breadcrumb-item">
+                                                                                                    <a
+                                                                                                    href="index.html">Home</a>
+                                                                                                    </li>
+                                                                                                    <li
+                                                                                                    class="breadcrumb-item active">
+                                                                                                    Verifyproduct</li>
+                                                                                                </ol>
+                                                                                            </nav>
+                                                                                        </div>
+                                                                                        <div id="verifyproduct-content-inner">
+                                                                                        
+                                                                                        </div>
+                                                                                        <!-- <div id="addmenteealert" class=" mt-2 mb-2"></div> -->
+                                                                                    
+                                                                                </div>
+                                                                                <div id="verifyinternship-content">
                                                                                     <div class="pagetitle mb-4">
-                                                                                        <h1 class="mb-2">Verify product
+                                                                                        <h1 class="mb-2">Verify Internship
                                                                                         </h1>
                                                                                         <nav>
                                                                                             <ol class="breadcrumb">
                                                                                                 <li
-                                                                                                    class="breadcrumb-item">
-                                                                                                    <a
-                                                                                                        href="index.html">Home</a>
-                                                                                                </li>
-                                                                                                <li
-                                                                                                    class="breadcrumb-item active">
-                                                                                                    Verifyproduct</li>
-                                                                                            </ol>
-                                                                                        </nav>
-                                                                                    </div>
-                                                                                    <div id="verifyproduct-content-inner">
-
-                                                                                    </div>
-                                                                                    <!-- <div id="addmenteealert" class=" mt-2 mb-2"></div> -->
-
+                                                                                                class="breadcrumb-item">
+                                                                                                <a
+                                                                                                href="index.html">Home</a>
+                                                                                            </li>
+                                                                                            <li
+                                                                                            class="breadcrumb-item active">
+                                                                                            Verifyinternship</li>
+                                                                                        </ol>
+                                                                                    </nav>
                                                                                 </div>
+                                                                                <div id="verifyinternship-content-inner" >
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                            <div id="verifyproject-content">
+                                                                                <div class="pagetitle mb-4">
+                                                                                    <h1 class="mb-2">Verify Project
+                                                                                    </h1>
+                                                                                    <nav>
+                                                                                        <ol class="breadcrumb">
+                                                                                            <li
+                                                                                            class="breadcrumb-item">
+                                                                                            <a
+                                                                                            href="index.html">Home</a>
+                                                                                        </li>
+                                                                                        <li
+                                                                                        class="breadcrumb-item active">
+                                                                                        Verifyproject</li>
+                                                                                    </ol>
+                                                                                </nav>
+                                                                            </div>
+                                                                            <div id="verifyproject-content-inner">
+                                                                                
+                                                                            </div>
+                                                                        </div> 
                                                                                 <div id="default-content">
                                                                                     <div class="pagetitle">
                                                                                         <h1 class="mb-2"> My Profile
@@ -185,45 +310,9 @@
                                                                                     </div>
                                                                                     <section class="section profile">
                                                                                         <div class="row">
-                                                                                            <div class="col-xl-4">
+                                                                                       
 
-                                                                                                <div class="card">
-                                                                                                    <div
-                                                                                                        class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-                                                                                                        <img src="<%= user.profileImage.path%>"
-                                                                                                            alt="Profile Image Not Uploaded"
-                                                                                                            class="">
-                                                                                                        <h2>
-                                                                                                            <%=
-                                                                                                                user.name%>
-                                                                                                        </h2>
-                                                                                                        <h3
-                                                                                                            class="mt-2">
-                                                                                                            <%= user.email
-                                                                                                                %>
-                                                                                                        </h3>
-                                                                                                        <div
-                                                                                                            class="social-links mt-2">
-                                                                                                            <a href="#"
-                                                                                                                class="twitter"><i
-                                                                                                                    class="bi bi-twitter"></i></a>
-                                                                                                            <a href="#"
-                                                                                                                class="facebook"><i
-                                                                                                                    class="bi bi-facebook"></i></a>
-                                                                                                            <a href="#"
-                                                                                                                class="instagram"><i
-                                                                                                                    class="bi bi-instagram"></i></a>
-                                                                                                            <a href="#"
-                                                                                                                class="linkedin"><i
-                                                                                                                    class="bi bi-linkedin"></i></a>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                            </div>
-
-                                                                                            <div class="col-xl-8">
+                                                                                            
 
                                                                                                 <div class="card">
                                                                                                     <div
@@ -250,12 +339,12 @@
                                                                                                             </li>
 
                                                                                                             <!-- <li class="nav-item">
-                                              <button class="nav-link" data-mdb-toggle="tab" data-mdb-target="#profile-settings">Settings</button>
-                                            </li> -->
+                                                                                                            <button class="nav-link" data-mdb-toggle="tab" data-mdb-target="#profile-settings">Settings</button>
+                                                                                                            </li> -->
 
                                                                                                             <!-- <li class="nav-item">
-                                              <button class="nav-link" data-mdb-toggle="tab" data-mdb-target="#profile-change-password">Change Password</button>
-                                            </li> -->
+                                                                                                            <button class="nav-link" data-mdb-toggle="tab" data-mdb-target="#profile-change-password">Change Password</button>
+                                                                                                            </li> -->
 
                                                                                                         </ul>
                                                                                                         <div
@@ -386,12 +475,14 @@
                                                                                                                             class="col-md-4 col-lg-3 col-form-label">Phone</label>
                                                                                                                         <div
                                                                                                                             class="col-md-8 col-lg-9">
-                                                                                                                            <input
+                                                                                                                            <div
                                                                                                                                 type="number"
                                                                                                                                 class="form-control"
                                                                                                                                 id="phone"
                                                                                                                                 name="phone"
-                                                                                                                                value="<%= user.phone%>">
+                                                                                                                                value="">
+                                                                                                                                <%= user.phone%>
+                                                                                                                            </div>
                                                                                                                         </div>
                                                                                                                     </div>
                                                                                                                     <div
@@ -658,7 +749,7 @@
                                                                                                     </div>
                                                                                                 </div>
 
-                                                                                            </div>
+                                                                                           
                                                                                         </div>
                                                                                     </section>
                                                                                     <!-- default-content -->

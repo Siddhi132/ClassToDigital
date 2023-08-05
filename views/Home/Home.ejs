@@ -8,18 +8,112 @@
     <link href="/css/Home/aos.css" rel="stylesheet">
     <link href="/css/Home/home.css" rel="stylesheet">
     <link href="/css/Home/swiper-bundle.min.css" rel="stylesheet">
-    <!-- <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet"> -->
+   
+  <!-- my css links -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+  integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+  integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+  .nav-scroller-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 0 30px;
+}
+
+.nav-scroller {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  font-size: 0;
+  padding-bottom: 20px;
+  margin: 0 20px -20px 20px;
+}
+
+.nav-scroller-content {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  float: left;
+  width: min-content;
+  min-width: 100%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.no-transition {
+  transition: none;
+}
+
+.nav-scroller-content .active{
+  background-color: #3b71ca;
+  color: white;
+}
+.nav-scroller-item {
+  display: block;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 0.2rem 0.6rem;
+  margin: 0 0.5rem;
+  background-color: white;
+  border-radius: 8px;
+  color: black;
+  border: 2px solid #3b71ca;
+}
 
 
-  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" /> -->
-  <!-- Google Fonts -->
-  <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" /> -->
-  <!-- MDB -->
-  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet" /> -->
+.nav-scroller-content li:hover{
+  background-color: #3b71ca;
+  color: white;
+  text-decoration-line: none;
+  transition: .5s ease;
+  cursor: pointer;
+}
 
-    <style>
+.nav-scroller-btn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+  transition: opacity 0.3s;
+  height: 2.25rem;
+  width: 2rem;
+  border: none;
+  background-color:transparent;                           
+  color: black;
+}
+.nav-scroller-btn:not(.active) {
+  opacity: 0;
+  pointer-events: none;
+}
 
-    </style>
+.nav-scroller-btn--left {
+  left: 0;
+}
+
+.nav-scroller-btn--right {
+  right: 0;
+}
+
+body {
+  background-color: #ccc;
+}
+
+.fullwidth {
+  padding: 15px 0;
+  margin: 15px 0;
+  background-color: #fff;
+}
+</style>
+   
 </head>
 <body>
 
@@ -148,73 +242,178 @@
       </p>
       </header>
 
+        <div class="row">
+          <div class="nav-scroller-wrapper">
+            <nav class="owl-filter-bar nav-scroller">
 
-      <div class="slides-3 swiper" data-aos="fade-up" data-aos-delay="100">
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="internship-wrap">
-                <div class="internship-item">
-                  
-                <a href="/images/Dummy/app-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="/images/Dummy/portfolio-1.jpg" class="img-fluid" alt=""></a>
-                  <h4 class="mt-2">
-                    Web developer
-                  </h4>
-                  <p class="mb-1">IBM India pvt ltd</p>
-                  <p>Stipend: 5000Rs.</p>
-                  <button class="btn btn-primary">View Details</button>
-
-                  <div class="d-flex justify-content-center justify-content-lg watch-courses-btn">
-                    <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i></a>
-                  </div>
+                <div class="nav-scroller-content" id="category-fillter">
+                    <li href="#" class="item nav-scroller-item active" data-owl-filter="*">All</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".Web-Developer">Web Developer</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".Software-Engineer">Software
+                        Engineer</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".Android-Developer">Android
+                        Developer</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".SEO-Engineer">SEO Engineer</li>
+                    <!-- ============================ -->
+                    <li href="#" class="item nav-scroller-item" data-owl-filter="*">All</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".Web-Developer">Web Developer</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".Software-Engineer">Software
+                        Engineer</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".Android-Developer">Android
+                        Developer</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".SEO-Engineer">SEO Engineer</li>
+                    <!-- === -->
+                    <li href="#" class="item nav-scroller-item" data-owl-filter="*">All</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".Web-Developer">Web Developer</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".Software-Engineer">Software
+                        Engineer</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".Android-Developer">Android
+                        Developer</li>
+                    <li href="#" class="item nav-scroller-item" data-owl-filter=".SEO-Engineer">SEO Engineer</li>
+                    <!-- === -->
                 </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="internship-wrap">
-                <div class="internship-item">
-                  
-                <a href="/images/Dummy/app-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="/images/Dummy/portfolio-2.jpg" class="img-fluid" alt=""></a>
-                <h4 class="mt-2">
-                  Web developer
-                </h4>
-                <p class="mb-1">IBM India pvt ltd</p>
-                <p>Stipend: 5000Rs.</p>
-                <button class="btn btn-primary">View Details</button>
-                  <div class="d-flex justify-content-center justify-content-lg watch-courses-btn">
-                    <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="internship-wrap">
-                <div class="internship-item">
-                  
-                <a href="/images/Dummy/app-1.jpg" data-gallery="portfolio-gallery-app" class="glightbox"><img src="/images/Dummy/portfolio-3.jpg" class="img-fluid" alt=""></a>
-                <h4 class="mt-2">
-                  Web developer
-                </h4>
-                <p class="mb-1">IBM India pvt ltd</p>
-                <p>Stipend: 5000Rs.</p>
-                <button class="btn btn-primary">View Details</button>
-                  <div class="d-flex justify-content-center justify-content-lg watch-courses-btn">
-                    <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- End courses item -->
 
-           
+            </nav>
 
-          </div>
-         
+            <button class="btn-sm nav-scroller-btn nav-scroller-btn--left"><i class="fa fa-angle-left" aria-hidden="true"></i></button>
+
+            <button class="btn-sm nav-scroller-btn nav-scroller-btn--right"><i class="fa fa-angle-right" aria-hidden="true"></i></button>
+
         </div>
-        <div class="swiper-button-next-unique"></div>
-        <div class="swiper-button-prev-unique"></div>
-      
+
+          <div class="owl-carousel owl-theme mt-4 pb-4">
+              <div class="item Web-Developer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-1.jpg" class="card-img-top p-2" alt="..." >
+                      <div class="card-body">
+                        <h5 class="card-title">Web Developer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                    </div>
+              </div>
+              <div class="item Software-Engineer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-2.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Software Engineer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item Software-Engineer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-3.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Software Engineer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item SEO-Engineer" >
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-4.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">SEO Engineer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item Web-Developer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-5.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Web Developer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item Web-Developer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-6.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Web Developer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item SEO-Engineer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-7.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">SEO Engineer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item Software-Engineer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-8.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Software Engineer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item Android-Developer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-9.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Android Developer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item Software-Engineer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-1.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Software Engineer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item Software-Engineer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-2.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Software Engineer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item SEO-Engineer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-3.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">SEO Engineer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+              <div class="item Android-Developer">
+                  <div class="card">
+                      <img src="/images/Dummy/portfolio-4.jpg" class="card-img-top p-2" alt="...">
+                      <div class="card-body">
+                        <h5 class="card-title">Android Developer</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-primary">Apply Now</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
     </div>
 </section>
 
@@ -650,8 +849,6 @@
                  
       
                 </div>
-                <!-- <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div> -->
               </div>
 
 
@@ -723,6 +920,261 @@
 </body>
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script> -->
 <!-- <script src="assets/vendor/glightbox/js/glightbox.min.js"></script> -->
+
+<!-- my script -->
+
+ <!-- Option 1: Bootstrap Bundle with Popper -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+ integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+ integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- // OwlCarousel 2 - Filter -->
+<script src="https://huynhhuynh.github.io/owlcarousel2-filter/dist/owlcarousel2-filter.min.js"></script>
+
+<script>
+ var owl = $('.owl-carousel').owlCarousel({
+     loop: true,
+     margin: 10,
+     nav: true,
+     responsive: {
+         0: {
+             items: 1
+         },
+         600: {
+             items: 3
+         },
+         1000: {
+             items: 4
+         }
+     }
+ })
+
+ $('.owl-filter-bar').on('click', '.item', function () {
+
+     var $item = $(this);
+     var filter = $item.data('owl-filter')
+
+     owl.owlcarousel2_filter(filter);
+
+ })
+
+//  part 2
+
+const navScroller = function({
+    wrapperSelector: wrapperSelector = '.nav-scroller-wrapper',
+    selector: selector = '.nav-scroller',
+    contentSelector: contentSelector = '.nav-scroller-content',
+    buttonLeftSelector: buttonLeftSelector = '.nav-scroller-btn--left',
+    buttonRightSelector: buttonRightSelector = '.nav-scroller-btn--right',
+    scrollStep: scrollStep = 75
+  } = {}) {
+
+  let scrolling = false;
+  let scrollingDirection = '';
+  let scrollOverflow = '';
+  let timeout;
+
+  let navScrollerWrapper;
+
+  if (wrapperSelector.nodeType === 1) {
+    navScrollerWrapper = wrapperSelector;
+  }
+  else {
+    navScrollerWrapper = document.querySelector(wrapperSelector);
+  }
+  if (navScrollerWrapper === undefined || navScrollerWrapper === null) return;
+
+  let navScroller = navScrollerWrapper.querySelector(selector);
+  let navScrollerContent = navScrollerWrapper.querySelector(contentSelector);
+  let navScrollerLeft = navScrollerWrapper.querySelector(buttonLeftSelector);
+  let navScrollerRight = navScrollerWrapper.querySelector(buttonRightSelector);
+
+
+  // Sets overflow
+  const setOverflow = function() {
+    scrollOverflow = getOverflow(navScrollerContent, navScroller);
+    toggleButtons(scrollOverflow);
+  }
+
+
+  // Debounce setting the overflow with requestAnimationFrame
+  const requestSetOverflow = function() {
+    if (timeout) {
+      window.cancelAnimationFrame(timeout);
+    }
+
+    timeout = window.requestAnimationFrame(() => {
+      setOverflow();
+    });
+  }
+
+
+  // Get overflow value on scroller
+  const getOverflow = function(content, container) {
+    let containerMetrics = container.getBoundingClientRect();
+    let containerWidth = containerMetrics.width;
+    let containerMetricsLeft = Math.floor(containerMetrics.left);
+
+    let contentMetrics = content.getBoundingClientRect();
+    let contentMetricsRight = Math.floor(contentMetrics.right);
+    let contentMetricsLeft = Math.floor(contentMetrics.left);
+
+    // Offset the values by the left value of the container
+    let offset = containerMetricsLeft;
+    containerMetricsLeft -= offset;
+    contentMetricsRight -= offset + 1; // Due to an off by one bug in iOS
+    contentMetricsLeft -= offset;
+
+    // console.log (containerMetricsLeft, contentMetricsLeft, containerWidth, contentMetricsRight);
+
+    if (containerMetricsLeft > contentMetricsLeft && containerWidth < contentMetricsRight) {
+        return 'both';
+    } else if (contentMetricsLeft < containerMetricsLeft) {
+        return 'left';
+    } else if (contentMetricsRight > containerWidth) {
+        return 'right';
+    } else {
+        return 'none';
+    }
+  }
+
+
+  // Move the scroller with a transform
+  const moveScroller = function(direction) {
+    if (scrolling === true) return;
+
+    setOverflow();
+
+    let scrollDistance = scrollStep;
+    let scrollAvailable;
+
+
+    if (scrollOverflow === direction || scrollOverflow === 'both') {
+
+      if (direction === 'left') {
+        scrollAvailable = navScroller.scrollLeft;
+      }
+
+      if (direction === 'right') {
+        let navScrollerRightEdge = navScroller.getBoundingClientRect().right;
+        let navScrollerContentRightEdge = navScrollerContent.getBoundingClientRect().right;
+
+        scrollAvailable = Math.floor(navScrollerContentRightEdge - navScrollerRightEdge);
+      }
+
+      // If there is less that 1.5 steps available then scroll the full way
+      if (scrollAvailable < (scrollStep * 1.5)) {
+        scrollDistance = scrollAvailable;
+      }
+
+      if (direction === 'right') {
+        scrollDistance *= -1;
+      }
+
+      navScrollerContent.classList.remove('no-transition');
+      navScrollerContent.style.transform = 'translateX(' + scrollDistance + 'px)';
+
+      scrollingDirection = direction;
+      scrolling = true;
+    }
+
+  }
+
+
+  // Set the scroller position and removes transform, called after moveScroller()
+  const setScrollerPosition = function() {
+    var style = window.getComputedStyle(navScrollerContent, null);
+    var transform = style.getPropertyValue('transform');
+    var transformValue = Math.abs(parseInt(transform.split(',')[4]) || 0);
+
+    if (scrollingDirection === 'left') {
+      transformValue *= -1;
+    }
+
+    navScrollerContent.classList.add('no-transition');
+    navScrollerContent.style.transform = '';
+    navScroller.scrollLeft = navScroller.scrollLeft + transformValue;
+    navScrollerContent.classList.remove('no-transition');
+
+    scrolling = false;
+  }
+
+
+  // Toggle buttons depending on overflow
+  const toggleButtons = function(overflow) {
+    navScrollerLeft.classList.remove('active');
+    navScrollerRight.classList.remove('active');
+
+    if (overflow === 'both' || overflow === 'left') {
+      navScrollerLeft.classList.add('active');
+    }
+
+    if (overflow === 'both' || overflow === 'right') {
+      navScrollerRight.classList.add('active');
+    }
+  }
+
+
+  const init = function() {
+
+    // Determine scroll overflow
+    setOverflow();
+
+    // Scroll listener
+    navScroller.addEventListener('scroll', () => {
+      requestSetOverflow();
+    });
+
+    // Resize listener
+    window.addEventListener('resize', () => {
+      requestSetOverflow();
+    });
+
+    // Button listeners
+    navScrollerLeft.addEventListener('click', () => {
+      moveScroller('left');
+    });
+
+    navScrollerRight.addEventListener('click', () => {
+      moveScroller('right');
+    });
+
+    // Set scroller position
+    navScrollerContent.addEventListener('transitionend', () => {
+      setScrollerPosition();
+    });
+
+  };
+
+  // Init is called by default
+  init();
+
+
+  // Reveal API
+  return {
+    init
+  };
+};
+
+const navScrollerTest = navScroller();
+
+// Part 3
+const header = document.getElementById("category-fillter");
+const btns = header.getElementsByClassName("nav-scroller-item");
+for (let i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+  const current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  });
+}
+
+</script>
+
 <script src="/js/Home/isotope.pkgd.min.js"></script>
 
 <script src="/js/Home//purecounter_vanilla.js"></script>
@@ -731,5 +1183,6 @@
 <script src="/js/Home/swiper-bundle.min.js"></script>
 
 <script src="/js/Home/home.js"></script>
+
 
 </html>

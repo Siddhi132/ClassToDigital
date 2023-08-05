@@ -9,6 +9,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    userPhone: {
+        type: String,
+    },
 
     role: {
         type: String,

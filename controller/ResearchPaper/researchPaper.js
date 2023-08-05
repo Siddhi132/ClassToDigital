@@ -3,6 +3,8 @@ const ResearchPaper = require('../../models/ResearchPaper');
 const MentorProfile = require('../../models/MentorProfile');
 const StudentProfile = require('../../models/StudentProfile');
 const UserProfile = require('../../models/Users');
+const ResearchPaperCoAuthor = require('../../models/ResearchPaperCoAuthor');
+const ResearchPaperMentor = require('../../models/ResearchPaperMentor');
 
 const uploadResearchPaper = async (req, res) => {
   try {
@@ -10,6 +12,88 @@ const uploadResearchPaper = async (req, res) => {
     const newResearchPaper = new ResearchPaper(req.body);
     // console.log("newResearchPaper", newResearchPaper);
     const val = await newResearchPaper.save();
+    // console.log("val", val);
+    if (req.body.userRole === "student") {
+      StudentProfile.findOneAndUpdate({ _id: req.body.userId }, { $push: { researchPapers: val._id } }, (err, existingUser) => {
+        if (!err) {
+          console.log("existingUser", existingUser);
+          res.send({ status: true, statusCode: 200, message: "Research paper addedd successfully" });
+        }
+        else {
+          console.log("err", err);
+          res.send({ status: false, statusCode: 400, message: "Research paper not added" });
+        }
+
+      })
+    }
+    else if (req.body.userRole === "mentor") {
+      MentorProfile.findOneAndUpdate({ _id: req.body.userId }, { $push: { researchPapers: val._id } }, (err, existingUser) => {
+        if (!err) {
+          res.send({ status: true, statusCode: 200, message: "Research paper addedd successfully" });
+        }
+        else {
+          console.log("err", err);
+          res.send({ status: false, statusCode: 400, message: "Research paper not added" });
+        }
+      })
+    }
+    else {
+      res.send({ status: false, statusCode: 500, message: "Research paper not addedd successfully" });
+    }
+  }
+  catch (err) {
+    console.log("err", err);
+    res.send({ status: false, statusCode: 500, message: "Error During Adding Research Paper" });
+  }
+
+}
+const uploadResearchPaperCoAuthor = async (req, res) => {
+  try {
+    console.log("req.body here", req.body);
+    const newResearchPaperCoAuthor = new ResearchPaperCoAuthor(req.body);
+    // console.log("newResearchPaper", newResearchPaper);
+    const val = await newResearchPaperCoAuthor.save();
+    // console.log("val", val);
+    if (req.body.userRole === "student") {
+      StudentProfile.findOneAndUpdate({ _id: req.body.userId }, { $push: { researchPapers: val._id } }, (err, existingUser) => {
+        if (!err) {
+          console.log("existingUser", existingUser);
+          res.send({ status: true, statusCode: 200, message: "Research paper addedd successfully" });
+        }
+        else {
+          console.log("err", err);
+          res.send({ status: false, statusCode: 400, message: "Research paper not added" });
+        }
+
+      })
+    }
+    else if (req.body.userRole === "mentor") {
+      MentorProfile.findOneAndUpdate({ _id: req.body.userId }, { $push: { researchPapers: val._id } }, (err, existingUser) => {
+        if (!err) {
+          res.send({ status: true, statusCode: 200, message: "Research paper addedd successfully" });
+        }
+        else {
+          console.log("err", err);
+          res.send({ status: false, statusCode: 400, message: "Research paper not added" });
+        }
+      })
+    }
+    else {
+      res.send({ status: false, statusCode: 500, message: "Research paper not addedd successfully" });
+    }
+  }
+  catch (err) {
+    console.log("err", err);
+    res.send({ status: false, statusCode: 500, message: "Error During Adding Research Paper" });
+  }
+
+}
+const uploadResearchPaperMentor = async (req, res) => {
+  try {
+    console.log("req.body here", req.body);
+    const newResearchPaperMentor = new ResearchPaperMentor(req.body);
+    // console.log("newResearchPaper", newResearchPaper);
+    const val = await newResearchPaperMentor.save();
     // console.log("val", val);
     if (req.body.userRole === "student") {
       StudentProfile.findOneAndUpdate({ _id: req.body.userId }, { $push: { researchPapers: val._id } }, (err, existingUser) => {
@@ -86,6 +170,86 @@ const getAllResearchPapers = async (req, res) => {
     res.send({ status: false, statusCode: 500, 'message': "Error During fetching Research Paper" });
   }
 }
+const getRPMentor = async (req, res) => {
+  console.log('req.query length', Object.keys(req.query).length);
+  console.log("id..", req.query);
+  var filter;
+  try {
+    if (Object.keys(req.query).length > 0) {
+      console.log('req.query here', req.query);
+      let val;
+      if (req.query.request) {
+        if(typeof (req.query.request)==="object"){
+          filter= req.query.request;
+     }
+     else{
+          filter= JSON.parse(decodeURIComponent(req.query.request));
+
+     }
+
+        val = await ResearchPaperMentor.find(filter);
+      }
+      else {
+        val = await ResearchPaperMentor.find(req.query);
+      }
+      if (val.length == 0) {
+        res.send({ status: false, statusCode: 404, 'message': "0 Research Paper found" });
+      }
+      else {
+        res.send({ status: true, statusCode: 200, 'message': 'Research Papers found successfully', data: { 'RPMentor': val, 'userId': req.query.id, 'userRole': req.query.role } });
+      }
+    }
+    else {
+      console.log('req.query');
+      const val = await ResearchPaperMentor.find();
+      res.send({ status: true, statusCode: 200, 'message': 'Research Papers found successfully', data: { 'allRPMentor': val } });
+    }
+  }
+  catch (err) {
+    console.log('err', err);
+    res.send({ status: false, statusCode: 500, 'message': "Error During fetching Research Paper" });
+  }
+}
+const getRPCoAuthor = async (req, res) => {
+  console.log('req.query length', Object.keys(req.query).length);
+  console.log("id..", req.query);
+  var filter;
+  try {
+    if (Object.keys(req.query).length > 0) {
+      console.log('req.query here', req.query);
+      let val;
+      if (req.query.request) {
+        if(typeof (req.query.request)==="object"){
+          filter= req.query.request;
+     }
+     else{
+          filter= JSON.parse(decodeURIComponent(req.query.request));
+
+     }
+
+        val = await ResearchPaperCoAuthor.find(filter);
+      }
+      else {
+        val = await ResearchPaperCoAuthor.find(req.query);
+      }
+      if (val.length == 0) {
+        res.send({ status: false, statusCode: 404, 'message': "0 Research Paper found" });
+      }
+      else {
+        res.send({ status: true, statusCode: 200, 'message': 'Research Papers found successfully', data: { 'RPCoAuthor': val, 'userId': req.query.id, 'userRole': req.query.role } });
+      }
+    }
+    else {
+      console.log('req.query');
+      const val = await ResearchPaperCoAuthor.find();
+      res.send({ status: true, statusCode: 200, 'message': 'Research Papers found successfully', data: { 'allRPCoAuthor': val } });
+    }
+  }
+  catch (err) {
+    console.log('err', err);
+    res.send({ status: false, statusCode: 500, 'message': "Error During fetching Research Paper" });
+  }
+}
 
 const addCommentinResearchPaper = async (req, res) => {
   try {
@@ -142,4 +306,4 @@ const getResearchPaperById = async (req, res) => {
 
 
 
-module.exports = { uploadResearchPaper, getAllResearchPapers, addCommentinResearchPaper, getAllComments , getResearchPaperById};
+module.exports = { uploadResearchPaper, uploadResearchPaperCoAuthor, uploadResearchPaperMentor, getAllResearchPapers, addCommentinResearchPaper, getAllComments , getResearchPaperById, getRPCoAuthor, getRPMentor};
