@@ -15,29 +15,35 @@
   <!-- jquery cdn  -->
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
   <!-- for fontawesome  -->
-
+  <!-- verify number -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
   <style>
+    .image-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .image-box>div {
+      display: flex;
+      gap: 10px;
+    }
+
     .formimg {
       cursor: pointer;
-      margin: 15px;
+      margin: 10px;
       height: 160px;
       border-radius: 20px;
-      /* border: 5px solid blue; */
       padding: 15px;
       text-align: center;
-
+      border: 5px solid transparent;
     }
 
     .formimg>div {
-      /* display: block;
-      border: 2px solid red; */
       margin-top: 10px;
     }
 
-
-
     .formimg:focus {
-      /* outline: none; */
+
       border: 5px solid #000000;
     }
 
@@ -54,10 +60,6 @@
     .border {
       border: 5px solid black;
     }
-
-    /* .selectedImage { */
-    /* border: 5px solid blue; */
-    /* } */
 
     .divider:after,
     .divider:before {
@@ -81,44 +83,20 @@
       display: none;
     }
 
-    /* #imagePickerForm {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    h1 {
-      text-align: center;
+    .iti {
       width: 100%;
     }
 
-    p {
-      text-align: center;
+    .phoneInputStyle {
+      padding-top: 4.5px;
+      padding-bottom: 4.5px;
+      font-size: 1rem;
       width: 100%;
+      line-height: 2.15;
+      border-radius: 0.25rem;
+      border: 1.5px solid #00000047;
+      outline-color: #3B71CA;
     }
-
-    .formimg {
-      flex: 1;
-      max-width: 150px;
-      cursor: pointer;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    img {
-      max-width: 100%;
-    }
-
-    div {
-      text-align: center;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      color: #333;
-    } */
   </style>
 </head>
 
@@ -137,39 +115,44 @@
           <div id="imagePickerForm">
             <h1>Sign Up Form </h1>
             <p>Please Select Your Role : </p>
+            <div class="image-box">
+              <div class="firsttwoimage">
 
 
-            <label id="studentImage2" class="formimg" onclick="selectImage('studentImage2')">
-              <input type="radio" name="imagePicker" value="student" id="studentImage" class="hidden">
-              <img src="/images/signupcard/student.png" alt="Student Image" height="100">
-              <div>Student</div>
-
-
-
-            </label>
-
-            <label id="mentorImage2" class="formimg" onclick="selectImage('mentorImage2')">
-              <input type="radio" name="imagePicker" value="mentor" id="mentorImage" class="hidden">
-              <img src="/images/signupcard/mentor.png" alt="Mentor Image" height="100">
-              <div>Mentor</div>
-            </label>
-
-            <br>
-
-            <label id="adminImage2" class="formimg" onclick="selectImage('adminImage2')">
-              <input type="radio" name="imagePicker" value="admin" id="adminImage" class="hidden">
-              <img src="/images/signupcard/admin.png" alt="admin Image" height="100">
-              <div>Admin</div>
-            </label>
+                <label id="studentImage2" class="formimg" onclick="selectImage('studentImage2')">
+                  <input type="radio" name="imagePicker" value="student" id="studentImage" class="hidden">
+                  <img src="/images/signupcard/student.png" alt="Student Image" height="100">
+                  <div>Student</div>
 
 
 
+                </label>
 
-            <label id="companyImage2" class="formimg" onclick="selectImage('companyImage2')">
-              <input type="radio" name="imagePicker" value="company" id="companyImage" class="hidden">
-              <img src="/images/signupcard/company.png" alt="Company Image" height="100">
-              <div>Company</div>
-            </label>
+                <label id="mentorImage2" class="formimg" onclick="selectImage('mentorImage2')">
+                  <input type="radio" name="imagePicker" value="mentor" id="mentorImage" class="hidden">
+                  <img src="/images/signupcard/mentor.png" alt="Mentor Image" height="100">
+                  <div>Mentor</div>
+                </label>
+              </div>
+
+              <div class="secondtwoimage">
+
+                <label id="adminImage2" class="formimg" onclick="selectImage('adminImage2')">
+                  <input type="radio" name="imagePicker" value="admin" id="adminImage" class="hidden">
+                  <img src="/images/signupcard/admin.png" alt="admin Image" height="100">
+                  <div>Admin</div>
+                </label>
+
+
+
+
+                <label id="companyImage2" class="formimg" onclick="selectImage('companyImage2')">
+                  <input type="radio" name="imagePicker" value="company" id="companyImage" class="hidden">
+                  <img src="/images/signupcard/company.png" alt="Company Image" height="100">
+                  <div>Company</div>
+                </label>
+              </div>
+            </div>
           </div>
 
           <div id="errorMessage" class="hidden">Please select one Image</div>
@@ -195,9 +178,7 @@
                 <label class="form-label" for="name">Name</label>
               </div>
               <div class="form-outline mb-2">
-                <input type="phone" id="student-phone" name="phone" class="form-control form-control-lg"
-                  placeholder="Enter a valid phone no : (Ex : +910123456789)" required />
-                <label class="form-label" for="phone">Phone No : </label>
+                <input id="student-phone" type="tel" name="phone" class="phoneInputStyle" />
               </div>
 
               <button type="button" id="student-getOTPBtn" class="getOTPBtn btn btn-secondary btn-rounded mb-2">Get
@@ -271,9 +252,7 @@
                 <label class="form-label" for="name">Name</label>
               </div>
               <div class="form-outline mb-2">
-                <input type="phone" id="mentor-phone" name="phone" class="form-control form-control-lg"
-                  placeholder="Enter a valid phone no : (Ex : +910123456789)" required />
-                <label class="form-label" for="phone">Phone No : </label>
+                <input id="mentor-phone" type="tel" name="phone" class="phoneInputStyle" />
               </div>
 
               <button type="button" id="mentor-getOTPBtn" class="getOTPBtn btn btn-secondary btn-rounded mb-2">Get
@@ -347,9 +326,7 @@
                 <label class="form-label" for="name">Name</label>
               </div>
               <div class="form-outline mb-2">
-                <input type="phone" id="admin-phone" name="phone" class="form-control form-control-lg"
-                  placeholder="Enter a valid phone no : (Ex : +910123456789)" required />
-                <label class="form-label" for="phone">Phone No : </label>
+                <input id="admin-phone" type="tel" name="phone" class="phoneInputStyle" />
               </div>
 
               <button type="button" id="admin-getOTPBtn" class="getOTPBtn btn btn-secondary btn-rounded mb-2">Get
@@ -422,7 +399,26 @@
                   placeholder="Enter a valid Names" required />
                 <label class="form-label" for="name">Name</label>
               </div>
+              <div class="form-outline mb-2">
+                <input id="company-phone" type="tel" name="phone" class="phoneInputStyle" />
+              </div>
 
+              <button type="button" id="company-getOTPBtn" class="getOTPBtn btn btn-secondary btn-rounded mb-2">Get
+                OTP</button>
+              <p id="company-otpStatus" style="visibility:hidden"></p>
+
+
+
+              <div id="company-otpContainer" class="otpContainer">
+                <div class="form-outline mb-4">
+                  <input type="text" id="company-otp" maxlength="6" class="form-control form-control-lg"
+                    placeholder="Enter OTP to verify mobile no." />
+                  <label class="form-label" for="otp">OTP</label>
+                </div>
+                <button type="button" id="company-verifyOtpBtn" class="btn btn-secondary btn-rounded mb-2">Verify
+                  OTP</button>
+                <p id="company-otpVerificationStatus" style="visibility:hidden"></p>
+              </div>
 
 
               <div class="form-outline mb-4">
@@ -463,15 +459,10 @@
           <div>
           </div>
         </div>
-
-
-
-
-
-
   </section>
 </body>
-
+<!-- verify number -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -480,10 +471,4 @@
 
 <script src="/js/Authentication/signup.js"></script>
 <script src="/js/Authentication/signupwithoutjquery.js"></script>
-
-
-
-
-
-
 </html>

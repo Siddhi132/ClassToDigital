@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.css" rel="stylesheet" />
+  <style>
+    .min-height-50 {
+      min-height: 100px;
+    }
+
+    .project-title {
+      font-size: 25px;
+
+      .small-text {
+        font-size: 12px;
+      }
+
+    }
+
+    @media only screen and (max-width: 768px) {
+      .project-title {
+        font-size: 16px;
+
+      }
+
+      .small-text {
+        font-size: 14px;
+      }
+
+
+    }
+  </style>
+</head>
+
+<body>
+  <% if(login){ %>
+    <% if(typeof role!="undefined" && role){ %>
+      <% if(role=="student" ){ %>
+        <%- include('../Navbar/StudentNavbar.ejs') %>
+          <% }else if(role=="mentor" ){ %>
+            <%- include('../Navbar/MentorNavbar.ejs') %>
+              <% }else if(role=="admin" ){ %>
+                <%- include('../Navbar/AdminNavbar.ejs') %>
+                  <% }else if(role=="company" ){ %>
+                    <%- include('../Navbar/CompanyNavbar.ejs') %>
+                      <% } %>
+                        <% } %>
+
+                          <% }else { %>
+                            <%- include('../Navbar/InitNavbar.ejs') %>
+                              <% } %>
+
+                                <% projectRepoPartner.forEach(function(repository){ %>
+
+                                  <% if(repository.isHidden){ %>
+                                    <div class="container mt-4 mb-5">
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                          <p class="mb-2 text-center text-black">
+                                            Opps! Project Repository is Hidden By owner</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <% return; %>
+                                      <% } %>
+
+
+                                        <main
+                                          class="card p-sm-5 pt-sm-2 pb-sm-0  m-sm-5 m-2 p-0 text-start text-sm-start">
+
+
+                                          <div class="card-body">
+                                            <h5
+                                              class="card-title card-header text-center mb-sm-5 position-relative project-title">
+                                              Project Title : <%= repository.projectName %>
+
+                                            </h5>
+
+                                            <div class="mb-3 mb-sm-3">
+                                              <span class="label label-dark small-text ">Team Members :</span>
+                                              <div class="d-flex flex-wrap">
+                                                <% var members=repository.teamMember.split(','); %>
+                                                  <% members.forEach(function(member){ %>
+                                                    <div>
+
+                                                      <a href="">
+                                                        <span class="badge badge-primary mx-2">
+                                                          <%= member %>
+                                                        </span>
+                                                      </a>
+
+                                                    </div>
+                                                    <% }) %>
+                                              </div>
+
+
+                                            </div>
+
+
+
+
+                                            <div class="mb-3 d-flex flex-row  sm:mb-3 mt-3">
+                                              <span class="label label-dark">Stage Of Project :</span>
+                                              <a href="">
+                                                <span class="text-dark mx-2">
+                                                  <%=repository.stageOfProject%>
+                                                </span>
+                                              </a>
+                                            </div>
+
+                                            <div class="mb-3  sm:mb-3 mt-3">
+                                              <span class="label label-dark">Skills :</span>
+                                              <div class="d-flex flex-wrap">
+                                                <% var skills=repository.skillsRequiredforMentor.split(','); %>
+                                                  <% skills.forEach(function(skill){ %>
+                                                    <div>
+
+                                                      <a href="">
+                                                        <span class="badge badge-primary mx-2">
+                                                          <%= skill %>
+                                                        </span>
+                                                      </a>
+
+                                                    </div>
+                                                    <% }) %>
+                                              </div>
+
+
+
+                                            </div>
+
+
+
+                                            <p class="card-text mb-3 min-height-50 small-text"><strong> Domain
+                                                :</strong class-"small-text">
+                                              <%= repository.projectDomain %>
+                                            </p>
+                                            <p class="card-text mb-2 min-height-50 small-tex small"><strong>
+                                                Project Description :</strong>
+                                              <%= repository.projectDescription %>
+                                            </p>
+
+                                          </div>
+                                          <div class="d-sm-flex text-start justify-content-around small-text mt-sm-4">
+                                            <div class="card-footer text-muted"> College :<strong>
+                                                <%= repository.collegeName%>
+                                              </strong>,University : <%= repository.universityName %>
+                                            </div>
+                                            <div class="card-footer text-muted"> City :<strong>
+                                                <%= repository.city%>
+                                              </strong>,State :<strong>
+                                                <%= repository.state %>
+                                              </strong> </div>
+                                            <div class="card-footer text-muted"> Project StatDate : <% if
+                                                (repository.projectstartDate) { %>
+                                                <% const startDate=new Date(repository.projectstartDate); %>
+                                                  <strong>
+                                                    <%= startDate.getDate() %>
+                                                      <%= startDate.toLocaleString('default', { month: 'long' }) %>
+                                                        <%= startDate.getFullYear() %>
+                                                  </strong>
+                                                  <% } else { %>
+                                                    <strong>-</strong>
+                                                    <% } %>
+                                                      </strong>
+                                            </div>
+
+
+                                          </div>
+                                        </main>
+                                        <% }) %>
+
+</body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.1/mdb.min.js"></script>
+
+</html>

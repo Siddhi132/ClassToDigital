@@ -1,66 +1,49 @@
-const User=require('../../models/Users');
-const StudentProfile=require('../../models/StudentProfile');
-const MentorProfile=require('../../models/MentorProfile');
-const AdminProfile=require('../../models/AdminProfile');
-const CompanyProfile=require('../../models/CompanyProfile');
+const User = require('../../models/Users');
+const StudentProfile = require('../../models/StudentProfile');
+const MentorProfile = require('../../models/MentorProfile');
+const AdminProfile = require('../../models/AdminProfile');
+const CompanyProfile = require('../../models/CompanyProfile');
 
-const verifyUserForSignup =  async (req, res) => {
-    try {
-      var existingUser;
-      var user;
+
+const verifyUserForSignup = async (req, res) => {
+  try {
+    var existingUser;
+    var user;
     const { email, role, phone } = req.body;
-    console.log("req.body here", req.body);
+    console.log("req.body", req.body);
 
-   //This way, the query will return any existing user with the same email or phone number, or both.
     if (role == 'student') {
-      existingUser = await StudentProfile.find({
+      existingUser = await User.find({
         $or: [
           { email },
           { phone },
-        ],
-        $and: [
-          { email },
-          { phone },
-        ],
+        ]
       });
     } else if (role == 'mentor') {
-      existingUser = await MentorProfile.findOne({
+      existingUser = await User.findOne({
         $or: [
           { email },
           { phone },
-        ],
-        $and: [
-          { email },
-          { phone },
-        ],
+        ]
       });
     } else if (role == 'admin') {
-      existingUser = await AdminProfile.findOne({
+      existingUser = await User.findOne({
         $or: [
           { email },
           { phone },
-        ],
-        $and: [
-          { email },
-          { phone },
-        ],
+        ]
       });
     } else if (role == 'company') {
-      existingUser = await CompanyProfile.findOne({
+      existingUser = await User.findOne({
         $or: [
           { email },
           { phone },
-        ],
-        $and: [
-          { email },
-          { phone },
-        ],
+        ]
       });
     }
 
 
-    if (existingUser.length > 0) {
-      console.log("A user with this email already exists.");
+    if (existingUser > 0) {
       return res.send({ status: true, statusCode: 400, message: 'A user with this email already exists.' });
     }
     if (role == 'student') {
@@ -86,9 +69,9 @@ const verifyUserForSignup =  async (req, res) => {
     var userDataForUserSchema = new User(UserData);
     await userDataForUserSchema.save();
     console.log("userData", userDataForUserSchema);
-    console.log("User created successfully.")
     res.send({ status: true, statusCode: 200, message: 'User created successfully.' });
-  } catch (error) {
+  }
+  catch (error) {
     console.log("error this is ", error);
     res.send({ status: false, statusCode: 500, message: 'Error during creating user. ' });
   }

@@ -96,9 +96,6 @@ router.get('/', isAuth, async (req, res) => {
     console.log("role", role);
     res.render('Home/Home', { login, role });
   }
-
-
-
 });
 
 // sign up page
@@ -123,10 +120,14 @@ router.post('/signup', (req, res, next) => {
 });
 
 // login page
+
 router.get('/login', (req, res) => { res.render('Home/Login'); });
+
 router.post('/login', (req, res, next) => {
+
   axios.post(process.env.BASE_URL + '/api/login', req.body)
     .then((response) => {
+      console.log(response.statusCode);
 
       // flag = 1;
       var decodedId;
@@ -149,8 +150,20 @@ router.post('/login', (req, res, next) => {
 
     })
     .catch((error) => {
-      console.log("this i want", error);
-      res.render('Home/Login', { message: "Invalid Email or Password", status: false, statusCode: 500 });
+      const { email, password, phone } = req.body;
+      // console.log("this i want", error);
+
+      // res.render('Home/Login', { message: "Plese user Registration", status: false, statusCode: 500 });
+      if (phone && !email) {
+        return res.render('Home/Login', { message: 'Wrong mobile number', status: false, statusCode: 500 });
+      }
+      if (email && !phone) {
+        return res.render('Home/Login', { message: 'Invalid email or password', status: false, statusCode: 500 });
+      }
+      else {
+        return res.render('Home/Login', { message: 'Invalid Credential', status: false, statusCode: 500 })
+      }
+
     });
 
 
@@ -179,10 +192,10 @@ router.get('/profile', isLoginRequired, async (req, res, next) => {
       else if (role == "mentor") {
         res.render('Profile/MentorProfile', { "user": response.data.data.user, role, login });
       }
-      else if(role == "company"){
+      else if (role == "company") {
         res.render('Profile/CompanyProfile', { "user": response.data.data.user, role, login });
       }
-      else if(role=="admin"){
+      else if (role == "admin") {
         res.render('Profile/AdminProfile', { "user": response.data.data.user, role, login });
       }
     })
@@ -441,6 +454,44 @@ router.post('/uploadResearchPaper', isLoginRequired, (req, res, next) => {
       res.render('ResearchPaper/UploadResearchPaper', { "message": error });
     });
 });
+router.post('/uploadResearchPaperCoAuthor', isLoginRequired, (req, res, next) => {
+  req.body.userId = req.session.userId;
+  req.body.userRole = req.session.userRole;
+  console.log("req.body", req.body);
+  axios.post(process.env.BASE_URL + '/api/uploadResearchPaperCoAuthor', req.body)
+    .then((response) => {
+      var login = 1;
+      var role = req.session.userRole;
+      if (response.data.statusCode == 500) {
+        next(response.data.message);
+      }
+      console.log("response", response.data);
+      res.render('ResearchPaper/UploadResearchPaper', { "message": response.data, login, role });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.render('ResearchPaper/UploadResearchPaper', { "message": error });
+    });
+});
+router.post('/uploadResearchPaperMentor', isLoginRequired, (req, res, next) => {
+  req.body.userId = req.session.userId;
+  req.body.userRole = req.session.userRole;
+  console.log("req.body", req.body);
+  axios.post(process.env.BASE_URL + '/api/uploadResearchPaperMentor', req.body)
+    .then((response) => {
+      var login = 1;
+      var role = req.session.userRole;
+      if (response.data.statusCode == 500) {
+        next(response.data.message);
+      }
+      console.log("response", response.data);
+      res.render('ResearchPaper/UploadResearchPaper', { "message": response.data, login, role });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.render('ResearchPaper/UploadResearchPaper', { "message": error });
+    });
+});
 
 
 router.get('/researchPapers', (req, res, next) => {
@@ -485,6 +536,57 @@ router.get('/researchPapers', (req, res, next) => {
         res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
 
       });
+  }
+});
+router.get('/researchPaperCoAuthor', (req, res, next) => {
+  // console.log(req)
+  if (req.query._id) {
+    if (!req.session.userId) {
+      res.redirect('/login');
+    }
+    console.log("req.query", req.query);
+    axios.get(process.env.BASE_URL + '/api/getResearchPaperCoAuthor', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
+      .then((response) => {
+        if (response.data.statusCode == 500) {
+          next(response.data.message);
+        }
+        login = 1;
+        var role = req.session.userRole;
+        console.log("response here", response.data);
+        res.render('ResearchPaper/ResearchPaperCoAuthorDetails', { "researchPaperCoAuthor": response.data, "userId": req.session.userId, login, role });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
+      });
+  } else {
+    res.redirect('/researchPapers')
+  }
+  
+});
+router.get('/researchPaperMentor', (req, res, next) => {
+  if (req.query._id) {
+    if (!req.session.userId) {
+      res.redirect('/login');
+    }
+    console.log("req.query", req.query);
+    axios.get(process.env.BASE_URL + '/api/getResearchPaperMentor', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
+      .then((response) => {
+        if (response.data.statusCode == 500) {
+          next(response.data.message);
+        }
+        login = 1;
+        var role = req.session.userRole;
+        console.log("response here", response.data);
+        console.log(response.data.data.RPMentor)
+        res.render('ResearchPaper/ResearchPaperMentorDetails', { "researchPaperMentor": response.data, "userId": req.session.userId, login, role });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
+      });
+  } else {
+    res.redirect('/researchPapers')
   }
 });
 
@@ -599,6 +701,77 @@ router.post('/uploadProjectRepository', isLoginRequired, uploadFile.fields(
     });
 });
 
+router.post('/uploadProjectRepoMentor', isLoginRequired, uploadFile.fields(
+  [
+    { name: 'projectImage', maxCount: 1 },
+    { name: 'projectReport', maxCount: 1 }
+  ]
+), (req, res, next) => {
+  // Code to fetch data from the API goes here
+  console.log("req.only", req);
+  console.log("req.file befor ajax", req.file);
+  console.log("req.files befor ajax", req.files);
+  req.body.uploadFileData = req.files;
+  var userId = req.session.userId;
+  console.log("req gone wrong", req.session);
+  axios.post(process.env.BASE_URL + '/api/uploadProjectRepoMentor', req.body, { params: { "userId": userId, "userRole": req.session.userRole } })
+
+    .then((response) => {
+      if (response.data.statusCode == 500) {
+        next(response.data.message);
+      }
+      if (!req.session.userId) {
+        login = 0;
+      }
+      else {
+        login = 1;
+        var role = req.session.userRole;
+      }
+      res.render('ProjectRepository/uploadProjectRepository', { login, role, "message": response.data });
+
+    })
+    .catch((error) => {
+      res.render('ProjectRepository/projectRepositories', { "message": error });
+
+    });
+});
+
+
+
+router.post('/uploadProjectRepoPartner', isLoginRequired, uploadFile.fields(
+  [
+    { name: 'projectImage', maxCount: 1 },
+    { name: 'projectReport', maxCount: 1 }
+  ]
+), (req, res, next) => {
+  // Code to fetch data from the API goes here
+  console.log("req.only", req);
+  console.log("req.file befor ajax", req.file);
+  console.log("req.files befor ajax", req.files);
+  req.body.uploadFileData = req.files;
+  var userId = req.session.userId;
+  console.log("req gone wrong", req.session);
+  axios.post(process.env.BASE_URL + '/api/uploadProjectRepoPartner', req.body, { params: { "userId": userId, "userRole": req.session.userRole } })
+
+    .then((response) => {
+      if (response.data.statusCode == 500) {
+        next(response.data.message);
+      }
+      if (!req.session.userId) {
+        login = 0;
+      }
+      else {
+        login = 1;
+        var role = req.session.userRole;
+      }
+      res.render('ProjectRepository/uploadProjectRepository', { login, role, "message": response.data });
+    })
+    .catch((error) => {
+      res.render('ProjectRepository/uploadProjectRepository', { "message": error });
+
+    });
+});
+
 
 router.get("/ProjectRepository", (req, res) => {
   if (req.query._id) {
@@ -643,6 +816,64 @@ router.get("/ProjectRepository", (req, res) => {
 
       });
   }
+});
+
+router.get("/ProjectRepoMentor", (req, res) => {
+  if (req.query._id) {
+    if (!req.session.userId) {
+      res.redirect('/login');
+    }
+    console.log("req.query", req.query);
+    axios.get(process.env.BASE_URL + '/api/getProjectRepoMentor', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
+      .then((response) => {
+        if (response.data.statusCode == 500) {
+          next(response.data.message);
+        }
+
+        console.log("response here", response.data);
+        login = 1;
+        var role = req.session.userRole;
+
+
+
+        res.render('ProjectRepository/projectRepoMentorDetail', { "projectRepoMentor": response.data.data.ProjectRepoMentor, login, role });
+
+      })
+      .catch((error) => {
+        console.log(error);
+        res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
+      });
+  } else {
+    res.redirect('/ProjectRepository')
+  }
+ 
+});
+
+
+router.get("/ProjectRepoPartner", (req, res) => {
+  if (req.query._id) {
+    if (!req.session.userId) {
+      res.redirect('/login');
+    }
+    console.log("req.query", req.query);
+    axios.get(process.env.BASE_URL + '/api/getProjectRepoPartner', { params: { "request": req.query, "id": req.session.userId, "role": req.session.userRole } })
+      .then((response) => {
+        if (response.data.statusCode == 500) {
+          next(response.data.message);
+        }
+        console.log("response here", response.data);
+        login = 1;
+        var role = req.session.userRole;
+        res.render('ProjectRepository/projectRepoPartnerDetail', { "projectRepoPartner": response.data.data.ProjectRepoPartner, login, role });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.send({ status: false, statusCode: 500, "message": "Might be something went wrong" })
+      });
+  } else {
+    res.redirect('/ProjectRepository')
+  }
+ 
 });
 
 // Notification
@@ -702,7 +933,7 @@ router.get("/chat", isLoginRequired, (req, res) => {
   login = 1;
   var role = req.session.userRole;
   var userId = req.session.userId;
-  res.render('Chat/chat', { login, role , userId});
+  res.render('Chat/chat', { login, role, userId });
 });
 
 

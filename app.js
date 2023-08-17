@@ -38,7 +38,7 @@ app.use(express.static('public'));
 const start = async () => {
   try {
     await connectDB();
-    app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`));
+    app.listen(PORT, () => console.log(`App has been started on port ${PORT}...-> ` + `http://localhost:${PORT}`));
   } catch (e) {
     console.log('Server Error', e.message);
     process.exit(1);

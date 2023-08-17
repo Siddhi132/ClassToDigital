@@ -20,6 +20,36 @@
         body{
       background-color: #f6f9ff !important;
     }
+    .hidden {
+      display: none;
+    }
+    .required-icon::after {
+  content: "*";
+  color: red;
+  font-weight: bold;
+}
+    @media (min-width:1400px) {
+            .container .row .form-padding {
+                padding: 0 250px;
+            }
+        }
+
+        .label-name {
+            margin-bottom: 7px;
+        }
+
+        .radio-field {
+            display: flex;
+        }
+
+        @media (max-width:775px) {
+            .radio-field {
+                flex-direction: column;
+            }
+        }
+        body {
+            background-color: #f6f9ff !important;
+        }
     </style>
 </head>
 
@@ -58,84 +88,312 @@
                                 <div class="card-body p-md-5 text-black">
                                     <h3 class="mb-5 text-uppercase main-heading">Upload Research paper Details</h3>
 
-                                    <form method="post" action="/uploadResearchPaper" id="addInternshipform">
-                                        <div class="form-outline mb-4">
-                                            <input type="text" id="title" name="title"
+                                    <div class="d-flex justify-content-center">
+                                        <button class="btn btn-secondary mx-2 main-button" id="uploadResearchPaper1" onclick="setActiveButton('uploadResearchPaper1', 'uploadResearchPaperForm')">
+                                          <input type="radio" name="uploadResearchPaperFormPicker" value="uploadResearchPaper" id="uploadResearchPaper" class="hidden" />
+                                          <div>Upload Research Paper</div>
+                                        </button>
+                                        <button class="btn btn-secondary mx-2 main-button" id="lookingCoAuthor1" onclick="setActiveButton('lookingCoAuthor1', 'lookingCoAuthorForm')">
+                                            <input type="radio" name="ulookingCoAuthorFormPicker" value="lookingCoAuthor" id="lookingCoAuthor" class="hidden"/>
+                                            <div>Looking for CoAuthor</div>
+                                          </button>
+                                        <button class="btn btn-secondary mx-2 main-button" id="lookingMentor1" onclick="setActiveButton('lookingMentor1', 'lookingMentorForm')">
+                                          <input type="radio" name="uploadProjectRepoFormPicker" value="lookingMentor" id="lookingMentor" class="hidden"/>
+                                          <div>Looking for Mentor</div>
+                                        </button>
+                                       
+                                      </div>
+                                      <div class="card-body">
+                                        <form action="/uploadResearchPaper" method="post"
+                                         id="uploadResearchPaperForm" class="hidden form">
+                                         <!-- encoding type was removed to be resolved later on -->
+                                          <h3>Upload Research paper</h3>
+                                          <div class="form-outline mb-4">
+                                            <input type="text" id="authorName" name="authorName"
                                                 class="form-control form-control-lg" required />
-                                            <label class="form-label" for="title">title</label>
-                                        </div>
-
+                                            <label class="form-label" for="projectTitle">Author Name<span class="required-icon"></span></label>
+                                          </div>
                                         <div class="form-outline mb-4">
-                                            <textarea type="input" class="form-control  form-control-lg"
-                                                id="description" name="description" rows="3"
-                                                required></textarea>
-                                            <label class="form-label" for="description">Brief Description About
-                                                Research paper</label>
+                                            <input type="text" id="MentorGuideName" name="MentorGuideName"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="MentorGuideName"> Mentor/Guide Name<span class="required-icon"></span></label>
                                         </div>
-
-                                        <div class=" mb-4">
-
-                                            <select class="form-select form-select-lg" id="category" name="category"
-                                                aria-label="Default select example" required>
-                                                <option value="" selected>Choose category</option>
-
-                                            </select>
-
-                                        </div>
-                                        <div class=" mb-4">
-
-                                            <select class="form-select form-select-lg" id="needof" name="needof"
-                                                aria-label="Default select example" required>
-                                                <option value="" selected>Choose Need</option>
-
-                                            </select>
-
-                                        </div>
-
                                         <div class="form-outline mb-4">
-                                            <input type="text" id="teamMembers" name="teamMembers"
-                                                class="form-control  form-control-lg" required />
-                                            <label class="form-label" for="teamMembers">teamMembers</label>
-
+                                            <textarea
+                                              type="input"
+                                              class="form-control form-control-lg"
+                                              id="Abstract"
+                                              name="Abstract"
+                                              rows="3"
+                                              required
+                                            ></textarea>
+                                            <label class="form-label" for="Abstract">Abstract<span class="required-icon"></span></label>
+                                          </div>
+                                          <div class="form-outline mb-4">
+                                            <input type="text" id="conferenceName" name="conferenceName"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="conferenceName">Conference Name(Seperate
+                                                By
+                                                Comma(,)
+                                                )<span class="required-icon"></span></label>
                                         </div>
-
-
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label for="conferenceDate">Date of Conference :<span class="required-icon"></span></label>
+                                                <input type="date" class="form-control" id="conferenceDate" name="conferenceDate" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label for="issueDate">Date of Issue : <span class="required-icon"></span></label>
+                                                <input type="date" class="form-control" id="issueDate" name="issueDate" required>
+                                            </div>
+                                            
+                                        </div>
+                                          <div class="form-outline mb-4">
+                                            <input type="text" id="publisher" name="publisher"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="publisher">Publisher<span class="required-icon"></span></label>
+                                        </div>
+                                          <div class="form-outline mb-4">
+                                            <input type="text" id="conferenceLocation" name="conferenceLocation"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="conferenceLocation">Conference Location<span class="required-icon"></span></label>
+                                        </div>
+                                        
+                                       
                                         <div class="form-outline mb-4">
-                                            <input type="text" id="guide" name="guide"
-                                                class="form-control  form-control-lg" required />
-                                            <label class="form-label" for="guide">guide</label>
-
+                                            <input type="text" id="linkofResearchPaper" name="linkofResearchPaper"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="linkofResearchPaper">Link to Acess the published Research Paper : <span class="required-icon"></span></label>
                                         </div>
-
-
-                                 
-
                                         
 
-                                        <div class="form-outline mb-4">
-                                            <input type="text" id="skillsRequired" name="skillsRequired"
+                                         
+                                          <div class="d-flex justify-content-center">
+                                            
+                                              <button class="btn btn-primary mx-2" id="saveAsDraft">Save As draft</button>
+                                            
+                                           
+                                              <button class="btn btn-primary mx-2" id="Preview" >Preview</button>
+                                            
+                                              <button class="btn btn-primary mx-2" id="Post" type="submit">Post</button>
+                                              <!-- <button type="submit">button</button> -->
+                                           
+                                          </div>
+                                          
+                                          
+                                          
+                                        
+                                        
+                                        
+                                        </form>
+                                        <!-- <form action="/uploadResearchPaper" method="post">
+                                          <input type="text" name="hello">
+                                          <button type="submit">button</button>
+                                        </form> -->
+                                        <form action="/uploadResearchPaperCoAuthor" method="post"
+                                         id="lookingCoAuthorForm" class="hidden form">
+                                          <h3>Looking for Co-Author</h3>
+                                          <div class="form-outline mb-4">
+                                            <input type="text" id="proposedPaperName" name="proposedPaperName"
                                                 class="form-control form-control-lg" required />
-                                            <label class="form-label" for="skillsRequired">Skills Required(Seperate By
-                                                Comma(,) )</label>
+                                            <label class="form-label" for="proposedPaperName">Proposed Paper Name : </label>
                                         </div>
-
-
+                                         <div class="form-outline mb-4">
+                                            <textarea
+                                              type="input"
+                                              class="form-control form-control-lg"
+                                              id="Abstract"
+                                              name="Abstract"
+                                              rows="3"
+                                              required
+                                            ></textarea>
+                                            <label class="form-label" for="Abstract"> Abstract : </label>
+                                          </div>
                                         <div class="form-outline mb-4">
-                                            <textarea type="input" class="form-control  form-control-lg"
-                                                id="noteDetails" name="noteDetails" rows="3"
-                                                required></textarea>
-                                            <label class="form-label" for="noteDetails">noteDetails
-                                                </label>
+                                            <input type="text" id="authorName" name="authorName"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="authorName">Author Name :</label>
                                         </div>
-
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <select class="form-select form-select-lg collegeName" id="collegeName" name="collegeName" aria-label="Default select example" required>
+                                                    <option value="" selected>College Name</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <select class="form-select form-select-lg universityName" id="universityName" name="universityName" aria-label="Default select example" required>
+                                                    <option value="" selected>UniversityName</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <textarea
+                                              type="input"
+                                              class="form-control form-control-lg"
+                                              id="areaofResearchPaper"
+                                              name="areaofResearchPaper"
+                                              rows="3"
+                                              required
+                                            ></textarea>
+                                            <label class="form-label" for="areaofResearchPaper"> Area of Research Paper :</label>
+                                          </div>
+                                          <div class="form-outline mb-4">
+                                            <input type="text" id="mentorName" name="mentorName"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="mentorName">Mentor/Guide Name :</label>
+                                        </div>
+                                        <div class="form-outline mb-4">
+                                            <textarea
+                                              type="input"
+                                              class="form-control form-control-lg"
+                                              id="domainofResearchPaper"
+                                              name="domainofResearchPaper"
+                                              rows="2"
+                                              required
+                                            ></textarea>
+                                            <label class="form-label" for="domainofResearchPaper"> Domain of Research Paper :</label>
+                                          </div>
+                                        <div class="form-outline mb-4">
+                                            <textarea
+                                              type="input"
+                                              class="form-control form-control-lg"
+                                              id="lookingforCoAuthor"
+                                              name="lookingforCoAuthor"
+                                              rows="2"
+                                              required
+                                            ></textarea>
+                                            <label class="form-label" for="lookingforCoAuthor"> Looking for Co-Author :</label>
+                                          </div>
+                                          <div class="form-outline mb-4">
+                                            <input type="text" id="skillsRequiredforMentor" name="skillsRequiredforMentor"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="skillsRequiredforMentor">Skills Required For Mentor(Seperate
+                                                By
+                                                Comma(,)
+                                                )</label>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            
+                                            <button class="btn btn-primary mx-2" id="saveAsDraft" name="saveAsDraft">Save As draft</button>
+                                          
+                                         
+                                            <button class="btn btn-primary mx-2" id="Preview" name="Preview">Preview</button>
+                                          
+                                            <button class="btn btn-primary mx-2" id="Post" type="submit">Post</button>
+                                         
+                                        </div>
+                                          
+                                        </form>
+                                        <form action="/uploadResearchPaperMentor" method="post"
+                                         id="lookingMentorForm" class="hidden form">
+                                          <h3>Looking for Mentor</h3>
+                                          <div class="form-outline mb-4">
+                                            <input type="text" id="proposedPaperName" name="proposedPaperName"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="proposedPaperName">Proposed Paper Name :<span class="required-icon"></span> </label>
+                                        </div>
+                                         <div class="form-outline mb-4">
+                                            <textarea
+                                              type="input"
+                                              class="form-control form-control-lg"
+                                              id="Abstract"
+                                              name="Abstract"
+                                              rows="3"
+                                              required
+                                            ></textarea>
+                                            <label class="form-label" for="Abstract"> Abstract : <span class="required-icon"></span></label>
+                                          </div>
+                                        <div class="form-outline mb-4">
+                                            <input type="text" id="authorName" name="authorName"
+                                                class="form-control form-control-lg" required />
+                                            <label class="form-label" for="authorName">Author Name :<span class="required-icon"></span></label>
+                                        </div>
                                        
-
-                                        <div class="d-flex justify-content-center pt-3">
-                                            <input id="submitInternshipForm" type="submit"
-                                                class="btn btn-primary ms-2 btn-lg" value="Submit">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4">
+                                                <label for="collegeName" class="form-label">
+                                                    College Name<span class="required-icon"></span>
+                                                  </label>
+                                                <select class="form-select form-select-lg collegeName" id="collegeName" name="collegeName" aria-label="Default select example" required>
+                                                    <option value="" selected>College Name</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 mb-4">
+                                                <label for="universityName" class="form-label">
+                                                    University Name<span class="required-icon"></span>
+                                                  </label>
+                                                <select class="form-select form-select-lg universityName" id="universityName" name="universityName" aria-label="Default select example" required>
+                                                    <option value="" selected>UniversityName</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                    </form>
-
+                                        <div class="form-outline mb-4">
+                                            <textarea
+                                              type="input"
+                                              class="form-control form-control-lg"
+                                              id="areaofResearchPaper"
+                                              name="areaofResearchPaper"
+                                              rows="3"
+                                              required
+                                            ></textarea>
+                                            <label class="form-label" for="areaofResearchPaper"> Area of Research Paper :<span class="required-icon"></span></label>
+                                          </div>
+                                         
+                                        <div class="form-outline mb-4">
+                                            <textarea
+                                              type="input"
+                                              class="form-control form-control-lg"
+                                              id="domainofResearchPaper"
+                                              name="domainofResearchPaper"
+                                              rows="2"
+                                              required
+                                            ></textarea>
+                                            <label class="form-label" for="domainofResearchPaper"> Domain of Research Paper :<span class="required-icon"></span></label>
+                                          </div>
+                                        <div class="form-outline mb-4">
+                                            <textarea
+                                              type="input"
+                                              class="form-control form-control-lg"
+                                              id="anyotherInformation"
+                                              name="anyotherInformation"
+                                              rows="2"
+                                              
+                                            ></textarea>
+                                            <label class="form-label" for="anyotherInformation"> Any Other Information :</label>
+                                          </div>
+                                         
+                                        <div class="form-outline mb-4">
+                                            <textarea
+                                              type="input"
+                                              class="form-control form-control-lg"
+                                              id="lookingforMentor"
+                                              name="lookingforMentor"
+                                              rows="2"
+                                              
+                                            ></textarea>
+                                            <label class="form-label" for="lookingforMentor"> Looking for Mentor :</label>
+                                          </div>
+                                          <div class="form-outline mb-4">
+                                            <input type="text" id="skillsRequiredforMentor" name="skillsRequiredforMentor"
+                                                class="form-control form-control-lg"  />
+                                            <label class="form-label" for="skillsRequiredforMentor">Skills Required For Mentor(Seperate
+                                                By
+                                                Comma(,)
+                                                )</label>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            
+                                            <button class="btn btn-primary mx-2" id="saveAsDraft" name="saveAsDraft" type="submit">Save As draft</button>
+                                          
+                                         
+                                            <button class="btn btn-primary mx-2" id="Preview" name="Preview" type="submit">Preview</button>
+                                          
+                                            <button class="btn btn-primary mx-2" id="Post" type="submit">Post</button>
+                                         
+                                        </div>
+                                        </form>
+                                      </div>
                                 </div>
                             </div>
                         </div>

@@ -24,7 +24,6 @@ const industrialProjectSchema = new mongoose.Schema({
     numberOfOpenings:{type:Number,required:true},
     dateOfPosting:{type:Date,required:true,default:Date.now()},
     lastDateToApply:{type:Date,required:true},
-    contactDetails:{type:String,required:true},
     paidOrUnpaid:{type:String,required:true},
     typeOfIndustrialProject:{type:String,required:true},
     modeOfIndustrialProject:{type:String,required:true},

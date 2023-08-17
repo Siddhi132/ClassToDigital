@@ -10,7 +10,6 @@ fetch("/api/Categories")
         var modeOfIndustrialProject = data.data.categories[0].industrialProject.modeOfIndustrialProject;
         var typeOfIndustrialProject = data.data.categories[0].industrialProject.typeOfIndustrialProject;
         var paidUnpaid = data.data.categories[0].industrialProject.paidUnpaid;
-
         var state = document.getElementById("state");
         var city = document.getElementById("city");
         var category = document.getElementById("category");
@@ -19,11 +18,13 @@ fetch("/api/Categories")
         var paidOrUnpaid = document.getElementById("paidOrUnpaid");
 
         for (var i = 0; i < industrialProjectState.length; i++) {
+            console.log("ewdw")
             var option = document.createElement("option");
             option.text = industrialProjectState[i];
             option.value = industrialProjectState[i];
             state.add(option);
         } for (var i = 0; i < industrialProjectCity.length; i++) {
+            console.log("ew")
             var option = document.createElement("option");
             option.text = industrialProjectCity[i];
             option.value = industrialProjectCity[i];
@@ -31,6 +32,7 @@ fetch("/api/Categories")
         }
 
         for (var i = 0; i < industrialProjectCategory.length; i++) {
+            console.log("e")
             var option = document.createElement("option");
             option.text = industrialProjectCategory[i];
             option.value = industrialProjectCategory[i];
@@ -38,52 +40,144 @@ fetch("/api/Categories")
         }
 
         for (var i = 0; i < modeOfIndustrialProject.length; i++) {
-            var option = document.createElement("option");
-            option.text = modeOfIndustrialProject[i];
-            option.value = modeOfIndustrialProject[i];
-            modeIndustrialProject.add(option);
+            
+            var input = document.createElement("input");
+            var label = document.createElement("label");
+            label.innerText = modeOfIndustrialProject[i];
+            input.value = modeOfIndustrialProject[i];
+            input.setAttribute('class', 'ms-4 modeOfInternshipStatus')
+            input.setAttribute('type', 'radio')
+            input.setAttribute('name', 'modeOfIndustrialProject')
+            modeIndustrialProject.appendChild(input);
+            modeIndustrialProject.appendChild(label);
+            console.log("1")
+        }
+
+        const radio_modeOfInternship = document.querySelectorAll('input[name="modeOfIndustrialProject"]');
+
+        for (const radioButton of radio_modeOfInternship) {
+            radioButton.addEventListener("change", () => {
+                const selected = document.querySelector('input[name="modeOfIndustrialProject"]:checked').value;
+                console.log(selected)
+                if (selected == "Work from home") {
+                    document.getElementsByClassName("modeOfInternshipStatus")[0].classList.add("mode-status")
+                    document.getElementsByClassName("modeOfInternshipStatus")[1].classList.remove("mode-status")
+                    document.getElementsByClassName("modeOfInternshipStatus")[2].classList.remove("mode-status")
+                }
+                else if (selected == "Office location") {
+                    document.getElementsByClassName("modeOfInternshipStatus")[1].classList.add("mode-status")
+                    document.getElementsByClassName("modeOfInternshipStatus")[0].classList.remove("mode-status")
+                    document.getElementsByClassName("modeOfInternshipStatus")[2].classList.remove("mode-status")
+                }
+                else if (selected == "Hybrid") {
+                    document.getElementsByClassName("modeOfInternshipStatus")[2].classList.add("mode-status")
+                    document.getElementsByClassName("modeOfInternshipStatus")[0].classList.remove("mode-status")
+                    document.getElementsByClassName("modeOfInternshipStatus")[1].classList.remove("mode-status")
+                }
+            });
         }
 
         for (var i = 0; i < typeOfIndustrialProject.length; i++) {
-            var option = document.createElement("option");
-            option.text = typeOfIndustrialProject[i];
-            option.value = typeOfIndustrialProject[i];
-            typeIndustrialProject.add(option);
+            var input = document.createElement("input");
+            var label = document.createElement("label");
+            label.innerText = typeOfIndustrialProject[i];
+            input.value = typeOfIndustrialProject[i];
+            input.setAttribute('class', 'ms-4 typeOfInternshipStatus')
+            input.setAttribute('type', 'radio')
+            input.setAttribute('name', 'typeOfIndustrialProject')
+            typeIndustrialProject.appendChild(input);
+            typeIndustrialProject.appendChild(label);
+        }
+
+        const radio_typeOfInternship = document.querySelectorAll('input[name="typeOfIndustrialProject"]');
+
+        for (const radioButton of radio_typeOfInternship) {
+            radioButton.addEventListener("change", () => {
+                const selected = document.querySelector('input[name="typeOfIndustrialProject"]:checked').value;
+                console.log(selected)
+                if (selected == "Part time") {
+                    document.getElementsByClassName("typeOfInternshipStatus")[0].classList.add("type-status")
+                    document.getElementsByClassName("typeOfInternshipStatus")[1].classList.remove("type-status")
+                }
+                else {
+                    document.getElementsByClassName("typeOfInternshipStatus")[1].classList.add("type-status")
+                    document.getElementsByClassName("typeOfInternshipStatus")[0].classList.remove("type-status")
+                }
+            });
         }
 
         for (var i = 0; i < paidUnpaid.length; i++) {
-            var option = document.createElement("option");
-            option.text = paidUnpaid[i];
-            option.value = paidUnpaid[i];
-            paidOrUnpaid.add(option);
+            console.log("pu")
+            var input = document.createElement("input");
+            var label = document.createElement("label");
+            label.innerText = paidUnpaid[i];
+            input.value = paidUnpaid[i];
+            input.setAttribute('class', 'stipendstatus ms-4')
+            input.setAttribute('type', 'radio')
+            input.setAttribute('name', 'paidOrUnpaid')
+            paidOrUnpaid.appendChild(input);
+            paidOrUnpaid.appendChild(label);
         }
+        const radioButtons = document.querySelectorAll('input[name="paidOrUnpaid"]');
 
+        for (const radioButton of radioButtons) {
+            radioButton.addEventListener("change", () => {
+                const selected = document.querySelector('input[name="paidOrUnpaid"]:checked').value;
+                console.log(selected)
+                if (selected == "Paid") {
+                    document.getElementById("stipenid").style.display = "block"
+                    document.getElementById("stipend").value = "";
+                    document.getElementsByClassName("stipendstatus")[0].classList.add("Paid-status")
+                    document.getElementsByClassName("stipendstatus")[1].classList.remove("Paid-status")
+                }
+                else {
+                    document.getElementById("stipenid").style.display = "none"
+                    document.getElementById("stipend").value = 0;
+                    document.getElementsByClassName("stipendstatus")[1].classList.add("Paid-status")
+                    document.getElementsByClassName("stipendstatus")[0].classList.remove("Paid-status")
+                }
+            });
+        }
     })
     .catch(error => {
         console.log(error);
     })
+    function updateperks(checkbox) {
+        var resultInput = document.getElementById("perks");
+        var currentValue = resultInput.value;
+        var checkboxValue = checkbox.value;
+
+        if (checkbox.checked) {
+            if (currentValue === "") {
+                resultInput.value = checkboxValue;
+            } else {
+                resultInput.value = currentValue + "," + checkboxValue;
+            }
+        } else {
+            var values = currentValue.split(",");
+            var index = values.indexOf(checkboxValue);
+
+            if (index !== -1) {
+                values.splice(index, 1);
+                resultInput.value = values.join(",");
+            }
+        }
+    }
+
+ 
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+    $('#lastDateToApply').attr('min', today);
 
 // Closes an alert by removing it from the DOM. If the .fade and .show classes are present on the element, the alert will fade out before it is removed.
 $(document).on('click', '.alert .btn-close', function (e) {
     $(this).parent().remove();
 });
 
-$("#paidOrUnpaid").change(function () {
-    var paidOrUnpaid = $(this).val();
-
-    if (paidOrUnpaid == "Paid") {
-        // show and hide div with animation 
-        $("#stipenddiv").show();
-        $('#stipend').val("");
-
-
-        // $("#stipenddiv").show();
-    } else {
-        $("#stipenddiv").hide();
-        $('#stipend').val("0");
-
-    }
-});
 
 $('#typeOfCompany').change(function () {
     var typeOfCompany = $(this).val();
@@ -106,15 +200,17 @@ $('#previewForm').on('click', function () {
     var briefDescription = $('#briefDescription').val();
     var state = $('#state').val();
     var city = $('#city').val();
-    var paidOrUnpaid = $('#paidOrUnpaid').val();
+    var paidOrUnpaid = $('.Paid-status').val();
     var stipend = $('#stipend').val();
     var duration = $('#duration').val();
+    var morw = $('#morw').val();
     var skillsRequired = $('#skillsRequired').val();
     var numberOfOpenings = $('#numberOfOpenings').val();
     var lastDateToApply = $('#lastDateToApply').val();
-    var contactDetails = $('#contactDetails').val();
-    var typeOfIndustrialProject = $('#typeOfIndustrialProject').val();
-    var modeOfIndustrialProject = $('#modeOfIndustrialProject').val();
+    // var contactDetails = $('#contactDetails').val();
+    var typeOfIndustrialProject = $('.type-status').val();
+    var typeOfCompany = $('#typeOfCompany').val();
+    var modeOfIndustrialProject = $('.mode-status').val();
     var category = $('#category').val();
     var rolesAndResponsibilities = $('#rolesAndResponsibilities').val();
     var perks = $('#perks').val();
@@ -159,6 +255,9 @@ $('#previewForm').on('click', function () {
 <th scope="col">Duration:</th>
 <td>${duration}</td>
 </tr>
+<th scope="col">Months or Weeks:</th>
+    <td>${morw}</td>
+</tr>
 <tr>
 <th scope="col">Skills Required:</th>
 <td>${skillsRequired}</td>
@@ -172,10 +271,7 @@ $('#previewForm').on('click', function () {
 <th scope="col">Last Date To Apply:</th>
 <td>${lastDateToApply}</td>
 </tr>
-<tr>
-<th scope="col">Contact Details:</th>
-<td>${contactDetails}</td>
-</tr>
+
 <tr>
 <th scope="col">Type Of Industrial project:</th>
 <td>${typeOfIndustrialProject}</td>
@@ -197,8 +293,16 @@ $('#previewForm').on('click', function () {
 <td>${perks}</td>
 </tr>
 <tr>
+        <th scope="col">Type Of Company:</th>
+        <td>${typeOfCompany}</td>
+    </tr>
+<tr>
 <th scope="col">Who Can Apply:</th>
 <td>${whoCanApply}</td>
+</tr>
+<tr>
+<th scope="col">Total Number Of Applicants:</th>
+<td>${totalNumberOfApplicants}</td>
 </tr>
 <tr>
 <th scope="col">Criteria For Selection:</th>
@@ -211,8 +315,9 @@ $('#previewForm').on('click', function () {
 
     $('#previewformdetail').html(previewformdetail);
 
-    if (projectTitle == '' || companyName == '' || position == '' || briefDescription == '' || state == '' ||city==''|| paidOrUnpaid == '' || stipend == '' || duration == '' || skillsRequired == '' || numberOfOpenings == '' || lastDateToApply == '' || contactDetails == '' || typeOfIndustrialProject == '' || modeOfIndustrialProject == '' || category == '' || rolesAndResponsibilities == '' || perks == '' || whoCanApply == '' || criteriaForSelection == '') {
+    if (projectTitle == '' || companyName == '' || position == '' || briefDescription == '' || state == '' ||city==''|| paidOrUnpaid == '' || stipend == '' || duration == ''||morw == '' || skillsRequired == '' || numberOfOpenings == '' || lastDateToApply == '' || totalNumberOfApplicants == '' || typeOfIndustrialProject == '' || modeOfIndustrialProject == '' || category == '' || rolesAndResponsibilities == '' || perks == '' || whoCanApply == '' || criteriaForSelection == '') {
         // alert('Please fill all the fields');
+        console.log(companyName, position, briefDescription, state, city, paidOrUnpaid, stipend, duration, morw, skillsRequired, numberOfOpenings, lastDateToApply, category, rolesAndResponsibilities, perks, whoCanApply, criteriaForSelection);
         $('#alertfill').html('<div class="alert alert-danger" role="alert">Please fill all the fields</div>');
     }
 })

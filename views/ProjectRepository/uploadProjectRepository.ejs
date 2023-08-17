@@ -29,6 +29,42 @@
         margin: 1em;
         margin-top: 0;
     }
+    .hidden {
+      display: none;
+    }
+    @media (min-width:1400px) {
+            .container .row .form-padding {
+                padding: 0 250px;
+            }
+        }
+
+        .label-name {
+            margin-bottom: 7px;
+        }
+
+        .radio-field {
+            display: flex;
+        }
+
+        @media (max-width:775px) {
+            .radio-field {
+                flex-direction: column;
+            }
+        }
+        body {
+            background-color: #f6f9ff !important;
+        }
+        .required-icon::after {
+  content: "*";
+  color: red;
+  font-weight: bold;
+}
+.error-label{
+    color: red;
+}
+
+
+ 
     </style>
 </head>
 
@@ -69,155 +105,675 @@
                                             <h3 class="mb-5 text-uppercase main-heading">Upload Project Repository
                                                 Details</h3>
 
-                                            <form action="/uploadProjectRepository" method="post"
-                                                enctype="multipart/form-data" id="addProjectRepositoryForm" class="addProjectRepositoryForm">
-                                                <div class="form-outline mb-4">
-                                                    <input type="text" id="projectName" name="projectName"
-                                                        class="form-control form-control-lg" required />
-                                                        <div class="invalid-feedback">
-                                                            Please provide a project anme
-                                                          </div>
-                                                    <label class="form-label" for="projectName">projectName</label>
-                                                </div>
-
-                                                <div class="form-outline mb-4">
-                                                    <input type ="hidden"  name="teamMembers" id="teamMember-tags-input" value="" required>
-                                                    <input type="text" id="teamMembers" 
-                                                        class="form-control  form-control-lg" onkeyup="sendData(this)" />
-                                                    <label class="form-label" for="teamMembers">Team Members</label>
-
-                                                </div>
-                                                <div id="teamMember-container"></div>
-
-                                                <div class="form-outline mb-4">
-                                                    <input type="text" id="guideName" name="guideName"
-                                                        class="form-control  form-control-lg" required />
-                                                    <label class="form-label" for="guideName">guideName</label>
-
-                                                </div>
-
-                                                <div class="form-outline mb-4">
-                                                    <textarea type="input" class="form-control  form-control-lg"
-                                                        id="projectDescription" name="projectDescription" rows="3"
-                                                        required></textarea>
-                                                    <label class="form-label"
-                                                        for="projectDescription">projectDescription</label>
-                                                </div>
-
-                                                <div class="form-outline mb-4">
-                                                    <textarea type="input" class="form-control  form-control-lg"
-                                                        id="objective" name="objective" rows="3" required></textarea>
-                                                    <label class="form-label" for="objective">objective</label>
-                                                </div>
-
-
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-4">
-
-                                                        <select class="form-select form-select-lg" id="collegeName"
-                                                            name="collegeName" aria-label="Default select example"
+                                                
+                                                    <div class="d-flex justify-content-center">
+                                                      <button class="btn btn-primary mx-2 main-button" id="projectDirectory1" onclick="setActiveButton('projectDirectory1', 'projectDirectoryForm')">
+                                                        <input type="radio" name="uploadProjectRepoFormPicker" value="projectDirectory" id="projectDirectory" class="hidden" />
+                                                        <div>Project Directory</div>
+                                                      </button>
+                                                      <button class="btn btn-secondary mx-2 main-button" id="lookingMentor1" onclick="setActiveButton('lookingMentor1', 'lookingMentorForm')">
+                                                        <input type="radio" name="uploadProjectRepoFormPicker" value="lookingMentor" id="lookingMentor" class="hidden"/>
+                                                        <div>Looking for Mentor/Guide</div>
+                                                      </button>
+                                                      <button class="btn btn-secondary mx-2 main-button" id="projectPartner1" onclick="setActiveButton('projectPartner1', 'projectPartnerForm')">
+                                                        <input type="radio" name="uploadProjectRepoFormPicker" value="projectPartner" id="projectPartner" class="hidden"/>
+                                                        <div>Project Partner</div>
+                                                      </button>
+                                                    </div>
+                                                 
+                                                  
+                                                  <div class="card-body">
+                                                    <form action="/uploadProjectRepository" method="post"
+                                                    enctype="multipart/form-data" id="projectDirectoryForm" class=" form">
+                                                      <h3>Upload Projects in Project Directory</h3>
+                                                      <div class="form-outline mb-4">
+                                                        <input type="text" id="projectName" name="projectName"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="projectTitle">Project
+                                                            Name<span class="required-icon"></span></label>
+                                                    </div>
+                                                      <div class="form-outline mb-4">
+                                                        <input type="text" id="projectDomain" name="projectDomain"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="projectDomain">Project
+                                                            Domain<span class="required-icon"></span></label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="teamMember" name="teamMember"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="teamMember">Team Members Name(Seperate
+                                                            By
+                                                            Comma(,)
+                                                            )<span class="required-icon"></span></label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="academicMentorName" name="academicMentorName"
+                                                            class="form-control form-control-lg"  required/>
+                                                        <label class="form-label" for="academicMentorName">Academic Mentor/Guide Name<span class="required-icon"></span></label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="IndustryMentorName" name="IndustryMentorName"
+                                                            class="form-control form-control-lg"  required/>
+                                                        <label class="form-label" for="IndustryMentorName" >Industry Mentor/Guide Name<span class="required-icon"></span></label>
+                                                    </div>
+                                                    <div class="mb-4">
+                                                        <label for="typeOfProject" class="form-label">
+                                                            Type of Project<span class="required-icon"></span>
+                                                          </label>
+                                                        <select class="form-select form-select-lg" id="typeOfProject"
+                                                            name="typeOfProject" aria-label="Default select example"
                                                             required>
-                                                            <option value="" selected>Choose collegeName</option>
+                                                            <option value="" selected>
+                                                                Choose
+                                                                typeOfProject
+                                                            </option>
+                                                            <option value="Final Year Project">Final Year Project</option>
+                                                            <option value="Mini Project">Mini Project</option>
+                                                            <option value="Research Project">Reaserch Project</option>
+                                                            <option value="Other">Other</option>
+    
                                                         </select>
-
                                                     </div>
-                                                    <div class="col-md-6 mb-4">
-                                                        <select class="form-select form-select-lg" id="universityName"
-                                                            name="universityName" aria-label="Default select example"
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-4">
+                                                            <label for="collegeName" class="form-label">
+                                                                College Name<span class="required-icon"></span>
+                                                              </label>
+                                                            <select class="form-select form-select-lg collegeName" id="collegeName" name="collegeName" aria-label="Default select example" required>
+                                                                <option value="" selected>College Name</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 mb-4">
+                                                            <label for="universityName" class="form-label">
+                                                                University Name<span class="required-icon"></span>
+                                                              </label>
+                                                            <select class="form-select form-select-lg universityName" id="universityName" name="universityName" aria-label="Default select example" required>
+                                                                <option value="" selected>UniversityName</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label for="location" class="label-name">Location :<span class="required-icon"></span></label>
+                                                        <div class="col-md-6 mb-4">
+                                                            <select class="form-select form-select-lg state" id="state" name="state" aria-label="Default select example" required>
+                                                                <option value="" selected>Choose state</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 mb-4">
+                                                            <select class="form-select form-select-lg city" id="city" name="city" aria-label="Default select example" required>
+                                                                <option value="" selected>Choose city</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                          <label for="projectstartDate">Project Start Date<span class="required-icon"></span></label>
+                                                          <input type="date" class="form-control" id="projectstartDate" name="projectstartDate" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                          <label for="projectendDate">Project End Date<span class="required-icon"></span></label>
+                                                          <input type="date" class="form-control" id="projectendDate" name="projectendDate" required>
+                                                          <label id="endDateError" class="error-label hidden "></label>
+                                                        </div>
+                                                      </div>
+
+                                                   
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="briefDescription"
+                                                          name="briefDescription"
+                                                          rows="3"
+                                                          required
+                                                        ></textarea>
+                                                        <label class="form-label" for="briefDescription">Brief Description About Project<span class="required-icon"></span></label>
+                                                      </div>
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="problemsDefine"
+                                                          name="problemsDefine"
+                                                          rows="3"
+                                                          required
+                                                        ></textarea>
+                                                        <label class="form-label" for="problemsDefine">Problem Define in the Project<span class="required-icon"></span></label>
+                                                      </div>
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="problemsSolution"
+                                                          name="problemsSolution"
+                                                          rows="2"
+                                                          required
+                                                        ></textarea>
+                                                        <label class="form-label" for="problemsSolution">Problem Solution in the Project<span class="required-icon"></span></label>
+                                                      </div>
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="workingOfProject"
+                                                          name="workingOfProject"
+                                                          rows="2"
+                                                          required
+                                                         
+                                                        ></textarea>
+                                                        <label class="form-label" for="workingOfProject">Working Of Project <span class="required-icon"></span></label>
+                                                      </div>
+                                                      <div class="form-outline mb-4">
+                                                        <input type="text" id="applications" name="applications"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="applications">Applications of the Project(Seperate
+                                                            By
+                                                            Comma(,)
+                                                            )<span class="required-icon"></span></label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="usp"
+                                                          name="usp"
+                                                          rows="2"
+                                                          
+                                                        ></textarea>
+                                                        <label class="form-label" for="usp">USP Regarding Project</label>
+                                                      </div>
+                                                      <div class="form-outline mb-4">
+                                                        <input type="text" id="materialused" name="materialused"
+                                                            class="form-control form-control-lg"  />
+                                                        <label class="form-label" for="materialused">Material Used(Seperate
+                                                            By
+                                                            Comma(,)
+                                                            )</label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="hardwareused" name="hardwareused"
+                                                            class="form-control form-control-lg"  />
+                                                        <label class="form-label" for="hardwareused">Hardware Used(Seperate
+                                                            By
+                                                            Comma(,)
+                                                            )</label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="softwareused" name="softwareused"
+                                                            class="form-control form-control-lg"  />
+                                                        <label class="form-label" for="softwareused">Software Used(Seperate
+                                                            By
+                                                            Comma(,)
+                                                            )</label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="literatureSurvey"
+                                                          name="literatureSurvey"
+                                                          rows="2"
+                                                          
+                                                        ></textarea>
+                                                        <label class="form-label" for="literatureSurvey">Literature Survey</label>
+                                                      </div>
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="methodology"
+                                                          name="methodology"
+                                                          rows="2"
+                                                          
+                                                        ></textarea>
+                                                        <label class="form-label" for="methodology">Methodology</label>
+                                                      </div>
+                                                      <div class="form-outline mb-4">
+                                                        <input type="text" id="linkforAccessCode" name="linkforAccessCode"
+                                                            class="form-control form-control-lg"  />
+                                                        <label class="form-label" for="linkforAccessCode">Link to Acccess Code :</label>
+                                                    </div>
+                                                      <div class="form-outline mb-4">
+                                                        <input type="text" id="linkforAccessPrototype" name="linkforAccessPrototype"
+                                                            class="form-control form-control-lg"  />
+                                                        <label class="form-label" for="linkforAccessPrototype">Link to Access working Prototype</label>
+                                                    </div>
+                                                    <!-- <div class="form-outline mb-4">
+                                                        <label class="form-label">Upload Images (Max 6)</label>
+                                                        <input type="file" class="form-control" id="imageUpload" name="images[]" accept="image/*" multiple max="6">
+                                                      </div> -->
+                                                      <div class=" mb-4">
+                                                        <label class="form-label" for="projectImage">projectImage <span class="required-icon"></span></label>
+    
+                                                        <input type="file" id="projectImage" name="projectImage"
+                                                            class="form-control  form-control-lg" 
+                                                            accept="image/jpg,image/png" />
+                                                    </div>
+                                                    <div class=" mb-4">
+                                                        <label class="form-label" for="projectReport">projectReport <span class="required-icon"></span></label>
+    
+                                                        <input type="file" id="projectReport" name="projectReport"
+                                                            class="form-control  form-control-lg" required
+                                                            accept="application/pdf" />
+    
+                                                    </div>
+                                                     
+
+                                                      <div>
+                                                       <label class="form-check-label" for="patentRadio">
+                                                        Did you file patents?
+                                                      </label>
+                                                      <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="patentRadio" id="patentNo" value="false" checked onclick="togglePatentInput()" />
+                                                        <label class="form-check-label" for="patentRadio1"> No </label>
+                                                      </div>
+                                                      
+                                                      <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="patentRadio" id="patentYes" value="true" onclick="togglePatentInput()" />
+                                                        <label class="form-check-label" for="patentRadio2"> Yes </label>
+                                                      </div>
+                                                      
+                                                      <div class="form-outline mb-4 hidden" id="patentInput">
+                                                        <input type="text" name="patentInput" id="patentnoInput" class="form-control form-control-lg hidden" />
+                                                        <label class="form-label" for="patentInput">Patent Number: <span class="required-icon"></span></label>
+                                                      </div>
+                                                    </div>
+
+
+                                                    <div>
+                                                        <label class="form-check-label" for="publishresearchpaper">
+                                                            Did you publish Research Paper on this project :
+                                                       </label>
+                                                       <div class="form-check">
+                                                         <input class="form-check-input" type="radio" name="publishresearchpaper" id="publishresearchpaperNo" value="false" checked onclick="toggleResearchInput()" />
+                                                         <label class="form-check-label" for="publishresearchpaper1"> No </label>
+                                                       </div>
+                                                       
+                                                       <div class="form-check">
+                                                         <input class="form-check-input" type="radio" name="publishresearchpaper" id="publishresearchpaperYes" value="true" onclick="toggleResearchInput()" />
+                                                         <label class="form-check-label" for="publishresearchpaper2"> Yes </label>
+                                                       </div>
+                                                       
+                                                       <div class="form-outline mb-4 hidden" id="linkresearchpaper">
+                                                         <input type="text" name="linkresearchpaper" id="linkresearchpaperInput" class="form-control form-control-lg hidden" />
+                                                         <label class="form-label" for="linkresearchpaper">Link to published Research Paper : <span class="required-icon"></span></label>
+                                                       </div>
+                                                     </div>
+
+
+                                                   
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="testing_result"
+                                                          name="testing_result"
+                                                          rows="3"
+                                                          
+                                                        ></textarea>
+                                                        <label class="form-label" for="testing_result">Testing and Results</label>
+                                                      </div>
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="futurescope"
+                                                          name="futurescope"
+                                                          rows="2"
+                                                          
+                                                        ></textarea>
+                                                        <label class="form-label" for="futurescope">Future Scope</label>
+                                                      </div>
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="conclusion"
+                                                          name="conclusion"
+                                                          rows="2"
+                                                          
+                                                        ></textarea>
+                                                        <label class="form-label" for="conclusion">Conslusion</label>
+                                                      </div>
+
+                                                      <div class="d-flex justify-content-center">
+                                                        
+                                                          <button class="btn btn-primary" id="saveAsDraft" >Save As draft</button>
+                                                        
+                                                       
+                                                          <button class="btn btn-primary" id="Preview" >Preview</button>
+                                                        
+                                                          <button class="btn btn-primary" id="Post" >Post</button>
+                                                       
+                                                      </div>
+                                                      
+                                                      
+                                                      
+                                                    
+                                                    
+                                                    
+                                                    </form>
+                                                    <form action="/uploadProjectRepoMentor" method="post"
+                                                    enctype="multipart/form-data" id="lookingMentorForm" class="hidden form">
+                                                      <h3>Looking for Mentor/Guide</h3>
+                                                      <div class="form-outline mb-4">
+                                                        <input type="text" id="projectName" name="projectName"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="projectTitle">Project
+                                                            Name<span class="required-icon"></span></label>
+                                                    </div>
+                                                      <div class="form-outline mb-4">
+                                                        <input type="text" id="projectDomain" name="projectDomain"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="projectDomain">Project
+                                                            Domain<span class="required-icon"></span></label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="teamMember" name="teamMember"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="teamMember">Team Members Name(Seperate
+                                                            By
+                                                            Comma(,)
+                                                            )<span class="required-icon"></span></label>
+                                                    </div>
+                                                    <div class="mb-4">
+                                                        <label for="typeOfProject" class="form-label">
+                                                            Type of Project<span class="required-icon"></span>
+                                                          </label>
+                                                        <select class="form-select form-select-lg" id="typeOfProject"
+                                                            name="typeOfProject" aria-label="Default select example"
                                                             required>
-                                                            <option value="" selected>Choose universityName</option>
-
+                                                            <option value="" selected>
+                                                                Choose
+                                                                typeOfProject
+                                                            </option>
+                                                            <option value="Final Year Project">Final Year Project</option>
+                                                            <option value="Mini Project">Mini Project</option>
+                                                            <option value="Research Project">Reaserch Project</option>
+                                                            <option value="Other">Other</option>
+    
                                                         </select>
-
                                                     </div>
-                                                </div>
-
-
-
-                                                <div class="form-outline mb-4">
-                                                    <!-- <input type="number" pattern="[0-9]{10}" id="phone" name="phone"
-                                                        class="form-control form-control-lg" required /> -->
-                                                     <input class="form-control form-control-lg" type="tel" id="phone" name="phone" inputmode="tel" value="" required style="border: 1px solid #bdbdbd;" placeholder="   Enter Phone"/>
-                                                </div>
-
-                                                <div class="form-outline mb-4">
-                                                    <input type="email" id="email" name="email"
-                                                        class="form-control form-control-lg" required />
-                                                    <label class="form-label" for="email">email</label>
-                                                </div>
-
-                                                <div class="form-outline mb-4">
-                                                    <input type ="hidden"  name="skillsToBeLearned" id="skillsToBeLearned-tags-input" value="" required>
-                                                    <input type="text" id="skillsToBeLearned" class="form-control  form-control-lg" />
-                                                    
-                                                    <label class="form-label" for="skillsToBeLearned">Skills
-                                                        Required (Press Enter to add a Skill)</label>
-                                                </div>
-
-                                                <div id="skillsToBeLearned-container"></div>
-
-                                                <div class="form-outline mb-4">
-                                                    <input type ="hidden"  name="technologiesUsed" id="technologiesUsed-tags-input" value="" required>
-                                                    <input type="text" id="technologiesUsed" class="form-control  form-control-lg" />
-                                                    
-                                                    <label class="form-label" for="technologiesUsed">Technologies used (Press Enter to add a Technology)</label> 
-                                                </div>
-
-                                                <div id="technologiesUsed-container"></div>
-
-
-                                                <div class="row">
-                                                    <div class="col-md-6 mb-4">
-
-                                                        <div class="form-outline">
-                                                            <input type="text" id="projectSourceCode"
-                                                                name="projectSourceCode"
-                                                                class="form-control form-control-lg" required />
-                                                            <label class="form-label"
-                                                                for="projectSourceCode">projectSourceCode(link)</label>
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-4">
+                                                            <label for="collegeName" class="form-label">
+                                                                College Name<span class="required-icon"></span>
+                                                              </label>
+                                                            <select class="form-select form-select-lg collegeName" name="collegeName" aria-label="Default select example" required>
+                                                                <option value="" selected>College Name</option>
+                                                            </select>
                                                         </div>
-
-                                                    </div>
-                                                    <div class="col-md-6 mb-4">
-
-                                                        <div class="form-outline">
-                                                            <input type="text" id="videoDemo" name="videoDemo"
-                                                                class="form-control form-control-lg" required />
-                                                            <label class="form-label"
-                                                                for="videoDemo">videoDemo(link)</label>
+                                                        <div class="col-md-6 mb-4">
+                                                            <label for="universityName" class="form-label">
+                                                                University Name<span class="required-icon"></span>
+                                                              </label>
+                                                            <select class="form-select form-select-lg universityName" name="universityName" aria-label="Default select example" required>
+                                                                <option value="" selected>UniversityName</option>
+                                                            </select>
                                                         </div>
-
                                                     </div>
-                                                </div>
+                                                    <div class="row">
+                                                        <label for="location" class="label-name">Location :<span class="required-icon"></span></label>
+                                                        <div class="col-md-6 mb-4">
+                                                            <select class="form-select form-select-lg state" id="state" name="state" aria-label="Default select example" required>
+                                                                <option value="" selected>Choose state</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 mb-4">
+                                                            <select class="form-select form-select-lg city" id="city" name="city" aria-label="Default select example" required>
+                                                                <option value="" selected>Choose city</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                   
 
+                                                      <div>
+                                                        <label class="form-check-label" for="isprojectStarted">
+                                                            is Project Started  :
+                                                       </label>
+                                                       <div class="form-check">
+                                                         <input class="form-check-input" type="radio" name="isprojectStarted" id="isprojectStartedNo" value="false" checked onclick="toggleisProjectInput()" />
+                                                         <label class="form-check-label" for="isprojectStarted1"> No </label>
+                                                       </div>
+                                                       
+                                                       <div class="form-check">
+                                                         <input class="form-check-input " type="radio" name="isprojectStarted" id="isprojectStartedYes" value="true" onclick="toggleisProjectInput()" />
+                                                         <label class="form-check-label" for="isprojectStarted2"> Yes </label>
+                                                       </div>
+                                                       
+                                                       <div class="form-outline mb-4 hidden " id="projectStartedDate">
+                                                         <input type="date" name="projectstartDate" id="projectstartInput" class="form-control form-control-lg hidden " onchange="checkDateValidity()"/>
+                                                         <label class="form-label" for="projectstartDate">Project Start Date(format:MM-DD-YYYY) : <span class="required-icon"></span></label>
+                                                       </div>
+                                                     </div>
+                                                      
+                                                      
+                                                      
+                                                      
+                                                   
+                                                      
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="projectDescription"
+                                                          name="projectDescription"
+                                                          rows="3"
+                                                          required
+                                                        ></textarea>
+                                                        <label class="form-label" for="projectDescription"> Description About Project<span class="required-icon"></span></label>
+                                                      </div>
+                                                      <div class="mb-4">
+                                                        <label for="stageOfProject" class="form-label">
+                                                            Stage Of Project<span class="required-icon"></span>
+                                                          </label>
+                                                        <select class="form-select form-select-lg" id="stageOfProject"
+                                                            name="stageOfProject" aria-label="Default select example"
+                                                            required>
+                                                            <option value="" selected>
+                                                                Choose
+                                                                Stage of Project
+                                                            </option>
+                                                            <option value="Yet to Started">Yet to Started</option>
+                                                            <option value="Just Started">Just Started</option>
+                                                            <option value="Middle of ProjectWork">Middle Of Project Work</option>
+                                                          
+    
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-4">
+                                                        <label for="mentorType" class="form-label">
+                                                         Are You Looking For : <span class="required-icon"></span>
+                                                          </label>
+                                                        <select class="form-select form-select-lg" id="mentorType"
+                                                            name="mentorType" aria-label="Default select example"
+                                                            required>
+                                                            <option value="" selected>
+                                                                Choose
+                                                               Type of Mentor
+                                                            </option>
+                                                            <option value="Academic Mentor">Academic Mentor</option>
+                                                            <option value="Industry Mentor">Industry Mentor</option>
+                                                           
+                                                          
+    
+                                                        </select>
+                                                    </div>
+                                                   
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="skillsRequiredforMentor" name="skillsRequiredforMentor"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="skillsRequiredforMentor">Skills Required For Mentor(Seperate
+                                                            By
+                                                            Comma(,)
+                                                            )<span class="required-icon"></span></label>
+                                                    </div>
 
-
-
-                                                <div class=" mb-4">
-                                                    <label class="form-label" for="projectReport">projectReport</label>
-
-                                                    <input type="file" id="projectReport" name="projectReport"
-                                                        class="form-control  form-control-lg" required
-                                                        accept="application/pdf" />
-
-                                                </div>
-                                                <div class=" mb-4">
-                                                    <label class="form-label" for="projectImage">projectImage</label>
-
-                                                    <input type="file" id="projectImage" name="projectImage"
-                                                        class="form-control  form-control-lg" required
-                                                        accept="image/jpg,image/png" />
-                                                </div>
-
-                                                <div class="d-flex justify-content-center pt-3">
-                                                    <input id="submitProjectRepoForm" type="submit"
-                                                        class="btn btn-primary ms-2 btn-lg" value="Submit">
-                                                </div>
-                                            </form>
-
-
-
-
+                                                    <div class="d-flex justify-content-center">
+                                                        
+                                                        <button class="btn btn-primary" id="saveAsDraft">Save As draft</button>
+                                                      
+                                                     
+                                                        <button class="btn btn-primary" id="Preview" >Preview</button>
+                                                      
+                                                        <button class="btn btn-primary" id="Post"  type="submit">Post</button>
+                                                     
+                                                    </div>
+                                                      
+                                                    </form>
+                                                    <form action="/uploadProjectRepoPartner" method="post"
+                                                    enctype="multipart/form-data" id="projectPartnerForm" class="hidden form">
+                                                      <h3>Looking for Project Partner</h3>
+                                                      <div class="form-outline mb-4">
+                                                        <input type="text" id="projectName" name="projectName"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="projectTitle">Project
+                                                            Name<span class="required-icon"></span></label>
+                                                    </div>
+                                                      <div class="form-outline mb-4">
+                                                        <input type="text" id="projectDomain" name="projectDomain"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="projectDomain">Project
+                                                            Domain<span class="required-icon"></span></label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="teamMember" name="teamMember"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="teamMember">Team Members Name(Seperate
+                                                            By
+                                                            Comma(,)
+                                                            )<span class="required-icon"></span></label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="academicMentorName" name="academicMentorName"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="academicMentorName">Academic Mentor/Guide Name</label>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="IndustryMentorName" name="IndustryMentorName"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="IndustryMentorName">Industry Mentor/Guide Name</label>
+                                                    </div>
+                                                    <div class="mb-4">
+                                                        <label for="typeOfProject" class="form-label">
+                                                            Type of Project<span class="required-icon"></span>
+                                                          </label>
+                                                        <select class="form-select form-select-lg" id="typeOfProject"
+                                                            name="typeOfProject" aria-label="Default select example"
+                                                            required>
+                                                            <option value="" selected>
+                                                                Choose
+                                                                typeOfProject
+                                                            </option>
+                                                            <option value="Final Year Project">Final Year Project</option>
+                                                            <option value="Mini Project">Mini Project</option>
+                                                            <option value="Research Project">Reaserch Project</option>
+                                                            <option value="Other">Other</option>
+    
+                                                        </select>
+                                                    </div>
+                                                    
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-4">
+                                                            <label for="collegeName" class="form-label">
+                                                                College Name<span class="required-icon"></span>
+                                                              </label>
+                                                            <select class="form-select form-select-lg collegeName" name="collegeName" aria-label="Default select example" required>
+                                                                <option value="" selected>College Name</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 mb-4">
+                                                            <label for="universityName" class="form-label">
+                                                                University Name<span class="required-icon"></span>
+                                                              </label>
+                                                            <select class="form-select form-select-lg universityName" name="universityName" aria-label="Default select example" required>
+                                                                <option value="" selected>UniversityName</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <label for="location" class="label-name">Location :<span class="required-icon"></span></label>
+                                                        <div class="col-md-6 mb-4">
+                                                            <select class="form-select form-select-lg state" id="state" name="state" aria-label="Default select example" required>
+                                                                <option value="" selected>Choose state</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-6 mb-4">
+                                                            <select class="form-select form-select-lg city" id="city" name="city" aria-label="Default select example" required>
+                                                                <option value="" selected>Choose city</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <label class="form-check-label" for="isprojectStartedPartner">
+                                                            is Project Started  :
+                                                       </label>
+                                                       <div class="form-check">
+                                                         <input class="form-check-input" type="radio" name="isprojectStartedPartner" id="isprojectStartedNoPartner" value="false" checked onclick="toggleisProjectPartnerInput()" />
+                                                         <label class="form-check-label" for="isprojectStartedPartner1"> No </label>
+                                                       </div>
+                                                       
+                                                       <div class="form-check">
+                                                         <input class="form-check-input " type="radio" name="isprojectStartedPartner" id="isprojectStartedYesPartner" value="true" onclick="toggleisProjectPartnerInput()" />
+                                                         <label class="form-check-label" for="isprojectStartedPartner2"> Yes </label>
+                                                       </div>
+                                                       
+                                                       <div class="form-outline mb-4 hidden " id="projectStartedDatePartner">
+                                                         <input type="date" name="projectstartDatePartner" id="projectstartInputPartner" class="form-control form-control-lg hidden " onchange="checkDateValidity()"/>
+                                                         <label class="form-label" for="projectstartDatePartner">Project Start Date(format:MM-DD-YYYY) : <span class="required-icon"></span></label>
+                                                       </div>
+                                                     </div>
+                                                    <div class="form-outline mb-4">
+                                                        <textarea
+                                                          type="input"
+                                                          class="form-control form-control-lg"
+                                                          id="projectDescription"
+                                                          name="projectDescription"
+                                                          rows="3"
+                                                          required
+                                                        ></textarea>
+                                                        <label class="form-label" for="projectDescription"> Description About Project<span class="required-icon"></span></label>
+                                                      </div>
+                                                      <div class="mb-4">
+                                                        <label for="stageOfProject" class="form-label">
+                                                            Stage Of Project<span class="required-icon"></span>
+                                                          </label>
+                                                        <select class="form-select form-select-lg" id="stageOfProject"
+                                                            name="stageOfProject" aria-label="Default select example"
+                                                            required>
+                                                            <option value="" selected>
+                                                                Choose
+                                                                Stage of Project
+                                                            </option>
+                                                            <option value="Yet to Started">Yet to Started</option>
+                                                            <option value="Just Started">Just Started</option>
+                                                            <option value="Middle of ProjectWork">Middle Of Project Work</option>
+                                                          
+    
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-outline mb-4">
+                                                        <input type="text" id="skillsRequiredforMentor" name="skillsRequiredforMentor"
+                                                            class="form-control form-control-lg" required />
+                                                        <label class="form-label" for="skillsRequiredforMentor">Skills Required For Mentor(Seperate
+                                                            By
+                                                            Comma(,)
+                                                            )<span class="required-icon"></span></label>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center ">
+                                                        
+                                                        <button class="btn btn-primary mx-2" id="saveAsDraft"  type="submit">Save As draft</button>
+                                                      
+                                                     
+                                                        <button class="btn btn-primary mx-2" id="Preview"  type="submit">Preview</button>
+                                                      
+                                                        <button class="btn btn-primary mx-2" id="Post"  type="submit">Post</button>
+                                                     
+                                                    </div>
+                                                    </form>
+                                                  </div>
+                                               
                                         </div>
                             </div>
                         </div>
@@ -229,6 +785,36 @@
           <!-- footer  -->
           <%- include('../Footer/Footer.ejs') %>
         </body>
+        <script>
+
+$(document).ready(function() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+
+    $('#projectstartDate').attr('max', today);
+    $('#projectstartInput').attr('max', today);
+    $('#projectstartInputPartner').attr('max', today);
+
+    $('#projectendDate').on('change', function() {
+      var projectStartDate = new Date($('#projectstartDate').val());
+      var projectEndDate = new Date($(this).val());
+
+   
+    if (projectEndDate <= projectStartDate) {
+        $('#endDateError').text('Project end date must be greater than the project start date.').removeClass('hidden');
+        $(this).val('');
+      } else {
+        $('#endDateError').addClass('hidden');
+      }
+    });
+  });
+
+
+
+        </script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.0/js/intlTelInput.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.8/jquery.inputmask.bundle.min.js'></script>
