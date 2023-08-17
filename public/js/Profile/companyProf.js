@@ -200,7 +200,10 @@ async function displayInternships() {
                         <div class="text-danger mb-1 me-2">
                           <i class="fa fa-location-arrow"></i>
                         </div>
-                        <span>${internship.location}</span>
+                        <span>${internship.city}</span>
+                      </div>
+                      <div>
+                      ${internship.adminverified ? '<span class="text-success">Admin Verified</span>' : '<span class="text-danger">Pending Verification</span>'}
                       </div>
                       <div class="mt-1 mb-0 text-muted small">
                         <span>paid</span>

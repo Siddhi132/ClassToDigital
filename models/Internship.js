@@ -31,7 +31,7 @@ const internshipScheme = new mongoose.Schema({
     perks: { type: String, required: true },
     whoCanApply: { type: String, required: true },
     status: { type: Boolean, required: true, default: true },
-    totalNumberOfApplicants: { type: Number, required: true },
+    totalNumberOfApplicants: { type: Number, required: true, default: 0 },
     criteriaForSelection: { type: String, required: true },
     companyImage: {
         name: {
