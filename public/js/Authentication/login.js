@@ -1,97 +1,98 @@
-const $emailLogin = $('#emaillogin');
-const $phoneLogin = $('#phonelogin');
-const $loginWithOTPBtn = $('#loginWithOTPBtn');
-const $loginWithEmailBtn = $('#loginWithEmailBtn');
-const $getOTPValueBtn = $('#getOTPValueBtn'); // Add the "Get OTP" button
-const $otpInput = $('#otp'); // Get the OTP input field
-const $verifyOTPBtn = $('#verifyOTPBtn'); // Get the "Verify OTP" button
+const User=require('../../models/Users');
+const StudentProfile=require('../../models/StudentProfile');
+const MentorProfile=require('../../models/MentorProfile');
+const AdminProfile=require('../../models/AdminProfile');
+const CompanyProfile=require('../../models/CompanyProfile');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const { checkOTP } = require('../Common/otp');
 
-const phoneInputField = document.querySelector("#phone");
-console.log(phoneInputField)
-const phoneInput = window.intlTelInput(phoneInputField, {
-  utilsScript:
-    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-});
+const verifyUserForLogin = async (req, res) => {
+  var user;
+  try {
+    const { email, password, phone, otp } = req.body;
+    var role;
 
-// Add click event listener to "Login with OTP" link
-$loginWithOTPBtn.click(() => {
-    // Hide email login and show phone login
-    $emailLogin.hide();
-    $phoneLogin.show();
-    $loginWithOTPBtn.hide();
-    $loginWithEmailBtn.show();
-   
-    $("#getOTPValueBtn").click(function () {
-        
-        const phoneNumber = phoneInput.getNumber();
-        document.getElementById("phone").value = `${phoneNumber}`
+    if (phone && otp) {
+      // Check if the OTP is valid
+      const isValidOTP = await checkOTP(phone, otp);
+      if (!isValidOTP) {
+        return res.send({ status: true, statusCode: 400, message: 'Invalid OTP.' });
+      }
+      // Find the user by phone number
+      var userData = await User.findOne({ userPhone: phone });
+      console.log("userData", userData);
+      if (userData) {
+        role = userData.role;
+      }
+      else {
+        return res.send({ status: true, statusCode: 400, message: 'Invalid phone number.' });
+      }
+      console.log("role", role);
+      if (role == "mentor") {
+        user = await MentorProfile.findOne({ phone });
+      }
+      else if (role == "student") {
+        user = await StudentProfile.findOne({ phone });
+      }
+      else if (role == "admin") {
+        user = await AdminProfile.findOne({ phone });
+      }
+      else if (role == "company") {
+        user = await CompanyProfile.findOne({ phone });
+      }
+      console.log('user', user);
 
-        console.log("Click get otp button ");
-        // Get the phone number entered by the user
-        const phone = $("#phone").val();
-        // console.log(phone);
-        const phoneRegex = /^\+(?:[0-9] ?){6,14}[0-9]$/;
-        if (phone === "" || !phoneRegex.test(phone)) {
-            console.log("Phone no is null");
-            $("#otpStatus").text("Please Enter a valid number").css("visibility", "visible").removeClass("text-success").addClass("text-danger");
-        }
-        else {
-            document.getElementById('otpContainer').style.display = 'block';
-            // Make an AJAX request to the server
-            $.ajax({
-                url: "/api/setTextMessage",
-                method: "POST",
-                data: { phone: phone }, // Pass the phone number as data
-                success: function (response) {
-                    // Handle success response from the server
-                    console.log(response);
-                    $("#otpStatus").text("OTP sent successfully,Plese verify otp").css("visibility", "visible").removeClass("text-danger").addClass("text-success");
-                },
-                error: function (error) {
-                    // Handle error response from the server
-                    console.log(error); // You can customize the handling of the error here
-                    $("#otpVerificationStatus").text("OTP does not sent. Please try again.").css("visibility", "visible").removeClass("text-success").addClass("text-danger");
-                }
-            });
-        }
-    });
-    //button desable
-    $("#loginForm input[type=submit]").prop("disabled", true);
-    // Attach click event handler to the verify OTP button
-    $("#verifyOTPBtn").on("click", function () {
-        // Get the OTP value entered by the user
-        console.log("Click verify otp button ");
-        var otpValue = $("#otp").val();
-        // Make an Ajax post request to the server to verify the OTP
-        $.ajax({
-            url: "/api/verifyOtp",
-            method: "POST",
-            data: { otp: otpValue }, // Pass the OTP value as data
-            success: function (data) {
-                // Check if the OTP is verified successfully
-                if (data.success) {
-                    // Display success message
-                    $("#otpVerificationStatus").text("OTP verified successfully").css("visibility", "visible").removeClass("text-danger").addClass("text-success");
-                    $("#loginForm input[type=submit]").prop("disabled", false);
-                } else {
-                    // Display error message
-                    $("#otpVerificationStatus").text("OTP verification failed. Please try again.").css("visibility", "visible").removeClass("text-success").addClass("text-danger");
-                }
-            },
-            error: function (error) {
-                // Handle error response from the server
-                console.log(error); // You can customize the handling of the error here
-            }
-        });
-    });
-});
+      let token = jwt.sign({
+        _id: user._id, role: user.role, email: user.email
+      }, process.env.JWT_SECRET);
 
-// Add click event listener to "Login with Email" link
-$loginWithEmailBtn.click(() => {
-    //Hide email login and show phone login
-    $emailLogin.show();
-    $phoneLogin.hide();
-    $loginWithOTPBtn.show();
-    $loginWithEmailBtn.hide();
-    $("#loginForm input[type=submit]").prop("disabled", false);//enable button if hide
-});
+      res.send({ status: true, statusCode: 200, "data": { "user": user, 'token': token }, 'message': 'Logged in successfully.' });
+    }
+    else {
+      // find role from email from user schema
+      var userData = await User.findOne({ userEmail: email });
+      console.log("userData", userData);
+      if (userData) {
+        role = userData.role;
+      }
+      else {
+        return res.send({ status: true, statusCode: 400, message: 'Invalid email' });
+      }
+      console.log("role", role);
+      if (role == "mentor") {
+        user = await MentorProfile.findOne({ email });
+      }
+      else if (role == "student") {
+        user = await StudentProfile.findOne({ email });
+      }
+      else if (role == "admin") {
+        user = await AdminProfile.findOne({ email });
+      }
+      else if (role == "company") {
+        user = await CompanyProfile.findOne({ email });
+      }
+      console.log('user', user);
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      // console.log('isMatch', isMatch);
+      // If the password does not match, return an error
+      if (!isMatch) {
+        // console.log('password does not match');
+        return res.send({ status: true, statusCode: 400, message: 'Invalid password.' });
+      }
+      // If the email and password match, generate a JSON web token
+      let token = jwt.sign({
+        _id: user._id, role: user.role, email: user.email
+      }, process.env.JWT_SECRET);
+      res.send({ status: true, statusCode: 200, "data": { "user": user, 'token': token }, 'message': 'Logged in successfully.' });
+    }
+  } catch (error) {
+    console.log('error', error);
+    res.send({ status: false, statusCode: 500, message: 'Error during login. ' });
+  }
+};
+
+
+
+module.exports = { verifyUserForLogin };

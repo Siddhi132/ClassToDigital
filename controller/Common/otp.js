@@ -17,11 +17,13 @@ const setTextMessage = async (req, res) => {
     const phone = req.body.phone; // Get the phone number from the request body
     try {
         console.log(otp);
-        // const message = await client.messages.create({
-        //     body: `Hi there , I am node.js application, your otp is ${otp}`,
-        //     from: process.env.MOBILE_NUM,
-        //     to: phone
-        // });
+
+        const message = await client.messages.create({
+            body: `Hi there , I am node.js application, your otp is ${otp}`,
+            from: process.env.MOBILE_NUM,
+            to: phone
+        });
+
         // console.log(message.sid);
         res.send("OTP sent successfully"); // Send success response to the client
 
