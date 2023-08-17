@@ -307,10 +307,6 @@ $('#previewForm').on('click', function () {
         <th scope="col">Criteria For Selection:</th>
         <td>${criteriaForSelection}</td>
     </tr>
-    <tr>
-    <th scope="col">Criteria For Selection:</th>
-    <td>${totalNumberOfApplicants}</td>
-</tr>
 </tbody>`;
 
 
